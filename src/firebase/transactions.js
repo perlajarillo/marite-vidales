@@ -1,12 +1,12 @@
 import { db, storage } from "./firebase.js";
 
-export function addNewSeries(series) {
-  const data = { name: series.name, description: series.description };
+export function setSeriesFirebase(series, files) {
+  //const data = { name: series.name, description: series.description };
   return db
     .ref()
     .child(series.name)
-    .set(data)
-    .then(putPaintings(series.files, series.name))
+    .set(series)
+    .then(putPaintings(files, series.name))
     .catch(error => {
       console.log(error);
     });
