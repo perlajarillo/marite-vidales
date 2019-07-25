@@ -92,7 +92,7 @@ class Header extends Component {
                 component={Link}
                 to="/series"
               >
-                Gallery{" "}
+                Images{" "}
               </Button>
               <Button
                 color="inherit"

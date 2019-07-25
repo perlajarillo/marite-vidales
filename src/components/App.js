@@ -9,7 +9,7 @@ import Home from "./Home/Home";
 import Biography from "./Biography/Biography";
 import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
-import NewSeries from "./Artist/NewSeries";
+import MariteImages from "./Artist/MariteImages";
 
 const App = () => (
   <div className="App">
@@ -21,7 +21,7 @@ const App = () => (
         <Route exact path="/biography" component={Biography} />
         <Route exact path="/series" component={Series} />
         <Route exact path="/seriespaintings" component={SeriesPaintings} />
-        <Route exact path="/newseries" component={NewSeries} />
+        <Route exact path="/mariteimages" component={MariteImages} />
       </Switch>
       <Footer />
     </MuiThemeProvider>
