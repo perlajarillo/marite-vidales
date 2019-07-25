@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -102,10 +102,6 @@ const styles = makeStyles(theme => ({
     minWidth: 0,
     textAlign: "center",
     alignItems: "center"
-    /*     [theme.breakpoints.up("xs")]: {
-      display: "block",
-      flexWrap: "wrap"
-    } */
   },
   detailsStyles: {
     display: "block"
@@ -289,8 +285,6 @@ export default function Maritemages(props) {
   const thumbs = series.files.map((file, i) => (
     <Card key={i} className={classes.card}>
       <CardContent>
-        {/*  <Grid container spacing={2}>
-          <Grid item xs={4}>  */}
         <div className={classes.thumb}>
           <div className={classes.thumbInner}>
             <img
