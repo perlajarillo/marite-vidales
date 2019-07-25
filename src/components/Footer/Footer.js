@@ -5,6 +5,7 @@ import { Paper, Typography } from "@material-ui/core";
 const styles = theme => ({
   root: {
     marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     bottom: 0,
     width: "auto"
   },
