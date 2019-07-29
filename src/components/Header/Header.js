@@ -69,8 +69,7 @@ const NavNoAuth = props => {
             >
               Exhibits{" "}
             </Button>
-
-            <Button
+           <Button
               color="inherit"
               className={classes.items}
               component={Link}
