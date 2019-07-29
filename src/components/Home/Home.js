@@ -56,13 +56,12 @@ const styles = theme => ({
     color: "white",
     backgroundColor: "white",
     border: "none",
-    width: "730px",
+    width: "auto",
     marginBottom: "25px"
   },
   dividerContainer: {
     textAlign: "center",
-    alignItems: "center",
-    marginLeft: "400px"
+    alignItems: "center"
   },
   container: {
     width: "100%",
