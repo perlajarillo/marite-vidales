@@ -22,18 +22,20 @@ import CardContent from "@material-ui/core/CardContent";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { withStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import NoAuthenticated from "../NoAuthenticated/NoAuthenticated";
 
 const styles = makeStyles(theme => ({
   masthead: {
     textAlign: "center",
-    paddingTop: "150px",
+    paddingTop: "100px",
     paddingBottom: "100px",
     paddingLeft: "50px",
     marginLeft: 20,
     marginRight: 20,
     flexGrow: 1,
     [theme.breakpoints.up("xs")]: {
-      paddingTop: "100px",
+      paddingTop: "50px",
       paddingBottom: "100px",
       paddingLeft: "10px"
     }
@@ -150,6 +152,9 @@ const styles = makeStyles(theme => ({
     [theme.breakpoints.only("lg")]: {
       marginLeft: 100
     }
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 }));
 
@@ -164,6 +169,8 @@ const GreenCheckbox = withStyles({
 })(props => <Checkbox color="default" {...props} />);
 
 export default function Maritemages(props) {
+  const { authUser } = props;
+
   const classes = styles();
   const [series, setSeries] = useState({
     name: "",
@@ -175,7 +182,8 @@ export default function Maritemages(props) {
     error: "",
     open: false,
     i: -1,
-    cover: 0
+    cover: 0,
+    mounted: false
   });
 
   const pushFiles = acceptedFiles => {
@@ -338,7 +346,7 @@ export default function Maritemages(props) {
     }
   };
 
-  return (
+  return authUser ? (
     <div className={classes.masthead}>
       <Typography variant="h4" color="textSecondary">
         New series of paintings
@@ -516,8 +524,12 @@ export default function Maritemages(props) {
             </DialogActions>
           </Dialog>
         )}
-        {console.log(series)}
       </form>
+    </div>
+  ) : (
+    <div className={classes.masthead}>
+      <CircularProgress color="secondary" className={classes.progress} />
+      <NoAuthenticated />
     </div>
   );
 }

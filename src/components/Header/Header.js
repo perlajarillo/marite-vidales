@@ -5,6 +5,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import AuthUserContext from "../Session/context";
+import { auth } from "../../firebase";
 
 const styles = theme => ({
   root: {
@@ -69,7 +71,7 @@ const NavNoAuth = props => {
             >
               Exhibits{" "}
             </Button>
-           <Button
+            <Button
               color="inherit"
               className={classes.items}
               component={Link}
@@ -92,10 +94,72 @@ const NavNoAuth = props => {
   );
 };
 
+const NavAuth = props => {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h5" className={classes.brand}>
+            <a href="/" className={classes.links}>
+              Marite Vidales
+            </a>
+          </Typography>
+          <div>
+            <Button
+              color="inherit"
+              className={classes.items}
+              component={Link}
+              to="/"
+            >
+              My Series{" "}
+            </Button>
+            <Button
+              color="inherit"
+              className={classes.items}
+              component={Link}
+              to="/mariteimages"
+            >
+              Add Series{" "}
+            </Button>
+            <Button
+              color="inherit"
+              className={classes.items}
+              component={Link}
+              to="/"
+            >
+              Add Exhibits{" "}
+            </Button>
+
+            <Button
+              color="inherit"
+              className={classes.items}
+              component={Link}
+              onClick={auth.onLogOut}
+              to="/"
+            >
+              Log out{" "}
+            </Button>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
 class Header extends Component {
   render() {
     const { classes } = this.props;
-    return <NavNoAuth classes={classes} />;
+    return (
+      <AuthUserContext.Consumer>
+        {authUser =>
+          authUser ? (
+            <NavAuth classes={classes} />
+          ) : (
+            <NavNoAuth classes={classes} />
+          )
+        }
+      </AuthUserContext.Consumer>
+    );
   }
 }
 
