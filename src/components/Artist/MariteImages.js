@@ -84,12 +84,11 @@ const styles = makeStyles(theme => ({
   },
 
   thumb: {
-    display: "flex",
+    display: "inline-block",
     borderRadius: 2,
     width: 150,
     height: 150,
-    paddingLeft: 10,
-    paddingRight: 10,
+
     textAlign: "center"
   },
   thumbsContainer: {
@@ -100,7 +99,7 @@ const styles = makeStyles(theme => ({
     textAlign: "center"
   },
   thumbInner: {
-    display: "flex",
+    display: "inline-block",
     minWidth: 0,
     textAlign: "center",
     alignItems: "center"
@@ -110,11 +109,16 @@ const styles = makeStyles(theme => ({
   },
   img: {
     display: "block",
-    width: "99%",
-    height: "100%"
+    width: "auto",
+    height: "auto",
+    maxHeight: "150px",
+    maxWidth: "150px"
   },
   card: {
-    margin: 10
+    margin: 10,
+    [theme.breakpoints.down("xs")]: {
+      width: 500
+    }
   },
   dialog: {
     textAlign: "center",

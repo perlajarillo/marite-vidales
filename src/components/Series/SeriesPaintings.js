@@ -24,18 +24,22 @@ const styles = theme => ({
     wrap: "wrapper"
   },
   image: {
-    width: "50%",
-    height: "50%"
+    width: "auto",
+    height: "auto",
+    maxHeight: theme.spacing(70),
+    maxWidth: theme.spacing(150),
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: theme.spacing(35),
+      padding: 0
+    },
+    padding: "10px"
   },
-  bigDialogImage: {
-    width: "25%",
-    height: "25%"
-  },
-
   regularImage: {
-    width: "65%",
-    height: "55%",
-    marginLeft: "60px"
+    width: "auto",
+    height: "auto",
+    maxHeight: "285px",
+    maxWidth: "320px",
+    padding: "10px"
   },
   cards: {
     display: "flex",
@@ -66,7 +70,8 @@ const styles = theme => ({
     "&:hover": { backgroundColor: "#ffc400" }
   },
   picture: {
-    textAlign: "center"
+    textAlign: "center",
+    display: "inline-block"
   }
 });
 
@@ -104,31 +109,6 @@ class SeriesPainting extends Component {
       this.setState({ series: serie });
     }
   };
-  /**
-   * isBigImage – returns true when one of the sizes of the image is
-   * considerably bigger than the other.
-   * @returns {boolean}
-   */
-  isBigImage(url) {
-    let img = new Image();
-    img.src = url;
-    console.log(img.naturalWidth, img.naturalHeight);
-    if (
-      img.naturalWidth > img.naturalHeight &&
-      img.naturalWidth / img.naturalHeight > 3
-    ) {
-      img = null;
-      return true;
-    } else if (
-      img.naturalHeight > img.naturalWidth &&
-      img.naturalHeight / img.naturalWidth > 1.25
-    ) {
-      img = null;
-      return true;
-    }
-    img = null;
-    return false;
-  }
 
   render() {
     const { classes } = this.props;
@@ -151,12 +131,6 @@ class SeriesPainting extends Component {
               name={image.url}
             >
               <CardActionArea>
-                <CardContent>
-                  <Typography variant="body2" color="textSecondary">
-                    "{image.title}" {image.year} {"("}
-                    {image.technique} {image.measures} {")"}
-                  </Typography>
-                </CardContent>
                 <div className={classes.picture}>
                   <CardMedia
                     component="img"
@@ -165,6 +139,12 @@ class SeriesPainting extends Component {
                     className={classes.regularImage}
                   />
                 </div>
+                <CardContent>
+                  <Typography variant="body2" color="textSecondary">
+                    "{image.title}" {image.year} {"("}
+                    {image.technique} {image.measures} {")"}
+                  </Typography>
+                </CardContent>
               </CardActionArea>
             </Card>
           ))}
@@ -176,12 +156,7 @@ class SeriesPainting extends Component {
             fullScreen
           >
             <DialogActions>
-              <Typography variant="caption">
-                {" "}
-                {this.isBigImage(selectedImage.url) &&
-                  "Use the vertical scrollbar to see more details. "}{" "}
-                Click Close to return.
-              </Typography>
+              <Typography variant="caption"> Click Close to return.</Typography>
               <Button
                 onClick={this.handleClose}
                 color="secondary"
@@ -195,11 +170,7 @@ class SeriesPainting extends Component {
                 <img
                   src={selectedImage.url}
                   alt={selectedImage.title}
-                  className={
-                    this.isBigImage(selectedImage.url)
-                      ? classes.bigDialogImage
-                      : classes.image
-                  }
+                  className={classes.image}
                 />
                 <Typography variant="body2" color="textSecondary">
                   {" "}

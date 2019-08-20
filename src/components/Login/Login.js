@@ -13,12 +13,17 @@ import SnackbarContentWrapper from "../SnackbarContentComponent/SnackbarContentC
 
 const styles = makeStyles(theme => ({
   wrapper: {
-    margin: "80px 0",
+    margin: "50px 0",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
+    paddingBottom: theme.spacing(15),
     [theme.breakpoints.up("sm")]: {
-      margin: "70px 0"
+      margin: "30px 0"
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "0px 0",
+      paddingBottom: theme.spacing(10)
     },
     [theme.breakpoints.up("xs")]: { minHeight: "70vh" }
   },
@@ -26,7 +31,10 @@ const styles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(3),
     [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(3)
+      padding: theme.spacing(2)
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2)
     }
   },
   formControl: {
@@ -37,7 +45,7 @@ const styles = makeStyles(theme => ({
     marginLeft: theme.spacing(3),
     maxWidth: 410,
     [theme.breakpoints.up("xs")]: {
-      maxWidth: 270,
+      maxWidth: 250,
       marginLeft: theme.spacing(2),
       fontSize: "0.9rem"
     },
@@ -77,10 +85,6 @@ const styles = makeStyles(theme => ({
     [theme.breakpoints.between("sm", "md")]: {
       width: "520px"
     }
-  },
-
-  pos: {
-    marginBottom: 24
   }
 }));
 
