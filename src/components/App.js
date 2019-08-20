@@ -9,7 +9,9 @@ import Home from "./Home/Home";
 import Biography from "./Biography/Biography";
 import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
-import NewSeries from "./Artist/NewSeries";
+import MariteImages from "./Artist";
+import Login from "./Login/Login";
+import { withAuthentication } from "./Session";
 
 const App = () => (
   <div className="App">
@@ -18,14 +20,15 @@ const App = () => (
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/biography" component={Biography} />
-        <Route exact path="/series" component={Series} />
-        <Route exact path="/seriespaintings" component={SeriesPaintings} />
-        <Route exact path="/newseries" component={NewSeries} />
+        <Route path="/biography" component={Biography} />
+        <Route path="/series" component={Series} />
+        <Route path="/seriespaintings" component={SeriesPaintings} />
+        <Route path="/mariteimages" component={MariteImages} />
+        <Route path="/login" component={Login} />
       </Switch>
       <Footer />
     </MuiThemeProvider>
   </div>
 );
 
-export default App;
+export default withAuthentication(App);
