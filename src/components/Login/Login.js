@@ -118,7 +118,7 @@ export default function Login(props) {
           password: password,
           authenticated: true
         });
-        history.push("/mariteimages");
+        history.push("/myseries");
       })
       .catch(error => {
         setState({ ...state, error: error.message, openSnackbarError: true });
