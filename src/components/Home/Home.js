@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import painting from "../../images/Variacionesweb.jpg";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
