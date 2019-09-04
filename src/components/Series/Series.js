@@ -61,10 +61,6 @@ class Series extends Component {
     this.observer = this.getSeries();
   }
 
-  componentDidUpdate() {
-    this.observer = this.getSeries();
-  }
-
   getSeries = () => {
     db.getAllSeries().then(snapshot => {
       let series = Object.keys(snapshot.val()).map(serie => {
