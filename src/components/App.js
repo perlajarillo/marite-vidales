@@ -9,7 +9,8 @@ import Home from "./Home/Home";
 import Biography from "./Biography/Biography";
 import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
-import MariteImages from "./Artist";
+import SetSeries from "./SetSeries";
+import MySeries from "./MySeries";
 import Login from "./Login/Login";
 import { withAuthentication } from "./Session";
 
@@ -23,7 +24,8 @@ const App = () => (
         <Route path="/biography" component={Biography} />
         <Route path="/series" component={Series} />
         <Route path="/seriespaintings" component={SeriesPaintings} />
-        <Route path="/mariteimages" component={MariteImages} />
+        <Route path="/myseries" component={MySeries} />
+        <Route path="/setseries" component={SetSeries} />
         <Route path="/login" component={Login} />
       </Switch>
       <Footer />

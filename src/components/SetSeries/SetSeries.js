@@ -24,6 +24,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import NoAuthenticated from "../NoAuthenticated/NoAuthenticated";
+import Divider from "@material-ui/core/Divider";
+import { Redirect } from "react-router-dom";
 
 const styles = makeStyles(theme => ({
   masthead: {
@@ -172,22 +174,51 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-export default function Maritemages(props) {
-  const { authUser } = props;
-
+export default function SetSeries(props) {
   const classes = styles();
-  const [series, setSeries] = useState({
-    name: "",
-    description: "",
-    files: [],
-    images_details: [],
-    openSnackbarSaved: false,
-    openSnackbarError: false,
-    error: "",
-    open: false,
-    i: -1,
-    cover: 0,
-    mounted: false
+  const setSelectedSeries = p => {
+    let name = "";
+    let description = "";
+    let images_details = [];
+    let cover = 0;
+    if (p.location.state) {
+      if (p.location.state.series) {
+        let series = p.location.state.series;
+        name = series.name;
+        description = series.description;
+        images_details = series.images_details;
+        cover = series.cover;
+      }
+    }
+
+    return {
+      name: name,
+      description: description,
+      files: [],
+      images_details: images_details,
+      openSnackbarSaved: false,
+      openSnackbarError: false,
+      error: "",
+      open: false,
+      i: -1,
+      cover: cover,
+      j: -1,
+      openSaved: false,
+      saved_images: images_details.filter(
+        currentImage => currentImage.url !== ""
+      ),
+      toDelete: [],
+      returnMySeries: false
+    };
+  };
+
+  /**
+   * Lazy initial state: The initialState argument is the state used during the
+   * initial render. In subsequent renders, it is disregarded.
+   */
+  const [series, setSeries] = useState(() => {
+    const initialState = setSelectedSeries(props);
+    return initialState;
   });
 
   const pushFiles = acceptedFiles => {
@@ -246,7 +277,7 @@ export default function Maritemages(props) {
       return;
     }
     series.openSnackbarSaved
-      ? setSeries({ ...series, openSnackbarSaved: false })
+      ? setSeries({ ...series, openSnackbarSaved: false, returnMySeries: true })
       : setSeries({ ...series, openSnackbarError: false });
   };
 
@@ -255,8 +286,17 @@ export default function Maritemages(props) {
     setSeries({ ...series, open: true, i: i });
   };
 
+  const handleClickOpenSaved = j => e => {
+    e.preventDefault();
+    setSeries({ ...series, openSaved: true, j: j });
+  };
+
   const handleClose = () => {
-    setSeries({ ...series, open: false });
+    setSeries({ ...series, open: false, i: -1 });
+  };
+
+  const handleCloseSaved = () => {
+    setSeries({ ...series, openSaved: false, j: -1 });
   };
 
   const handleCoverChange = i => event => {
@@ -282,15 +322,38 @@ export default function Maritemages(props) {
 
   const deleteImage = i => e => {
     e.preventDefault();
+    let updatedCover =
+      i + series.saved_images.length < series.cover
+        ? series.cover - 1
+        : series.cover;
+    let newCover =
+      i + series.saved_images.length === series.cover ? 0 : updatedCover;
     const copyDetails = series.images_details;
-    copyDetails.splice(i, 1);
+    copyDetails.splice(i + series.saved_images.length, 1);
     const copyFiles = series.files;
     copyFiles.splice(i, 1);
     setSeries({
       ...series,
       images_details: copyDetails,
       files: copyFiles,
-      cover: i === series.cover ? 0 : series.cover
+      cover: newCover
+    });
+  };
+
+  const deleteSavedImage = i => e => {
+    e.preventDefault();
+    let updatedCover = i < series.cover ? series.cover - 1 : series.cover;
+    let newCover = i === series.cover ? 0 : updatedCover;
+    series.toDelete.push(series.saved_images[i].file);
+    const copyDetails = series.images_details;
+    copyDetails.splice(i, 1);
+    const copySavedImages = series.saved_images;
+    copySavedImages.splice(i, 1);
+    setSeries({
+      ...series,
+      images_details: copyDetails,
+      saved_images: copySavedImages,
+      cover: newCover
     });
   };
 
@@ -316,6 +379,28 @@ export default function Maritemages(props) {
     </Card>
   ));
 
+  const thumbsPreviouslySaved = series.saved_images.map((image, i) => (
+    <Card key={i} className={classes.card}>
+      <CardContent>
+        <div className={classes.thumb}>
+          <div className={classes.thumbInner}>
+            <img
+              src={image.url}
+              alt={image.title}
+              onClick={handleClickOpenSaved(i)}
+              className={classes.img}
+            />
+          </div>
+        </div>
+      </CardContent>
+      <CardActions className={classes.detailsStyles}>
+        <Fab aria-label="Delete" color="primary" onClick={deleteSavedImage(i)}>
+          <DeleteIcon />
+        </Fab>
+      </CardActions>
+    </Card>
+  ));
+
   /**
    * useEffect - Revokes the data uris to avoid memory leaks
    */
@@ -332,9 +417,14 @@ export default function Maritemages(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (series.name && series.description) {
+    if (series.name && series.description && series.images_details.length > 0) {
       const s = getPayload();
-      setSeriesFirebase(s, series.files)
+      setSeriesFirebase(
+        s,
+        series.files,
+        series.toDelete,
+        series.saved_images.length
+      )
         .then(() => {
           setSeries({ ...series, openSnackbarSaved: true });
         })
@@ -345,15 +435,22 @@ export default function Maritemages(props) {
       setSeries({
         ...series,
         openSnackbarError: true,
-        error: "Please add the series name and description"
+        error: "Please add the series name, description and at least 1 art work"
       });
     }
   };
-
-  return authUser ? (
+  let n = series.saved_images.length;
+  return props.authUser ? (
     <div className={classes.masthead}>
+      {series.returnMySeries && (
+        <Redirect
+          to={{
+            pathname: "/myseries"
+          }}
+        />
+      )}
       <Typography variant="h4" color="textSecondary">
-        New series of paintings
+        {!series.name ? "New series of paintings" : series.name + " series"}
       </Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <FormControl required className={classes.formControl}>
@@ -386,6 +483,7 @@ export default function Maritemages(props) {
             Save
           </Button>
         </FormControl>
+
         <Typography variant="caption">Fields with * are required.</Typography>
         <div className={classes.content}>
           <div {...getRootProps({ className: "dropzone" })}>
@@ -394,7 +492,16 @@ export default function Maritemages(props) {
               Drag and drop the images here, or click to select files
             </div>
           </div>
+          {series.saved_images.length > 0 && (
+            <div>
+              <Typography variant="h5">Current art in this series</Typography>
 
+              <div className={classes.thumbsContainer}>
+                {thumbsPreviouslySaved}
+              </div>
+              <Divider />
+            </div>
+          )}
           {series.files.length > 0 && (
             <div>
               <Typography variant="h5">
@@ -458,7 +565,6 @@ export default function Maritemages(props) {
                     <img
                       src={series.files[series.i].preview}
                       alt={series.files[series.i].name}
-                      onClick={handleClickOpen(series.i)}
                       className={classes.img}
                     />
                   </div>
@@ -472,8 +578,8 @@ export default function Maritemages(props) {
                   margin="normal"
                   label="Work art title: "
                   className={classes.textField}
-                  value={series.images_details[series.i].title}
-                  onChange={handleChangeDetails(series.i)}
+                  value={series.images_details[series.i + n].title}
+                  onChange={handleChangeDetails(series.i + n)}
                 />
                 <TextField
                   name="year"
@@ -481,8 +587,8 @@ export default function Maritemages(props) {
                   margin="normal"
                   label="Year: "
                   className={classes.textField}
-                  value={series.images_details[series.i].year}
-                  onChange={handleChangeDetails(series.i)}
+                  value={series.images_details[series.i + n].year}
+                  onChange={handleChangeDetails(series.i + n)}
                 />
               </div>
 
@@ -493,8 +599,8 @@ export default function Maritemages(props) {
                   margin="normal"
                   label="Technique: "
                   className={classes.textField}
-                  value={series.images_details[series.i].technique}
-                  onChange={handleChangeDetails(series.i)}
+                  value={series.images_details[series.i + n].technique}
+                  onChange={handleChangeDetails(series.i + n)}
                 />
                 <TextField
                   name="measures"
@@ -502,14 +608,14 @@ export default function Maritemages(props) {
                   margin="normal"
                   label="Measures: "
                   className={classes.textField}
-                  value={series.images_details[series.i].measures}
-                  onChange={handleChangeDetails(series.i)}
+                  value={series.images_details[series.i + n].measures}
+                  onChange={handleChangeDetails(series.i + n)}
                 />{" "}
                 <FormControlLabel
                   control={
                     <GreenCheckbox
-                      checked={series.i === series.cover}
-                      onChange={handleCoverChange(series.i)}
+                      checked={series.i + n === series.cover}
+                      onChange={handleCoverChange(series.i + n)}
                       value="cover"
                     />
                   }
@@ -520,6 +626,91 @@ export default function Maritemages(props) {
             <DialogActions>
               <Button
                 onClick={handleClose}
+                className={classes.button}
+                color="primary"
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
+        {series.j !== -1 && (
+          <Dialog
+            open={series.openSaved}
+            onClose={handleCloseSaved}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Image details</DialogTitle>
+            <DialogContent
+              className={(classes.dialog, classes.centerAlignment)}
+            >
+              <div className={classes.centerAlignment}>
+                <div className={classes.thumb}>
+                  <div className={classes.thumbInner}>
+                    <img
+                      src={series.images_details[series.j].url}
+                      alt={series.images_details[series.j].title}
+                      className={classes.img}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className={classes.detailsStyles}>
+                <TextField
+                  name="title"
+                  placeholder="Title"
+                  margin="normal"
+                  label="Work art title: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].title}
+                  onChange={handleChangeDetails(series.j)}
+                />
+                <TextField
+                  name="year"
+                  placeholder="Year"
+                  margin="normal"
+                  label="Year: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].year}
+                  onChange={handleChangeDetails(series.j)}
+                />
+              </div>
+
+              <div className={classes.detailsStyles}>
+                <TextField
+                  name="technique"
+                  placeholder="Technique"
+                  margin="normal"
+                  label="Technique: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].technique}
+                  onChange={handleChangeDetails(series.j)}
+                />
+                <TextField
+                  name="measures"
+                  placeholder="Measures"
+                  margin="normal"
+                  label="Measures: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].measures}
+                  onChange={handleChangeDetails(series.j)}
+                />{" "}
+                <FormControlLabel
+                  control={
+                    <GreenCheckbox
+                      checked={series.j === series.cover}
+                      onChange={handleCoverChange(series.j)}
+                      value="cover"
+                    />
+                  }
+                  label="Mark as series cover"
+                />
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleCloseSaved}
                 className={classes.button}
                 color="primary"
               >

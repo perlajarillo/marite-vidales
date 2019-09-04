@@ -110,7 +110,7 @@ const NavAuth = props => {
               color="inherit"
               className={classes.items}
               component={Link}
-              to="/"
+              to="/myseries"
             >
               My Series{" "}
             </Button>
@@ -118,9 +118,9 @@ const NavAuth = props => {
               color="inherit"
               className={classes.items}
               component={Link}
-              to="/mariteimages"
+              to="/"
             >
-              Add Series{" "}
+              Biography{" "}
             </Button>
             <Button
               color="inherit"
@@ -128,7 +128,7 @@ const NavAuth = props => {
               component={Link}
               to="/"
             >
-              Add Exhibits{" "}
+              Exhibits{" "}
             </Button>
 
             <Button
