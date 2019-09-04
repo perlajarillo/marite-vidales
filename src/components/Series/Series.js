@@ -9,6 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import noPicture from "../../images/noPicture.png";
 
 import { db } from "../../firebase";
 
@@ -60,13 +61,19 @@ class Series extends Component {
     this.observer = this.getSeries();
   }
 
+  componentDidUpdate() {
+    this.observer = this.getSeries();
+  }
+
   getSeries = () => {
     db.getAllSeries().then(snapshot => {
       let series = Object.keys(snapshot.val()).map(serie => {
         let serieData = {
           name: serie,
           description: snapshot.val()[serie].description,
-          images_details: snapshot.val()[serie].images_details,
+          images_details: snapshot.val()[serie].images_details
+            ? snapshot.val()[serie].images_details
+            : noPicture,
           cover: snapshot.val()[serie].cover
         };
         return serieData;
