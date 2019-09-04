@@ -417,7 +417,7 @@ export default function SetSeries(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (series.name && series.description) {
+    if (series.name && series.description && series.images_details.length > 0) {
       const s = getPayload();
       setSeriesFirebase(
         s,
@@ -435,7 +435,7 @@ export default function SetSeries(props) {
       setSeries({
         ...series,
         openSnackbarError: true,
-        error: "Please add the series name and description"
+        error: "Please add the series name, description and at least 1 art work"
       });
     }
   };

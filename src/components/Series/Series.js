@@ -71,9 +71,9 @@ class Series extends Component {
         let serieData = {
           name: serie,
           description: snapshot.val()[serie].description,
-          images_details: snapshot.val()[serie].images_details
-            ? snapshot.val()[serie].images_details
-            : noPicture,
+          images_details:
+            snapshot.val()[serie].images_details.length > 0 &&
+            snapshot.val()[serie].images_details,
           cover: snapshot.val()[serie].cover
         };
         return serieData;
@@ -104,7 +104,11 @@ class Series extends Component {
               >
                 <CardMedia
                   className={classes.media}
-                  image={serie.images_details[serie.cover].url}
+                  image={
+                    serie.images_details.length > 0
+                      ? serie.images_details[serie.cover].url
+                      : noPicture
+                  }
                   title={serie.name}
                 />
                 <CardContent>
