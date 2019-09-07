@@ -15,12 +15,25 @@ import { db } from "../../firebase";
 
 const styles = theme => ({
   card: {
-    width: 345,
+    width: 450,
     margin: theme.spacing(1),
-    flexGrow: 1
+    [theme.breakpoints.between("sm", "md")]: {
+      width: 900
+    }
   },
   media: {
-    height: 140
+    height: 190
+  },
+  content: {
+    height: 220,
+    paddingBottom: 10,
+    textAlign: "justify",
+    [theme.breakpoints.down("xs")]: {
+      height: 320
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      height: 300
+    }
   },
   cards: {
     display: "flex",
@@ -65,8 +78,12 @@ class Series extends Component {
     db.getAllSeries().then(snapshot => {
       let series = Object.keys(snapshot.val()).map(serie => {
         let serieData = {
-          name: serie,
+          name: snapshot.val()[serie].name,
           description: snapshot.val()[serie].description,
+          shortDescription:
+            snapshot.val()[serie].description.length > 325
+              ? snapshot.val()[serie].description.slice(0, 325) + "..."
+              : snapshot.val()[serie].description,
           images_details:
             snapshot.val()[serie].images_details.length > 0 &&
             snapshot.val()[serie].images_details,
@@ -107,7 +124,7 @@ class Series extends Component {
                   }
                   title={serie.name}
                 />
-                <CardContent>
+                <CardContent className={classes.content}>
                   <Typography gutterBottom variant="h5" component="h2">
                     {serie.name}
                   </Typography>
@@ -116,7 +133,7 @@ class Series extends Component {
                     color="textSecondary"
                     component="p"
                   >
-                    {serie.description}
+                    {serie.shortDescription}
                   </Typography>
                 </CardContent>
               </CardActionArea>

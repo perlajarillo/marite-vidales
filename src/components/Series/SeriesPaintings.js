@@ -11,6 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CardMedia from "@material-ui/core/CardMedia";
+import Paper from "@material-ui/core/Paper";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,9 +20,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const styles = theme => ({
   card: {
     margin: "10px",
-    width: "330px",
+    width: "339px",
     height: "370px",
-    wrap: "wrapper"
+    wrap: "wrapper",
+    [theme.breakpoints.down("sm")]: {
+      width: "auto"
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "95%"
+    }
   },
   image: {
     width: "auto",
@@ -38,7 +45,7 @@ const styles = theme => ({
     width: "auto",
     height: "auto",
     maxHeight: "285px",
-    maxWidth: "320px",
+    maxWidth: "300px",
     padding: "10px"
   },
   cards: {
@@ -62,16 +69,22 @@ const styles = theme => ({
     textAlign: "center"
   },
   button: {
-    backgroundColor: "#00c853",
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
     fontFamily: '"Montserrat"',
-    padding: "20px 30px",
-    "&:hover": { backgroundColor: "#ffc400" }
+    padding: "10px 20px"
   },
   picture: {
     textAlign: "center",
     display: "inline-block"
+  },
+  root: {
+    padding: theme.spacing(3, 2),
+    textAlign: "justify",
+    marginRight: theme.spacing(5),
+    [theme.breakpoints.down("sm")]: {
+      marginRight: theme.spacing(2)
+    }
   }
 });
 
@@ -115,10 +128,26 @@ class SeriesPainting extends Component {
     const { open, series, selectedImage } = this.state;
     return series ? (
       <div className={classes.masthead}>
-        <Typography gutterBottom variant="h5" component="h2" color="secondary">
-          {series.name}
-        </Typography>
-        <Typography color="secondary">{series.description}</Typography>
+        <Paper className={classes.root}>
+          <Typography
+            gutterBottom
+            variant="h4"
+            component="h2"
+            color="secondary"
+          >
+            {series.name}
+          </Typography>
+          <div
+            style={{
+              backgroundImage:
+                "url(" + series.images_details[series.cover].url + ")",
+              backgroundSize: "cover",
+              height: "10px",
+              margin: 10
+            }}
+          ></div>
+          <Typography color="secondary">{series.description}</Typography>
+        </Paper>
         <Typography variant="caption" color="secondary">
           Click in the image to see more details.
         </Typography>
@@ -141,8 +170,10 @@ class SeriesPainting extends Component {
                 </div>
                 <CardContent>
                   <Typography variant="body2" color="textSecondary">
-                    "{image.title}" {image.year} {"("}
-                    {image.technique} {image.measures} {")"}
+                    {image.title && '"' + image.title + '"'} {image.year}{" "}
+                    {image.technique && image.measures && "("}
+                    {image.technique} {image.measures}{" "}
+                    {image.technique && image.measures && ")"}
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -160,6 +191,7 @@ class SeriesPainting extends Component {
               <Button
                 onClick={this.handleClose}
                 color="secondary"
+                variant="contained"
                 className={classes.button}
               >
                 Close
