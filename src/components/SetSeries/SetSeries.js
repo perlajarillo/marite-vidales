@@ -43,16 +43,18 @@ const styles = makeStyles(theme => ({
     }
   },
   button: {
-    backgroundColor: "#00c853",
     marginBottom: 10,
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
     fontFamily: '"Montserrat"',
-    "&:hover": { backgroundColor: "#ffc400" }
+    maxWidth: 500,
+    alignSelf: "center"
   },
   formControl: {
-    display: "block",
-    margin: "10px 0"
+    display: "flex",
+    margin: "10px 30px",
+    marginLeft: 40,
+    textAlign: "center"
   },
   textField: {
     [theme.breakpoints.up("xs")]: {
@@ -71,6 +73,10 @@ const styles = makeStyles(theme => ({
     [theme.breakpoints.only("lg")]: {
       width: 400
     }
+  },
+  formControlDialog: {
+    display: "block",
+    margin: "10px 0"
   },
   fileArea: {
     backgroundColor: theme.palette.primary.dark,
@@ -181,6 +187,7 @@ export default function SetSeries(props) {
     let description = "";
     let images_details = [];
     let cover = 0;
+    let key = "";
     if (p.location.state) {
       if (p.location.state.series) {
         let series = p.location.state.series;
@@ -188,12 +195,14 @@ export default function SetSeries(props) {
         description = series.description;
         images_details = series.images_details;
         cover = series.cover;
+        key = series.key;
       }
     }
 
     return {
       name: name,
       description: description,
+      key: key,
       files: [],
       images_details: images_details,
       openSnackbarSaved: false,
@@ -421,6 +430,7 @@ export default function SetSeries(props) {
       const s = getPayload();
       setSeriesFirebase(
         s,
+        series.key,
         series.files,
         series.toDelete,
         series.saved_images.length
@@ -458,7 +468,6 @@ export default function SetSeries(props) {
             id="series_name"
             label="Series name"
             placeholder="Series name"
-            className={classes.textField}
             required
             margin="normal"
             value={series.name}
@@ -472,14 +481,18 @@ export default function SetSeries(props) {
             placeholder="Series description"
             multiline
             required
-            className={classes.textField}
             margin="normal"
             value={series.description}
             onChange={handleChange("description")}
           />
         </FormControl>
         <FormControl className={classes.formControl}>
-          <Button color="secondary" className={classes.button} type="submit">
+          <Button
+            color="secondary"
+            variant="contained"
+            className={classes.button}
+            type="submit"
+          >
             Save
           </Button>
         </FormControl>
@@ -625,9 +638,10 @@ export default function SetSeries(props) {
             </DialogContent>
             <DialogActions>
               <Button
+                color="secondary"
+                variant="contained"
                 onClick={handleClose}
                 className={classes.button}
-                color="primary"
               >
                 Close
               </Button>
@@ -712,7 +726,8 @@ export default function SetSeries(props) {
               <Button
                 onClick={handleCloseSaved}
                 className={classes.button}
-                color="primary"
+                color="secondary"
+                variant="contained"
               >
                 Close
               </Button>

@@ -1,23 +1,31 @@
 import { db, storage } from "./firebase.js";
 
-export function setSeriesFirebase(series, files, toDelete, n) {
+export function setSeriesFirebase(series, key, files, toDelete, n) {
+  let seriesKey = key;
+  if (seriesKey === "") {
+    seriesKey = db
+      .ref()
+      .child("series")
+      .push().key;
+  }
+  const updates = {};
+  updates["/series/" + seriesKey] = series;
   return db
     .ref()
-    .child(series.name)
-    .set(series)
+    .update(updates)
     .then(() => {
-      toDelete.length > 0 && deleteImages(series.name, toDelete);
-      files.length > 0 && putPaintings(files, series.name, n);
+      toDelete.length > 0 && deleteImages(seriesKey, toDelete);
+      files.length > 0 && putPaintings(files, seriesKey, n);
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-export function deleteImages(seriesName, toDelete) {
-  if (toDelete && seriesName) {
+export function deleteImages(seriesKey, toDelete) {
+  if (toDelete && seriesKey) {
     toDelete.map(image => {
-      let imageRef = storage.ref().child(seriesName + "/" + image);
+      let imageRef = storage.ref().child(seriesKey + "/" + image);
       imageRef.delete().catch(function(error) {
         console.log(error);
       });
@@ -27,7 +35,7 @@ export function deleteImages(seriesName, toDelete) {
 
 export function deleteAllImages(series) {
   series.images_details.map(i => {
-    let imageRef = storage.ref().child(series.name + "/" + i.file);
+    let imageRef = storage.ref().child(series.key + "/" + i.file);
     imageRef.delete().catch(function(error) {
       console.log(error);
     });
@@ -37,7 +45,8 @@ export function deleteAllImages(series) {
 export function deleteSeries(series) {
   return db
     .ref()
-    .child(series.name)
+    .child("series")
+    .child(series.key)
     .remove()
     .then(deleteAllImages(series))
     .catch(function(error) {
@@ -46,21 +55,21 @@ export function deleteSeries(series) {
 }
 
 export function getAllSeries() {
-  const ref = db.ref();
+  const ref = db.ref().child("series");
   const series = ref.once("value");
   return series;
 }
 
-export function putPaintings(paintings, seriesName, n) {
-  if (seriesName !== "") {
+export function putPaintings(paintings, seriesKey, n) {
+  if (seriesKey !== "") {
     const storageRef = storage.ref();
     paintings.map((painting, i) =>
       storageRef
-        .child(seriesName + "/" + painting.name)
+        .child(seriesKey + "/" + painting.name)
         .put(painting)
         .then(snapshot => {
           snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            setImageURL(seriesName, i + n, downloadURL);
+            setImageURL(seriesKey, i + n, downloadURL);
           });
         })
         .catch(error => {
@@ -70,9 +79,10 @@ export function putPaintings(paintings, seriesName, n) {
   }
 }
 
-export function setImageURL(seriesName, i, url) {
+export function setImageURL(seriesKey, i, url) {
   db.ref()
-    .child(seriesName)
+    .child("series")
+    .child(seriesKey)
     .child("images_details")
     .child(i)
     .child("url")
