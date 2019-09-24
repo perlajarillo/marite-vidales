@@ -1,5 +1,106 @@
 import { db, storage } from "./firebase.js";
 
+export function setSummary(text) {
+  return db
+    .ref()
+    .child("biography")
+    .child("summary")
+    .set(text);
+}
+
+export function setEducation(key, data) {
+  let educationKey = key;
+  if (educationKey === "") {
+    educationKey = db
+      .ref()
+      .child("biography")
+      .child("education")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/biography/education/" + educationKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function adjustIndex(keys) {
+  let reference = db
+    .ref()
+    .child("biography")
+    .child("education");
+  keys.forEach(element => {
+    let i = reference.child(element.key).child("index");
+    let newIndex = i.once("value") - 1;
+    i.set(newIndex);
+  });
+}
+export function deleteEducation(key, keys) {
+  return db
+    .ref()
+    .child("biography")
+    .child("education")
+    .child(key)
+    .remove()
+    .then(adjustIndex(keys))
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+export function setExperience(key, data) {
+  let educationKey = key;
+  if (educationKey === "") {
+    educationKey = db
+      .ref()
+      .child("biography")
+      .child("experience")
+      .push().key;
+  }
+  const updates = {};
+  updates["/biography/experience/" + educationKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function setProfileImageURL(url) {
+  db.ref()
+    .child("biography")
+    .child("pictureUrl")
+    .set(url);
+}
+
+export function putProfileImage(file) {
+  if (file !== "") {
+    const storageRef = storage.ref();
+    storageRef
+      .child("biography/" + file.name)
+      .put(file)
+      .then(snapshot => {
+        snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          setProfileImageURL(downloadURL);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+}
+
+export function getBiography() {
+  const ref = db.ref().child("biography");
+  const biography = ref.once("value");
+  return biography;
+}
+
 export function setSeriesFirebase(series, key, files, toDelete, n) {
   let seriesKey = key;
   if (seriesKey === "") {
