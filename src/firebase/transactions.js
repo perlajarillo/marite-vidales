@@ -1,6 +1,9 @@
 import { db, storage } from "./firebase.js";
 
-export function setSummary(text) {
+export function setSummary(text, file) {
+  if (file) {
+    putProfileImage(file);
+  }
   return db
     .ref()
     .child("biography")
@@ -28,44 +31,131 @@ export function setEducation(key, data) {
     });
 }
 
-export function adjustIndex(keys) {
+export function setEducationIndex(mapOfKeys) {
   let reference = db
     .ref()
     .child("biography")
     .child("education");
-  keys.forEach(element => {
-    let i = reference.child(element.key).child("index");
-    let newIndex = i.once("value") - 1;
-    i.set(newIndex);
-  });
+  for (let [k, i] of mapOfKeys) {
+    reference
+      .child(k)
+      .child("index")
+      .set(i - 1);
+  }
+  return reference.once("value");
 }
-export function deleteEducation(key, keys) {
+
+export function deleteEducation(key, index) {
   return db
     .ref()
     .child("biography")
     .child("education")
     .child(key)
     .remove()
-    .then(adjustIndex(keys))
-    .catch(function(error) {
-      console.log(error);
+    .then(() => {
+      adjustIndex(index, "education");
+    })
+    .catch(
+      () =>
+        function(error) {
+          console.log(error);
+        }
+    );
+}
+
+export function adjustIndex(index, section) {
+  if (index === null) return;
+  let reference = db
+    .ref()
+    .child("biography")
+    .child(section);
+  reference.once("value").then(snapshot => {
+    const entries = snapshot.val();
+    Object.keys(entries).forEach(element => {
+      if (entries[element].index > index) {
+        let i = reference.child(element).child("index");
+        i.once("value").then(snapshot => {
+          let newIndex = snapshot.val() - 1;
+          i.set(newIndex);
+        });
+      }
     });
+  });
+}
+export function setExperienceIndex(mapOfKeys) {
+  let reference = db
+    .ref()
+    .child("biography")
+    .child("experience");
+  for (let [k, i] of mapOfKeys) {
+    reference
+      .child(k)
+      .child("index")
+      .set(i - 1);
+  }
+  return reference.once("value");
+}
+
+export function deleteExperience(key, index) {
+  return db
+    .ref()
+    .child("biography")
+    .child("experience")
+    .child(key)
+    .remove()
+    .then(() => {
+      adjustIndex(index, "experience");
+    })
+    .catch(
+      () =>
+        function(error) {
+          console.log(error);
+        }
+    );
+}
+
+export function shiftExperienceIndex(key) {
+  let reference = db
+    .ref()
+    .child("biography")
+    .child("experience");
+  let items = reference.once("value");
+
+  items.then(snapshot => {
+    Object.keys(snapshot.val()).forEach(k => {
+      if (k !== key) {
+        let i = reference.child(k).child("index");
+        i.once("value").then(snap => {
+          let newIndex = snap.val() + 1;
+          i.set(newIndex);
+        });
+      }
+    });
+  });
 }
 
 export function setExperience(key, data) {
   let educationKey = key;
+  let isEditing = false;
   if (educationKey === "") {
     educationKey = db
       .ref()
       .child("biography")
       .child("experience")
       .push().key;
+  } else {
+    isEditing = true;
   }
   const updates = {};
   updates["/biography/experience/" + educationKey] = data;
   return db
     .ref()
     .update(updates)
+    .then(() => {
+      if (!isEditing) {
+        shiftExperienceIndex(educationKey);
+      }
+    })
     .catch(error => {
       console.log(error);
     });
