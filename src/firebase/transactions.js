@@ -114,48 +114,38 @@ export function deleteExperience(key, index) {
     );
 }
 
-export function shiftExperienceIndex(key) {
+export function shiftExperienceIndex(key, experienceTable) {
   let reference = db
     .ref()
     .child("biography")
     .child("experience");
-  let items = reference.once("value");
-
-  items.then(snapshot => {
-    Object.keys(snapshot.val()).forEach(k => {
-      if (k !== key) {
-        let i = reference.child(k).child("index");
-        i.once("value").then(snap => {
-          let newIndex = snap.val() + 1;
-          i.set(newIndex);
-        });
-      }
-    });
+  experienceTable.forEach(k => {
+    if (k.key !== key) {
+      //i is the index plus 1
+      let i = k.i;
+      reference
+        .child(k.key)
+        .child("index")
+        .set(i);
+    }
   });
 }
 
-export function setExperience(key, data) {
+export function setExperience(key, data, experienceTable) {
   let educationKey = key;
-  let isEditing = false;
   if (educationKey === "") {
     educationKey = db
       .ref()
       .child("biography")
       .child("experience")
       .push().key;
-  } else {
-    isEditing = true;
+    shiftExperienceIndex(educationKey, experienceTable);
   }
   const updates = {};
   updates["/biography/experience/" + educationKey] = data;
   return db
     .ref()
     .update(updates)
-    .then(() => {
-      if (!isEditing) {
-        shiftExperienceIndex(educationKey);
-      }
-    })
     .catch(error => {
       console.log(error);
     });
