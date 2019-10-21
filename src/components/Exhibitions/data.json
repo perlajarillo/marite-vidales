@@ -1,0 +1,120 @@
+{
+  "solo": {
+    "0": {
+      "name": "Perspectivas Latinas, an impression of immigrants' hope",
+      "place": "Pascal Center for Performing Arts Center. Anne Arundel Community Collage. MD.",
+      "dates": "Sept 15 - Oct 15 2019"
+    },
+    "1": {
+      "name": "Passages",
+      "place": "Target Gallery, Torpedo Factory, Alexandria Virginia",
+      "dates": "January 27 – March 4, 2018"
+    },
+    "2": {
+      "name": "Timeless Huacas",
+      "place": "Fernando De Szyszlo Gallery, Embassy of Peru, Washington, D.C",
+      "dates": "March 28 – April 30, 2017"
+    },
+    "3": {
+      "name": "Search for Home",
+      "place": "Hill Center Galleries, Washington, D.C.",
+      "dates": "January 5 - February 26, 2017"
+    },
+
+    "4": {
+      "name": "Buscando el Centro: Pinturas de Marité Vidales",
+      "place": "Fondo de Cultura Economica FCE, Lima, Peru",
+      "dates": "March 18 - April 6, 2015"
+    },
+
+    "5": {
+      "name": "La Candida Eréndira",
+      "place": "Gala Theatre, Washington D.C",
+      "dates": "February 3 - 27, 2011"
+    },
+    "6": {
+      "name": "The Nest Series",
+      "place": "Marcatus Creative Art Market, The Yards, Washington, D.C.",
+      "dates": "June 5, 2011"
+    },
+    "7": {
+      "name": "Patuxent Art League",
+      "place": "Montpelier Arts Center, Laurel, Maryland",
+      "dates": "December 4-28, 2011"
+    },
+    "8": {
+      "name": "Impressions of Colors and Symbols works by Marité Vidales",
+      "place": "Design Studio Art Gallery, Hyattsville, Maryland",
+      "dates": "June 7 - 30, 2009"
+    }
+  },
+  "colective": {
+    "0": {
+      "name": "Elixir: Artists Respond to Making and Healing",
+      "place": "Joan Hisaoka Arts Gallery at Smith Center, Washington DC",
+      "dates": "September 13- October 20, 2018"
+    },
+    "1": {
+      "name": "Wall Mountables",
+      "place": "DC Arts Center, Washington DC, Collective Exhibit",
+      "dates": "June 28-August 10, 2018"
+    },
+    "2": {
+      "name": "Costa Rica Contemporary",
+      "place": "Rojas Ford Fine Art Gallery, Coral Gables Florida",
+      "dates": "April – June 2018"
+    },
+    "3": {
+      "name": "La Vie en Bleu",
+      "place": "Strathmore Mansion, Bethesda Maryland. Annual Juried Exhibition",
+      "dates": "January 7- February 19, 2017"
+    },
+
+    "4": {
+      "name": "Cotidiarte: de los Artistas Costarricenses Jose Alejandro Herrera y Marité Vidales",
+      "place": "Embassy of Costa Rica, Lima Peru",
+      "dates": "September 2014"
+    },
+
+    "5": {
+      "name": "41 Anniversary ASPAP (Asociación Peruana de Artistas Plásticos)",
+      "place": "Joint Exhibition, art work presented: Fruits of Nature, Universidad Femenina del Sagrado Corazón UNIFE, Lima, Peru.",
+      "dates": "June 13- July 3, 2014"
+    },
+    "6": {
+      "name": "Montpelier Arts Center, Laurel",
+      "place": "Montpelier Arts Center, Laurel. Art worker presented: Alas Abiertas",
+      "dates": "March- April 2013"
+    },
+    "7": {
+      "name": "On the Surface",
+      "place": "ArtDC Gallery at the Lustine Center, Arts District, Hyattsville, Maryland",
+      "dates": "October 20 - November 4, 2012"
+    },
+    "8": {
+      "name": "Caminos, CAMINANTE: A Path as We Travel",
+      "place": "ArtDC Gallery at the Lustine Center, Arts District, Hyattsville, Maryland.",
+      "dates": "October 7 - 30, 2011. Read Sentinel Newspaper Article written by Dana Amihere on October 27, 2011"
+    },
+    "9": {
+      "name": "The Love of Artistic Expressions",
+      "place": "Prince George's Arts Council, Hyattsville, Maryland",
+      "dates": "September 15 - October 15, 2010"
+    },
+    "10": {
+      "name": "\"Latinic\" September 16 - October 15, 2010",
+      "place": "Design Studio Art Gallery, Hyattsville Art District, Hyattsville, Maryland",
+      "dates": "September 16 - October 15, 2010"
+    },
+    "11": {
+      "name": "Reencuentro",
+      "place": "Galeria Arte Costarricense (GAC), Tres Rios, Costa Rica",
+      "dates": "July - September 2010"
+    },
+    "12": {
+      "name": "Lust",
+      "place": "Design Studio Art Gallery, Artdc.com, and Cheryl Edwards Studio, Hyattsville Art District, Hyattsville, Maryland",
+      "dates": "February 14 - March 3, 2010"
+    }
+  }
+}

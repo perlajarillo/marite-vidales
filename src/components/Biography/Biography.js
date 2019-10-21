@@ -68,7 +68,9 @@ class Biography extends Component {
       summary: "",
       education: [],
       experience: [],
-      pictureUrl: marite
+      pictureUrl: marite,
+      educationTable: [],
+      experienceTable: []
     };
   }
   /**
@@ -94,15 +96,35 @@ class Biography extends Component {
     if (this.props) {
       db.getBiography().then(snapshot => {
         let summary = snapshot.val().summary;
+        let n = snapshot.child("education").numChildren();
+        let nExp = snapshot.child("experience").numChildren();
         let education = snapshot.val().education;
         let experience = snapshot.val().experience;
         let url = snapshot.val().pictureUrl;
-
+        let educationTable = new Array(n);
+        snapshot.val().education &&
+          Object.keys(snapshot.val().education).forEach(edu => {
+            educationTable[snapshot.val().education[edu].index] = {
+              key: edu,
+              i: snapshot.val().education[edu].index + 1
+            };
+          });
+        let experienceTable = new Array(nExp);
+        for (let exp in experience) {
+          experienceTable[experience[exp].index] = {
+            key: exp,
+            i: experience[exp].index + 1
+          };
+        }
         this.setState({
           summary: summary,
           education: education,
           experience: experience,
-          pictureUrl: url ? url : marite
+          pictureUrl: url ? url : marite,
+          n: n,
+          nExp: nExp,
+          educationTable: educationTable,
+          experienceTable: experienceTable
         });
       });
     }
@@ -110,7 +132,14 @@ class Biography extends Component {
 
   render() {
     const { classes } = this.props;
-    const { summary, education, experience, pictureUrl } = this.state;
+    const {
+      summary,
+      education,
+      experience,
+      pictureUrl,
+      educationTable,
+      experienceTable
+    } = this.state;
 
     return (
       <div className={classes.masthead}>
@@ -137,13 +166,14 @@ class Biography extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Education </Typography>
           {education
-            ? Object.keys(education).map(i => (
-                <div className={classes.contentBlock} key={i}>
+            ? educationTable.map(e => (
+                <div className={classes.contentBlock} key={e}>
                   <Typography className={classes.text}>
-                    {education[i].field + ". "}
-                    {education[i].degree + ". "}
-                    {education[i].institution + ". "}
-                    {education[i].country + ". "} {education[i].year}{" "}
+                    {education[e.key].field + ". "}
+                    {education[e.key].degree + ". "}
+                    {education[e.key].institution + ". "}
+                    {education[e.key].country + ". "}
+                    {education[e.key].year}{" "}
                   </Typography>
 
                   <br></br>
@@ -155,12 +185,12 @@ class Biography extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Professional experience</Typography>
           {experience
-            ? Object.keys(experience).map(x => (
+            ? experienceTable.map(x => (
                 <div className={classes.contentBlock} key={x}>
                   <Typography variant="body2" className={classes.text}>
-                    {experience[x].position + ". "}
-                    {experience[x].institution + ". "}
-                    {experience[x].country + ". "} {experience[x].dates}
+                    {experience[x.key].position + ". "}
+                    {experience[x.key].institution + ". "}
+                    {experience[x.key].country + ". "} {experience[x.key].dates}
                   </Typography>
 
                   <br></br>
