@@ -7,6 +7,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Home from "./Home/Home";
 import Biography from "./Biography/Biography";
+import Exhibitions from "./Exhibitions/Exhibitions";
 import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
 import SetSeries from "./SetSeries";
@@ -23,6 +24,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/biography" component={Biography} />
+        <Route path="/exhibitions" component={Exhibitions} />
         <Route path="/series" component={Series} />
         <Route path="/seriespaintings" component={SeriesPaintings} />
         <Route path="/myseries" component={MySeries} />
