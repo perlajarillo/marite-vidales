@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { db } from "../../firebase";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";

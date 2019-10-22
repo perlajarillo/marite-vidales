@@ -8,6 +8,7 @@ import Footer from "./Footer/Footer";
 import Home from "./Home/Home";
 import Biography from "./Biography/Biography";
 import Exhibitions from "./Exhibitions/Exhibitions";
+import Reviews from "./Reviews/Reviews";
 import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
 import SetSeries from "./SetSeries";
@@ -25,6 +26,7 @@ const App = () => (
         <Route exact path="/" component={Home} />
         <Route path="/biography" component={Biography} />
         <Route path="/exhibitions" component={Exhibitions} />
+        <Route path="/reviews" component={Reviews} />
         <Route path="/series" component={Series} />
         <Route path="/seriespaintings" component={SeriesPaintings} />
         <Route path="/myseries" component={MySeries} />
