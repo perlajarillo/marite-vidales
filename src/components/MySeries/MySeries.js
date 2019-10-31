@@ -25,20 +25,30 @@ import { db } from "../../firebase";
 
 const styles = theme => ({
   card: {
-    width: 345,
+    width: 450,
     margin: theme.spacing(1),
-    flexGrow: 1
+    [theme.breakpoints.between("sm", "md")]: {
+      width: 900
+    }
   },
   media: {
-    height: 140
+    height: 190
+  },
+  content: {
+    height: 220,
+    paddingBottom: 10,
+    textAlign: "justify",
+    [theme.breakpoints.down("xs")]: {
+      height: 290
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      height: 300
+    }
   },
   cards: {
     display: "flex",
     flexFlow: "row wrap",
-    padding: "3rem 0",
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.sectionPadding.padding
-    }
+    padding: "1rem 0"
   },
   masthead: {
     textAlign: "center",
@@ -71,7 +81,7 @@ const styles = theme => ({
   },
 
   button: {
-    margin: theme.spacing(5)
+    margin: theme.spacing(1)
   },
   redButton: {
     margin: theme.spacing(1),
@@ -103,10 +113,11 @@ class MySeries extends Component {
         snapshot.val() &&
         Object.keys(snapshot.val()).map(serie => {
           let serieData = {
-            name: serie,
+            name: snapshot.val()[serie].name,
             description: snapshot.val()[serie].description,
             images_details: snapshot.val()[serie].images_details,
-            cover: snapshot.val()[serie].cover
+            cover: snapshot.val()[serie].cover,
+            key: serie
           };
           return serieData;
         });
@@ -184,7 +195,7 @@ class MySeries extends Component {
                     image={serie.images_details[serie.cover].url}
                     title={serie.name}
                   />
-                  <CardContent>
+                  <CardContent className={classes.content}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {serie.name}
                     </Typography>
@@ -193,7 +204,9 @@ class MySeries extends Component {
                       color="textSecondary"
                       component="p"
                     >
-                      {serie.description}
+                      {serie.description.length > 325
+                        ? serie.description.slice(0, 325) + "..."
+                        : serie.description}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
