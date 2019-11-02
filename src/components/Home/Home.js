@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import painting from "../../images/Variacionesweb.jpg";
-import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
@@ -30,7 +29,9 @@ const styles = theme => ({
     lineHeight: "75px",
     marginBottom: "50px",
     fontFamily: '"Montserrat"',
-    textTransform: "uppercase !important"
+    textTransform: "uppercase !important",
+    background: "rgba(23, 21, 21, 0.6)",
+    display: "inline-block"
   },
 
   introLeadIn: {
@@ -38,7 +39,9 @@ const styles = theme => ({
     fontStyle: "italic",
     lineHeight: "70px",
     marginBottom: "32px",
-    fontFamily: "'Droid Serif'"
+    fontFamily: "'Droid Serif'",
+    background: "rgba(23, 21, 21, 0.6)",
+    display: "inline-block"
   },
   button: {
     backgroundColor: "#00c853",
@@ -49,14 +52,6 @@ const styles = theme => ({
     "&:hover": { backgroundColor: "#ffc400" }
   },
 
-  divider: {
-    height: "2px",
-    color: "white",
-    backgroundColor: "white",
-    border: "none",
-    width: "auto",
-    marginBottom: "25px"
-  },
   dividerContainer: {
     textAlign: "center",
     alignItems: "center"
@@ -81,9 +76,7 @@ class Home extends Component {
       <div className={classes.masthead}>
         <div className={classes.introText}>
           <div className={classes.introHeading}>Marite Vidales</div>
-          <div className={classes.dividerContainer}>
-            <Divider className={classes.divider} />
-          </div>
+          <div className={classes.dividerContainer}></div>
           <div className={classes.introLeadIn}>Visual Artist</div>
           <br />
         </div>
