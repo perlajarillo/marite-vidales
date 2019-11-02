@@ -31,3 +31,6 @@ yarn-error.log*
 functions
 storage.rules
 database.rules.json
+
+# Submodules
+/public/pabloferrer
