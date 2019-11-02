@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Paper, Typography } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
@@ -17,6 +18,14 @@ const styles = theme => ({
     backgroundColor: "transparent",
     textAlign: "center",
     borderRadius: 0
+  },
+  divider: {
+    height: "2px",
+    color: "white",
+    backgroundColor: "white",
+    border: "none",
+    width: "auto",
+    marginBottom: "25px"
   }
 });
 
@@ -37,6 +46,23 @@ class Footer extends Component {
 
           <Typography variant="caption" className={classes.copyright}>
             Washington, D.C.
+          </Typography>
+          <Divider />
+          <Typography
+            variant="caption"
+            align="left"
+            gutterBottom
+            className={classes.mLeft}
+          >
+            Web app developed by{" "}
+            <a
+              className={classes.links}
+              href="https://www.linkedin.com/in/perla-jarillo-98290436/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Perla Jarillo
+            </a>
           </Typography>
         </Paper>
       </footer>

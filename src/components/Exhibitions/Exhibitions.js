@@ -12,7 +12,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 const solo = exhibitions.solo;
-const colective = exhibitions.colective;
+const collective = exhibitions.collective;
+const galleries = exhibitions.galleries;
 
 const styles = theme => ({
   image: {
@@ -103,6 +104,21 @@ class Exhibitions extends Component {
               </div>
             </Carousel>
           </div>
+          <Typography variant="h6">Galleries </Typography>
+          {galleries
+            ? Object.keys(galleries).map(i => (
+                <div className={classes.contentBlock} key={i}>
+                  <Typography className={classes.text}>
+                    {galleries[i].gallery + ". "}
+                    {galleries[i].address + ". "}
+                  </Typography>
+
+                  <br></br>
+                  <Divider />
+                  <br></br>
+                </div>
+              ))
+            : "No galleries have been added yet!"}
           <Typography variant="h6">Solo Exhibits </Typography>
           {solo
             ? Object.keys(solo).map(i => (
@@ -120,21 +136,21 @@ class Exhibitions extends Component {
             : "No solo exhibitions have been added yet!"}
         </Paper>
         <Paper className={classes.paper}>
-          <Typography variant="h6">Selected group exhibits</Typography>
-          {colective
-            ? Object.keys(colective).map(x => (
+          <Typography variant="h6">Juried exhibits</Typography>
+          {collective
+            ? Object.keys(collective).map(x => (
                 <div className={classes.contentBlock} key={x}>
                   <Typography className={classes.text}>
-                    {colective[x].name + ". "}
-                    {colective[x].place + ". "}
-                    {colective[x].dates + ". "}
+                    {collective[x].name + ". "}
+                    {collective[x].place + ". "}
+                    {collective[x].dates + ". "}
                   </Typography>
 
                   <br></br>
                   <Divider />
                 </div>
               ))
-            : "No colective exhibitions been added yet!"}
+            : "No juried exhibitions been added yet!"}
         </Paper>
       </div>
     );
