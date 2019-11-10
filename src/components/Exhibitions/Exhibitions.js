@@ -12,12 +12,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 const solo = exhibitions.solo;
-const collective = exhibitions.collective;
+const selected = exhibitions.selected;
 const galleries = exhibitions.galleries;
+const juried = exhibitions.juried;
 
 const styles = theme => ({
   image: {
-    width: "750px",
+    width: "650px",
 
     [theme.breakpoints.down("sm")]: {
       width: "auto"
@@ -124,7 +125,7 @@ class Exhibitions extends Component {
             ? Object.keys(solo).map(i => (
                 <div className={classes.contentBlock} key={i}>
                   <Typography className={classes.text}>
-                    {solo[i].name + ". "}
+                    {'"' + solo[i].name + '". '}
                     {solo[i].place + ". "}
                     {solo[i].dates + ". "}
                   </Typography>
@@ -137,13 +138,13 @@ class Exhibitions extends Component {
         </Paper>
         <Paper className={classes.paper}>
           <Typography variant="h6">Juried exhibits</Typography>
-          {collective
-            ? Object.keys(collective).map(x => (
+          {juried
+            ? Object.keys(juried).map(x => (
                 <div className={classes.contentBlock} key={x}>
                   <Typography className={classes.text}>
-                    {collective[x].name + ". "}
-                    {collective[x].place + ". "}
-                    {collective[x].dates + ". "}
+                    {'"' + juried[x].name + '". '}
+                    {juried[x].place + ". "}
+                    {juried[x].dates + ". "}
                   </Typography>
 
                   <br></br>
@@ -151,6 +152,23 @@ class Exhibitions extends Component {
                 </div>
               ))
             : "No juried exhibitions been added yet!"}
+        </Paper>
+        <Paper className={classes.paper}>
+          <Typography variant="h6">Selected exhibits</Typography>
+          {selected
+            ? Object.keys(selected).map(x => (
+                <div className={classes.contentBlock} key={x}>
+                  <Typography className={classes.text}>
+                    {'"' + selected[x].name + '". '}
+                    {selected[x].place + ". "}
+                    {selected[x].dates + ". "}
+                  </Typography>
+
+                  <br></br>
+                  <Divider />
+                </div>
+              ))
+            : "No selected exhibitions been added yet!"}
         </Paper>
       </div>
     );
