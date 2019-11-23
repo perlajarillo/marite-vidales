@@ -49,6 +49,11 @@
       "name": "Oil paintings: pre-Columbian Pottery",
       "place": "Organization of American States, Washington, DC",
       "dates": "December 18-22, 1989"
+    },
+    "8": {
+      "name": "Oleo",
+      "place": "Galeria de Arte Jose Figueres, Banco Popular, San Jose, Costa Rica",
+      "dates": "January 28-February 17, 1988"
     }
   },
   "juried": {
@@ -58,21 +63,26 @@
       "dates": "September 13- October 20, 2018"
     },
     "1": {
+      "name": "Passages",
+      "place": "Target Gallery, Torpedo Factory, Alexandria Virginia",
+      "dates": "January 27 – March 4, 2018"
+    },
+    "2": {
       "name": "La Vie en Bleu",
       "place": "Strathmore Mansion, Bethesda Maryland. Annual Juried Exhibition",
       "dates": "January 7- February 19, 2017"
     },
-    "2": {
+    "3": {
       "name": "Alas Abiertas",
       "place": "Montpelier Arts Center, Laurel, Maryland.",
       "dates": "March-April, 2013"
     },
-    "3": {
+    "4": {
       "name": "Patuxent Art League",
       "place": "Montpelier Arts Center, Laurel, Maryland",
       "dates": "December 4-28, 2011"
     },
-    "4": {
+    "5": {
       "name": "Paper",
       "place": "Montpelier Arts Center, Laurel, Maryland",
       "dates": "November 5-29, 2009"
@@ -80,29 +90,29 @@
   },
   "selected": {
     "0": {
-      "name": "Passages",
-      "place": "Target Gallery, Torpedo Factory, Alexandria Virginia",
-      "dates": "January 27 – March 4, 2018"
-    },
-    "1": {
       "name": "Wall Mountables",
       "place": "DC Arts Center, Washington DC, Collective Exhibit",
       "dates": "June 28-August 10, 2018"
     },
-    "2": {
+    "1": {
       "name": "Costa Rica Contemporary",
       "place": "Rojas Ford Fine Art Gallery, Coral Gables Florida",
       "dates": "April – June 2018"
     },
-    "3": {
+    "2": {
       "name": "Cotidiarte: de los Artistas Costarricenses Jose Alejandro Herrera y Marité Vidales",
       "place": "Embassy of Costa Rica, Lima Peru",
       "dates": "September 2014"
     },
-    "4": {
+    "3": {
       "name": "41 Anniversary ASPAP (Asociación Peruana de Artistas Plásticos)",
       "place": "Joint Exhibition, art work presented: Fruits of Nature, Universidad Femenina del Sagrado Corazón UNIFE, Lima, Peru.",
       "dates": "June 13- July 3, 2014"
+    },
+    "4": {
+      "name": "Salón de Primavera ASPAP 2014",
+      "place": "Galeria de Arte Ryoichi Jinnai, Centro Cultural Peruano Japones, Lima Peru",
+      "dates": " October 7-25, 2014"
     },
     "5": {
       "name": "Montpelier Arts Center, Laurel",
@@ -148,6 +158,131 @@
       "name": "Lust",
       "place": "Design Studio Art Gallery, Artdc.com, and Cheryl Edwards Studio, Hyattsville Art District, Hyattsville, Maryland",
       "dates": "February 14 - March 3, 2010"
+    },
+    "14": {
+      "name": "Expressions: Tell me your dreams and Cuban Pop Art, projects by Marité Vidales and Ric García",
+      "place": "Design Studio Art Gallery, Hyattsville, Maryland.",
+      "dates": "October, 2009"
+    },
+    "15": {
+      "name": "Gone Green",
+      "place": "Prince George's Art Council. Lowe House Office Building, Annapolis, Maryland",
+      "dates": "January-April 2009"
+    },
+    "16": {
+      "name": "OAS Staff Arts Group, Eight and Ninth Anual Art Exhibits",
+      "place": "Washington, DC",
+      "dates": "September 2007 and September 2008"
+    },
+    "17": {
+      "name": "Canticle of Creations",
+      "place": "The Arts for Theology and Ministry Program, The Washington Theological Union, Washington, DC",
+      "dates": "January 5 - March 3, 2006"
+    },
+    "18": {
+      "name": "International Small Works Competition",
+      "place": "International Visions-The Gallery, Washington, DC",
+      "dates": "December 9, 2005 - January 14, 2006"
+    },
+    "19": {
+      "name": "YWCA VOICES Art Exhibit",
+      "place": "Edison Place Gallery, Washington, DC",
+      "dates": "September 6 - October 21, 2005"
+    },
+    "20": {
+      "name": "Selected Paintings by Emily Conover, Tinam Valk, and Marité Vidales",
+      "place": "The Learning Center Gallery, Landover, Maryland",
+      "dates": "July 8 - August 30, 2005"
+    },
+    "21": {
+      "name": "Landscapes of Costa Rica: The Visions of Rojas-Alfaro, Vidales and Villalobos",
+      "place": "World Bank, Washington, DC",
+      "dates": "July - October 2004"
+    },
+    "22": {
+      "name": "Lush Scenes from Costa Rica",
+      "place": "Target Gallery, Torpedo Factory Art Center, Alexandria, Virginia",
+      "dates": "July 5-August 12, 2001"
+    },
+    "23": {
+      "name": "White Columns Gallery, New York City",
+      "place": "Women of the World: A Global Collection of Art, curated by Claudia DeMonte",
+      "dates": "June 9-July 15, 2000"
+    },
+    "24": {
+      "name": "International Monetary Fund",
+      "place": "Washington, DC",
+      "dates": "June 1998"
+    },
+    "25": {
+      "name": "Encuentros: A Multimedia Exhibition of Latin American and Caribbean Art",
+      "place": "Acrylic Painting \"Casa en San Juaquin de Flores\". Martin Luther King Memorial Library, Washington, DC",
+      "dates": "October 1 – 27, 1997"
+    },
+    "26": {
+      "name": "Art for Life – Hope for our Children. \"Pottery\", Acrylic Painting",
+      "place": "Pan American Health Organization, Washington, DC",
+      "dates": "October, 1997"
+    },
+    "27": {
+      "name": "Threading Memories",
+      "place": "Acrylic Paintings. Irazú Art Gallery, Columbia, Maryland",
+      "dates": "June-August, 1997"
+    },
+    "28": {
+      "name": "Raquel",
+      "place": "Acrylic Painting. Collective Portrait Exposition. Montpelier Art Center, Laurel Maryland",
+      "dates": " January – February, 1996"
+    },
+    "29": {
+      "name": "Latin American Legacy",
+      "place": "Collective Exposition, Acrylic Paintings. Irazú Art Gallery, Columbia, Maryland",
+      "dates": "September 15 – October 28, 1995"
+    },
+    "30": {
+      "name": "Latin American Legacy",
+      "place": "Collective Exposition, Acrylic Paintings. Irazú Art Gallery, Columbia, Maryland",
+      "dates": "September 15 – October 29, 1994"
+    },
+    "31": {
+      "name": "Kunst aus Costa Rica",
+      "place": "Collective Exposition of Art of Costa Rica which traveled to seven German cities. Oil Painting \"Bosque Noche\". Sprengel Museum, Hannover, Germany",
+      "dates": "August 1992 – October 1993"
+    },
+    "32": {
+      "name": "Contemporary Costa Rican Women Artists. Collective. Oil Paintings",
+      "place": "Bausch & Lomb Art Gallery of Garrett Community College, McHenry, Maryland",
+      "dates": "September 21 – October 15, 1992"
+    },
+    "33": {
+      "name": "Oil Painting honoring bicentennial of French Revolution",
+      "place": "Galería del Instituto Nacional de Seguros, San José, Costa Rica, Collective",
+      "dates": "March-April, 1989"
+    },
+    "34": {
+      "name": "Oil Paintings",
+      "place": "Galeria Publicidad Siboney, San Jose, Costa Rica",
+      "dates": "October-December 1988"
+    },
+    "35": {
+      "name": "Watercolors",
+      "place": "Biblioteca Nacional (National Library), San Jose, Costa Rica",
+      "dates": "January- February 1987"
+    },
+    "36": {
+      "name": "Graduation Workshop. Oil Paintings",
+      "place": "School of Fine Arts, University of Costa Rica, San Jose, Costa Rica",
+      "dates": "December, 1987"
+    },
+    "37": {
+      "name": "5th Annual \"Fausto Pacheco\" Contest",
+      "place": "Awarded Honorable Mention for Oil Painting \"Neighborhood\". Galeria Sophia Wanamaker, Centro Cultural Costaricense Norteamericano, San Jose, Costa Rica",
+      "dates": "1985"
+    },
+    "38": {
+      "name": "Oil Paintings",
+      "place": "School of Fine Arts, University of Costa Rica",
+      "dates": "1984"
     }
   }
 }
