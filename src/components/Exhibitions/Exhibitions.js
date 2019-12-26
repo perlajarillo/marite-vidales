@@ -83,6 +83,10 @@ class Exhibitions extends Component {
               className={classes.image}
             >
               <div>
+                <img src={picture6} alt="Exhibitions" />
+                <p className="legend">Peru</p>
+              </div>
+              <div>
                 <img src={picture1} alt="Exhibitions" />
                 <p className="legend">
                   Fondo de Cultura Economica FCE, Lima, Peru
@@ -112,10 +116,7 @@ class Exhibitions extends Component {
                 <img src={picture5} alt="Exhibitions" />
                 <p className="legend"></p>
               </div>
-              <div>
-                <img src={picture6} alt="Exhibitions" />
-                <p className="legend"></p>
-              </div>
+
               <div>
                 <img src={picture7} alt="Exhibitions" />
                 <p className="legend">Timeless Huacas</p>
