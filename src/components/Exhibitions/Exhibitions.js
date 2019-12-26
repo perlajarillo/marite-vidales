@@ -8,6 +8,11 @@ import picture1 from "../../images/one.jpg";
 import picture2 from "../../images/two.jpg";
 import picture3 from "../../images/three.jpg";
 import picture4 from "../../images/four.jpg";
+import picture5 from "../../images/five.JPG";
+import picture6 from "../../images/six.JPG";
+import picture7 from "../../images/seven.JPG";
+import picture8 from "../../images/eight.jpg";
+import picture9 from "../../images/nine.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
@@ -102,6 +107,26 @@ class Exhibitions extends Component {
                 <p className="legend">
                   Montpelier Arts Center, Laurel, Montpelier Juried Art Exhibit
                 </p>
+              </div>
+              <div>
+                <img src={picture5} alt="Exhibitions" />
+                <p className="legend"></p>
+              </div>
+              <div>
+                <img src={picture6} alt="Exhibitions" />
+                <p className="legend"></p>
+              </div>
+              <div>
+                <img src={picture7} alt="Exhibitions" />
+                <p className="legend">Timeless Huacas</p>
+              </div>
+              <div>
+                <img src={picture8} alt="Exhibitions" />
+                <p className="legend">Torpedo Factory Art Center </p>
+              </div>
+              <div>
+                <img src={picture9} alt="Exhibitions" />
+                <p className="legend">Hill Center</p>
               </div>
             </Carousel>
           </div>
