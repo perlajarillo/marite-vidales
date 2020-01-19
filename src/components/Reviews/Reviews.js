@@ -4,6 +4,7 @@ import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import reviewsData from "./data";
+import reviewsImage from "../../images/reviews-image.jpg";
 
 const styles = theme => ({
   masthead: {
@@ -35,6 +36,13 @@ const styles = theme => ({
     fontWeight: "bold",
     alignSelf: "right",
     fontSize: "0.95rem"
+  },
+  picture: {
+    width: "20em",
+    paddingBottom: "1em",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "250px"
+    }
   }
 });
 
@@ -49,6 +57,11 @@ class Reviews extends Component {
         </Typography>
         <br></br>
         <Paper className={classes.paper}>
+          <img
+            src={reviewsImage}
+            className={classes.picture}
+            alt="Marite Vidales working in her studio"
+          />
           {reviewsData
             ? Object.keys(reviewsData).map(i => (
                 <div className={classes.contentBlock} key={i}>
