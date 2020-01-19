@@ -53,7 +53,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/"
             >
-              Home{" "}
+              Home
             </Button>
             <Button
               color="inherit"
@@ -61,7 +61,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/series"
             >
-              Images{" "}
+              Artworks
             </Button>
             <Button
               color="inherit"
@@ -69,7 +69,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/exhibitions"
             >
-              Exhibits{" "}
+              Exhibits
             </Button>
             <Button
               color="inherit"
