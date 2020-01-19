@@ -63,8 +63,8 @@ class Reviews extends Component {
             alt="Marite Vidales working in her studio"
           />
           {reviewsData
-            ? Object.keys(reviewsData).map(i => (
-                <div className={classes.contentBlock} key={i}>
+            ? Object.keys(reviewsData).map((i, idx) => (
+                <div className={classes.contentBlock} key={idx}>
                   <Typography variant="body2" className={classes.reviewContent}>
                     {'"' + reviewsData[i].review + '"'}
                   </Typography>

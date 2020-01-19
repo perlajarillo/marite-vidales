@@ -80,9 +80,12 @@ class Biography extends Component {
     this.observer = this.getBiography();
   };
 
-  componentDidUpdate = () => {
-    this.observer = this.getBiography();
-  };
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.observer = this.getBiography();
+    }
+  }
+
   /**
    * componentWillUnmount – set observer to null to avoid memory leaks
    * @returns {void}
@@ -165,8 +168,8 @@ class Biography extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Education </Typography>
           {education
-            ? educationTable.map(e => (
-                <div className={classes.contentBlock} key={e}>
+            ? educationTable.map((e, idx) => (
+                <div className={classes.contentBlock} key={idx}>
                   <Typography className={classes.text}>
                     {education[e.key].field + ". "}
                     {education[e.key].degree + ". "}
@@ -184,8 +187,8 @@ class Biography extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Professional experience</Typography>
           {experience
-            ? experienceTable.map(x => (
-                <div className={classes.contentBlock} key={x}>
+            ? experienceTable.map((x, idx) => (
+                <div className={classes.contentBlock} key={idx}>
                   <Typography variant="body2" className={classes.text}>
                     {experience[x.key].position + ". "}
                     {experience[x.key].institution + ". "}
