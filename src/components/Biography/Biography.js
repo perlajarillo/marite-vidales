@@ -8,8 +8,7 @@ import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   image: {
-    with: "250px",
-    height: "250px"
+    width: "250px"
   },
 
   masthead: {
