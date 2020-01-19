@@ -317,7 +317,7 @@ class SetEducation extends Component {
   };
 
   render() {
-    const { classes, education, n, educationTable } = this.props;
+    const { classes, education, educationTable } = this.props;
     const {
       institution,
       country,

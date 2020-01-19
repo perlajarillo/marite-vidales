@@ -61,7 +61,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/series"
             >
-              Artworks
+              Artwork
             </Button>
             <Button
               color="inherit"
@@ -77,7 +77,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/biography"
             >
-              Biography{" "}
+              Biography
             </Button>
             <Button
               color="inherit"
@@ -85,7 +85,7 @@ const NavNoAuth = props => {
               component={Link}
               to="/reviews"
             >
-              Reviews{" "}
+              Reviews
             </Button>
             {/*             <Button
               color="inherit"
@@ -120,7 +120,7 @@ const NavAuth = props => {
               component={Link}
               to="/myseries"
             >
-              My Series{" "}
+              My Series
             </Button>
             <Button
               color="inherit"
@@ -128,7 +128,7 @@ const NavAuth = props => {
               component={Link}
               to="/setbiography"
             >
-              Biography{" "}
+              Biography
             </Button>
             <Button
               color="inherit"
@@ -136,7 +136,7 @@ const NavAuth = props => {
               component={Link}
               to="/"
             >
-              Exhibits{" "}
+              Exhibits
             </Button>
 
             <Button
@@ -146,7 +146,7 @@ const NavAuth = props => {
               onClick={auth.onLogOut}
               to="/"
             >
-              Log out{" "}
+              Log out
             </Button>
           </div>
         </Toolbar>
