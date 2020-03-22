@@ -38,7 +38,7 @@ const styles = theme => ({
     textAlign: "center",
     color: "white",
     paddingTop: "50px",
-    paddingBottom: "100px",
+    paddingBottom: "30px",
     paddingLeft: "50px",
     paddingRight: "50px",
     [theme.breakpoints.down("sm")]: {
