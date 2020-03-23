@@ -83,7 +83,7 @@ class Footer extends Component {
                 </a>
                 <a
                   className={classes.links}
-                  href="https://www.instagram.com/maritevidales/"
+                  href="https://www.instagram.com/vidalesmarite/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
