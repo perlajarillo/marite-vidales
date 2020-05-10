@@ -13,6 +13,7 @@ import picture6 from "../../images/six.JPG";
 import picture7 from "../../images/seven.JPG";
 import picture8 from "../../images/eight.jpg";
 import picture9 from "../../images/nine.jpg";
+import picture10 from "../../images/ten.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
@@ -128,6 +129,10 @@ class Exhibitions extends Component {
               <div>
                 <img src={picture9} alt="Exhibitions" />
                 <p className="legend">Hill Center</p>
+              </div>
+              <div>
+                <img src={picture10} alt="Exhibitions" />
+                <p className="legend">In the studio</p>
               </div>
             </Carousel>
           </div>
