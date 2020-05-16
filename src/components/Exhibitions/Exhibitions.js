@@ -22,18 +22,18 @@ const selected = exhibitions.selected;
 const galleries = exhibitions.galleries;
 const juried = exhibitions.juried;
 
-const styles = theme => ({
+const styles = (theme) => ({
   image: {
     width: "650px",
 
     [theme.breakpoints.down("sm")]: {
-      width: "auto"
-    }
+      width: "auto",
+    },
   },
   carouselContainer: {
     textAlign: "center",
     width: "50%",
-    margin: "auto"
+    margin: "auto",
   },
   masthead: {
     textAlign: "center",
@@ -44,12 +44,12 @@ const styles = theme => ({
     paddingRight: "50px",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "10px",
-      paddingRight: "10px"
-    }
+      paddingRight: "10px",
+    },
   },
   paper: {
     padding: theme.spacing(4),
-    margin: "auto"
+    margin: "auto",
   },
 
   contentBlock: { paddingTop: theme.spacing(2) },
@@ -61,9 +61,9 @@ const styles = theme => ({
     paddingRight: theme.spacing(10),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1)
-    }
-  }
+      paddingRight: theme.spacing(1),
+    },
+  },
 });
 
 class Exhibitions extends Component {
@@ -103,8 +103,8 @@ class Exhibitions extends Component {
               <div>
                 <img src={picture3} alt="Exhibitions" />
                 <p className="legend">
-                  ArtDC Gallery at the Lustine Center, Arts District,
-                  Hyattsville, Maryland
+                  Fruits of Nature. Universidad Femenina del Sagrado Corazón
+                  (UNIFE), Lima, Peru.
                 </p>
               </div>
               <div>
@@ -138,7 +138,7 @@ class Exhibitions extends Component {
           </div>
           <Typography variant="h6">Galleries </Typography>
           {galleries
-            ? Object.keys(galleries).map(i => (
+            ? Object.keys(galleries).map((i) => (
                 <div className={classes.contentBlock} key={i}>
                   <Typography className={classes.text}>
                     {galleries[i].gallery + ". "}
@@ -153,7 +153,7 @@ class Exhibitions extends Component {
             : "No galleries have been added yet!"}
           <Typography variant="h6">Solo Exhibits </Typography>
           {solo
-            ? Object.keys(solo).map(i => (
+            ? Object.keys(solo).map((i) => (
                 <div className={classes.contentBlock} key={i}>
                   <Typography className={classes.text}>
                     {'"' + solo[i].name + '". '}
@@ -170,7 +170,7 @@ class Exhibitions extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Juried exhibits</Typography>
           {juried
-            ? Object.keys(juried).map(x => (
+            ? Object.keys(juried).map((x) => (
                 <div className={classes.contentBlock} key={x}>
                   <Typography className={classes.text}>
                     {'"' + juried[x].name + '". '}
@@ -187,7 +187,7 @@ class Exhibitions extends Component {
         <Paper className={classes.paper}>
           <Typography variant="h6">Selected exhibits</Typography>
           {selected
-            ? Object.keys(selected).map(x => (
+            ? Object.keys(selected).map((x) => (
                 <div className={classes.contentBlock} key={x}>
                   <Typography className={classes.text}>
                     {'"' + selected[x].name + '". '}
