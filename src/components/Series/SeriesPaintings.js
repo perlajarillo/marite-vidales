@@ -17,19 +17,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const styles = theme => ({
+const styles = (theme) => ({
   card: {
     margin: "10px",
-    width: "339px",
-    height: "370px",
+    width: "21.2rem",
+    height: "25rem",
     wrap: "wrapper",
     [theme.breakpoints.down("sm")]: {
-      width: "auto"
+      width: "auto",
     },
     [theme.breakpoints.between("sm", "md")]: {
-      width: "95%"
-    }
+      width: "95%",
+    },
   },
+
+  cardContent: {
+    width: "21.2rem",
+    height: "25rem",
+    [theme.breakpoints.down("sm")]: {
+      width: "auto",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "95%",
+    },
+  },
+
   image: {
     width: "auto",
     height: "auto",
@@ -37,23 +49,23 @@ const styles = theme => ({
     maxWidth: theme.spacing(150),
     [theme.breakpoints.down("sm")]: {
       maxWidth: theme.spacing(35),
-      padding: 0
+      padding: 0,
     },
-    padding: "10px"
+    padding: "10px",
   },
   regularImage: {
     width: "auto",
     height: "auto",
     maxHeight: "285px",
     maxWidth: "300px",
-    padding: "10px"
+    padding: "10px",
   },
   cards: {
     display: "flex",
     flexFlow: "row wrap",
     [theme.breakpoints.up("sm")]: {
-      padding: theme.sectionPadding.padding
-    }
+      padding: theme.sectionPadding.padding,
+    },
   },
   masthead: {
     textAlign: "center",
@@ -62,30 +74,30 @@ const styles = theme => ({
     paddingBottom: "100px",
     paddingLeft: "50px",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "10px"
-    }
+      paddingLeft: "10px",
+    },
   },
   container: {
-    textAlign: "center"
+    textAlign: "center",
   },
   button: {
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
     fontFamily: '"Montserrat"',
-    padding: "10px 20px"
+    padding: "10px 20px",
   },
   picture: {
     textAlign: "center",
-    display: "inline-block"
+    display: "inline-block",
   },
   root: {
     padding: theme.spacing(3, 2),
     textAlign: "justify",
     marginRight: theme.spacing(5),
     [theme.breakpoints.down("sm")]: {
-      marginRight: theme.spacing(2)
-    }
-  }
+      marginRight: theme.spacing(2),
+    },
+  },
 });
 
 class SeriesPainting extends Component {
@@ -93,10 +105,10 @@ class SeriesPainting extends Component {
     super(props);
     this.state = {
       open: false,
-      selectedImage: ""
+      selectedImage: "",
     };
   }
-  handleClickOpen = url => {
+  handleClickOpen = (url) => {
     this.setState({ open: true, selectedImage: url });
   };
 
@@ -143,7 +155,7 @@ class SeriesPainting extends Component {
                 "url(" + series.images_details[series.cover].url + ")",
               backgroundSize: "cover",
               height: "10px",
-              margin: 10
+              margin: 10,
             }}
           ></div>
           <Typography color="secondary">{series.description}</Typography>
@@ -159,7 +171,7 @@ class SeriesPainting extends Component {
               key={i}
               name={image.url}
             >
-              <CardActionArea>
+              <CardActionArea className={classes.cardContent}>
                 <div className={classes.picture}>
                   <CardMedia
                     component="img"
@@ -169,7 +181,7 @@ class SeriesPainting extends Component {
                   />
                 </div>
                 <CardContent>
-                  <Typography variant="body2" color="textSecondary">
+                  <Typography variant="body2" color="textSecondary" noWrap>
                     {image.title && '"' + image.title + '"'} {image.year}{" "}
                     {image.technique && image.measures && "("}
                     {image.technique} {image.measures}{" "}
