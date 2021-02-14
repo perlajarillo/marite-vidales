@@ -46,7 +46,6 @@ const styles = makeStyles(theme => ({
     marginBottom: 10,
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
-    fontFamily: '"Montserrat"',
     maxWidth: 500,
     alignSelf: "center"
   },
