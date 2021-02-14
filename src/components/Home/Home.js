@@ -28,7 +28,6 @@ const styles = theme => ({
     fontWeight: "700",
     lineHeight: "75px",
     marginBottom: "50px",
-    fontFamily: '"Montserrat"',
     textTransform: "uppercase !important",
     background: "rgba(23, 21, 21, 0.6)",
     display: "inline-block"
@@ -39,7 +38,6 @@ const styles = theme => ({
     fontStyle: "italic",
     lineHeight: "70px",
     marginBottom: "32px",
-    fontFamily: "'Droid Serif'",
     background: "rgba(23, 21, 21, 0.6)",
     display: "inline-block"
   },
@@ -47,7 +45,6 @@ const styles = theme => ({
     backgroundColor: "#00c853",
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
-    fontFamily: '"Montserrat"',
     padding: "20px 30px",
     "&:hover": { backgroundColor: "#ffc400" }
   },
