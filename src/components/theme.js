@@ -18,7 +18,8 @@ export default createMuiTheme({
   typography: {
     fontSize: 16,
     useNextVariants: true,
-    fontFamily: '"Montserrat"'
+    fontFamily: '"Open Sans", sans-serif',
+    fontStyle: "normal"
   },
   sectionPadding: {
     padding: "3rem 0"

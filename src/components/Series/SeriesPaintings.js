@@ -83,7 +83,6 @@ const styles = (theme) => ({
   button: {
     color: theme.palette.secondary.contrastText,
     fontSize: "1.05rem",
-    fontFamily: '"Montserrat"',
     padding: "10px 20px",
   },
   picture: {
