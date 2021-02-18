@@ -16,22 +16,27 @@ const styles = theme => ({
 
   links: {
     textDecoration: "none",
-    color: "#000"
+    color: "#424242"
   },
   items: {
     letterSpacing: "1px",
     color: theme.palette.primary.contrastText,
     marginLeft: 50,
-    [theme.breakpoints.down("xs")]: {
+     [theme.breakpoints.down("xs")]: {
       fontSize: "0.9rem",
       marginLeft: 5
     }
   },
   brand: {
+    paddingTop:"1rem",
     flex: 1,
     [theme.breakpoints.down("xs")]: {
       fontSize: "1.1rem"
     }
+  },
+  linkContainer: {
+    width: "100%",
+    textAlign: "center"
   }
 });
 
@@ -40,21 +45,13 @@ const NavNoAuth = props => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h5" className={classes.brand}>
+      <Typography variant="h5" className={classes.brand} align="center">
             <a href="/" className={classes.links}>
               Marite Vidales
             </a>
           </Typography>
-          <div>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/"
-            >
-              Home
-            </Button>
+        <Toolbar>
+          <div className={classes.linkContainer}>
             <Button
               color="inherit"
               className={classes.items}
