@@ -9,7 +9,8 @@ import instagram from "../../images/icon_instagram.svg";
 const styles = theme => ({
   root: {
     padding: theme.spacing(2, 1),
-    width: "auto",
+    position: "fixed",
+    width: "100%",
     bottom: 0,
     backgroundColor: "#fafafa",
     boxShadow:
