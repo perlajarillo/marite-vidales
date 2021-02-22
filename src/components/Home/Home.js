@@ -10,23 +10,33 @@ const styles = theme => ({
   masthead: {
     position: "fixed",
     width: "100%",
-    height: "100%",
+    height: "76%",
     paddingBottom: "0px",
     boxSizing: "border-box",
-    minHeight: "100%",
+    [theme.breakpoints.up('xl')]: {
+      height: "82%",
+    },
   },
 
   collage: {
-    margin: "1em",
     minHeight: "100%",
     overflow: "visible",
-    position: "relative",
-    textAlign:"center",
+    textAlign: "center",
+    background: "url(" + painting + ")",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "scroll",
+    backgroundPosition: "center",
+    backgroundSize: "55%",
+    [theme.breakpoints.down("sm")]: {
+      backgroundSize: "90%",
+    },
+   [theme.breakpoints.only('md')]: {
+      backgroundSize: "80%",
+    },
+    [theme.breakpoints.only('xl')]: {
+      backgroundSize: "63%",
+    },
   },
-  image: {
-    maxWidth: "100%",
-    height: "auto",
-  }
 
 });
 
@@ -36,7 +46,6 @@ class Home extends Component {
     return (
       <div className={classes.masthead}>
         <div className={classes.collage}>
-          <img src={painting} className={classes.image}></img>
         </div>
       </div>
     );
