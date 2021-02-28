@@ -117,7 +117,9 @@ class MySeries extends Component {
             description: snapshot.val()[serie].description,
             images_details: snapshot.val()[serie].images_details,
             cover: snapshot.val()[serie].cover,
-            key: serie
+            key: serie,
+            isInTopSeries: snapshot.val()[serie].isInTopSeries,
+            order: snapshot.val()[serie].order
           };
           return serieData;
         });
