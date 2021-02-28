@@ -76,21 +76,27 @@ class Series extends Component {
 
   getSeries = () => {
     db.getAllSeries().then(snapshot => {
-      let series = Object.keys(snapshot.val()).map(serie => {
-        let serieData = {
-          name: snapshot.val()[serie].name,
-          description: snapshot.val()[serie].description,
-          shortDescription:
-            snapshot.val()[serie].description.length > 325
-              ? snapshot.val()[serie].description.slice(0, 325) + "..."
-              : snapshot.val()[serie].description,
-          images_details:
-            snapshot.val()[serie].images_details.length > 0 &&
-            snapshot.val()[serie].images_details,
-          cover: snapshot.val()[serie].cover
-        };
-        return serieData;
+      let series = [];
+      Object.keys(snapshot.val()).forEach(serie => {
+        if (snapshot.val()[serie].isInTopSeries)
+        {
+            let serieData = {
+            name: snapshot.val()[serie].name,
+            description: snapshot.val()[serie].description,
+            shortDescription:
+              snapshot.val()[serie].description.length > 325
+                ? snapshot.val()[serie].description.slice(0, 325) + "..."
+                : snapshot.val()[serie].description,
+            images_details:
+              snapshot.val()[serie].images_details.length > 0 &&
+              snapshot.val()[serie].images_details,
+              cover: snapshot.val()[serie].cover,
+              order: snapshot.val()[serie].order
+          };
+          series.push(serieData);
+        }
       });
+      series.sort((a, b) => a.order - b.order);
       this.setState({ allSeries: series });
     });
   };
@@ -98,7 +104,7 @@ class Series extends Component {
   render() {
     const { classes } = this.props;
     const { allSeries } = this.state;
-    return allSeries ? (
+    return allSeries && allSeries.length> 0 ? (
       <div className={classes.masthead}>
         <Typography gutterBottom variant="h5" component="h2" color="secondary">
           Art work series

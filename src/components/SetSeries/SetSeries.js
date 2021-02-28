@@ -187,6 +187,8 @@ export default function SetSeries(props) {
     let images_details = [];
     let cover = 0;
     let key = "";
+    let isInTopSeries = false;
+    let order = 1;
     if (p.location.state) {
       if (p.location.state.series) {
         let series = p.location.state.series;
@@ -195,6 +197,8 @@ export default function SetSeries(props) {
         images_details = series.images_details;
         cover = series.cover;
         key = series.key;
+        isInTopSeries = series.isInTopSeries;
+        order = series.order;
       }
     }
 
@@ -216,7 +220,9 @@ export default function SetSeries(props) {
         currentImage => currentImage.url !== ""
       ),
       toDelete: [],
-      returnMySeries: false
+      returnMySeries: false,
+      isInTopSeries: isInTopSeries,
+      order: order
     };
   };
 
@@ -255,7 +261,8 @@ export default function SetSeries(props) {
           technique: "",
           measures: "",
           file: file.name,
-          checked: true
+          checked: true,
+          isTopTen: false
         }
       )
     );
@@ -309,6 +316,23 @@ export default function SetSeries(props) {
 
   const handleCoverChange = i => event => {
     setSeries({ ...series, cover: i });
+  };
+
+    const handleMarkAsTopSeries = name => event => {
+    setSeries({ ...series, [name]: event.target.checked });
+  };
+
+  const handleIsTopTen = name => event => {
+    const detail = event.target.name;
+    const detailsPath = R.lensPath([name, detail]);
+    setSeries({
+      ...series,
+      images_details: R.set(
+        detailsPath,
+        event.target.checked,
+        series.images_details
+      )
+    });
   };
 
   const handleChange = name => event => {
@@ -420,7 +444,7 @@ export default function SetSeries(props) {
   );
 
   const getPayload = () => {
-    return R.pick(["name", "description", "images_details", "cover"], series);
+    return R.pick(["name", "description", "images_details", "cover", "isInTopSeries", "order"], series);
   };
 
   const handleSubmit = e => {
@@ -485,6 +509,29 @@ export default function SetSeries(props) {
             onChange={handleChange("description")}
           />
         </FormControl>
+        <FormControl required className={classes.formControl}>
+          <TextField
+            id="standard-textarea"
+            label="Order"
+            placeholder="Series order: 1, 2, 3, etc."
+            multiline
+            required
+            margin="normal"
+            value={series.order}
+            onChange={handleChange("order")}
+          />
+        </FormControl>
+        <FormControlLabel
+          className={classes.formControl}
+            control={
+                <GreenCheckbox
+                  checked={series.isInTopSeries}
+                  onChange={handleMarkAsTopSeries('isInTopSeries')}
+                  value="isInTopSeries"
+                />
+            }
+            label="Mark as top series"
+        />
         <FormControl className={classes.formControl}>
           <Button
             color="secondary"
@@ -622,7 +669,16 @@ export default function SetSeries(props) {
                   className={classes.textField}
                   value={series.images_details[series.i + n].measures}
                   onChange={handleChangeDetails(series.i + n)}
-                />{" "}
+                />
+                <TextField
+                  name="order"
+                  placeholder="Display as: 1, 2, 3... in the list"
+                  margin="normal"
+                  label="Order: "
+                  className={classes.textField}
+                  value={series.images_details[series.i + n].order}
+                  onChange={handleChangeDetails(series.i + n)}
+                />
                 <FormControlLabel
                   control={
                     <GreenCheckbox
@@ -632,6 +688,17 @@ export default function SetSeries(props) {
                     />
                   }
                   label="Mark as series cover"
+                />
+                <FormControlLabel
+                  control={
+                    <GreenCheckbox
+                      name="isTopTen"
+                      checked={series.images_details[series.i + n].isTopTen}
+                      onChange={handleIsTopTen(series.i + n)}
+                      value="isTopTen"
+                    />
+                  }
+                  label="Mark as top ten"
                 />
               </div>
             </DialogContent>
@@ -709,6 +776,15 @@ export default function SetSeries(props) {
                   value={series.images_details[series.j].measures}
                   onChange={handleChangeDetails(series.j)}
                 />{" "}
+                <TextField
+                  name="order"
+                  placeholder="Display as: 1, 2, 3... in the list"
+                  margin="normal"
+                  label="Order: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].order}
+                  onChange={handleChangeDetails(series.j)}
+                />
                 <FormControlLabel
                   control={
                     <GreenCheckbox
@@ -718,6 +794,17 @@ export default function SetSeries(props) {
                     />
                   }
                   label="Mark as series cover"
+                />
+                <FormControlLabel
+                  control={
+                    <GreenCheckbox
+                      name="isTopTen"
+                      checked={series.images_details[series.j].isTopTen}
+                      onChange={handleIsTopTen(series.j)}
+                      value="isTopTen"
+                    />
+                  }
+                  label="Mark as top ten"
                 />
               </div>
             </DialogContent>
