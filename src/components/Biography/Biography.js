@@ -4,7 +4,6 @@ import marite from "../../images/Mariteweb.jpg";
 import { db } from "../../firebase";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   image: {
@@ -30,11 +29,11 @@ const styles = theme => ({
 
   contentBlock: { paddingTop: theme.spacing(2) },
   text: {
-    textAlign: "left",
+    textAlign: "justify",
     alignSelf: "left",
     fontSize: "0.95rem",
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
+    paddingLeft: theme.spacing(30),
+    paddingRight: theme.spacing(30),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1)
@@ -50,8 +49,8 @@ const styles = theme => ({
     whiteSpace: "pre-line",
     textAlign: "justify",
     fontSize: "0.98rem",
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
+    paddingLeft: theme.spacing(30),
+    paddingRight: theme.spacing(30),
     paddingTop: theme.spacing(4),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(1),
@@ -179,7 +178,6 @@ class Biography extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No education has been added yet!"}
@@ -196,7 +194,6 @@ class Biography extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No professional experience has been added yet!"}
