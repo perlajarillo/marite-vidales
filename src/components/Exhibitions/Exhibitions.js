@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
 import exhibitions from "./data";
 import picture1 from "../../images/one.jpg";
 import picture2 from "../../images/two.jpg";
@@ -54,11 +53,10 @@ const styles = (theme) => ({
 
   contentBlock: { paddingTop: theme.spacing(2) },
   text: {
-    textAlign: "left",
-    alignSelf: "left",
+    textAlign: "justify",
     fontSize: "0.95rem",
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
+    paddingLeft: theme.spacing(30),
+    paddingRight: theme.spacing(30),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
@@ -146,7 +144,6 @@ class Exhibitions extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                   <br></br>
                 </div>
               ))
@@ -162,7 +159,6 @@ class Exhibitions extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No solo exhibitions have been added yet!"}
@@ -179,7 +175,6 @@ class Exhibitions extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No juried exhibitions been added yet!"}
@@ -196,7 +191,6 @@ class Exhibitions extends Component {
                   </Typography>
 
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No selected exhibitions been added yet!"}
