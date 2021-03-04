@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
 import reviewsData from "./data";
 import reviewsImage from "../../images/reviews-image.jpg";
 
@@ -24,12 +23,22 @@ const styles = theme => ({
     margin: "auto"
   },
 
-  contentBlock: { paddingTop: theme.spacing(2), textAlign: "justify" },
+  contentBlock: {
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(30),
+    paddingRight: theme.spacing(30),
+        [theme.breakpoints.down("xs")]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1)
+    },
+    textAlign: "justify"
+  },
 
   reviewContent: {
     whiteSpace: "pre-line",
     textAlign: "justify",
-    fontStyle: "italic"
+    fontStyle: "italic",
+
   },
   reviewer: {
     textAlign: "right",
@@ -73,7 +82,6 @@ class Reviews extends Component {
                     {reviewsData[i].reviewer}
                   </Typography>
                   <br></br>
-                  <Divider />
                 </div>
               ))
             : "No reviews have been added yet!"}
