@@ -164,6 +164,7 @@ class SeriesPainting extends Component {
         </Typography>
         <div className={classes.cards}>
           {series.images_details.map((image, i) => (
+            image.isTopTen &&
             <Card
               className={classes.card}
               onClick={() => this.handleClickOpen(image)}
