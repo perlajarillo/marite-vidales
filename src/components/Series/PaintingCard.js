@@ -7,14 +7,18 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const styles = makeStyles(theme => ({
   card: {
-    margin: "10px",
-    width: "18.2%",
+    marginRight: "20px",
+    marginBottom: "20px",
+    width: "calc(20% - 20px)",
     wrap: "wrapper",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
-    [theme.breakpoints.between("sm", "md")]: {
-      width: "25%",
+    [theme.breakpoints.only("sm")]: {
+      width: "calc(50% - 20px)",
+    },
+    [theme.breakpoints.only("md")]: {
+      width: "calc(33.333% - 20px)",
     },
   },
 
@@ -27,16 +31,16 @@ const styles = makeStyles(theme => ({
     height: "auto",
     paddingLeft: "9px",
     paddingRight: "9px",
-    maxWidth: "260px",
-    maxHeight: "240px",
-    [theme.breakpoints.between("sm", "md")]: {
-    maxHeight: "250px",
-      maxWidth: "200px",
+    maxWidth: "17rem",
+    maxHeight: "18rem",
+    [theme.breakpoints.only("lg")]: {
+        maxWidth: "14rem",
     },
-
-        [theme.breakpoints.down("sm")]: {
-    maxHeight: "303px",
-      maxWidth: "431px",
+    [theme.breakpoints.only("xs")]: {
+      maxWidth: "23rem",
+    },
+    [theme.breakpoints.only("xl")]: {
+        maxWidth: "21rem",
     },
   },
   cards: {

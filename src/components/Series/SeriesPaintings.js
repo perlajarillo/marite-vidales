@@ -29,8 +29,12 @@ const styles = (theme) => ({
   cards: {
     display: "flex",
     flexFlow: "row wrap",
+    marginRight: "20px",
     [theme.breakpoints.up("sm")]: {
       padding: theme.sectionPadding.padding,
+    },
+    [theme.breakpoints.between("xs","sm")]: {
+          marginRight: "0px",
     },
   },
   masthead: {
@@ -105,7 +109,8 @@ class SeriesPainting extends Component {
   render() {
     const { classes } = this.props;
     const { open, series, selectedImage, viewMore, moreButtonText } = this.state;
-    const topTenSeries = series?series.images_details.filter(image => image.isTopTen):[];
+    const topTenSeries = series ? series.images_details.filter(image => image.isTopTen) : [];
+    topTenSeries.sort((a, b) => a.order - b.order);
     return series ? (
       <div className={classes.masthead}>
         <Paper className={classes.root}>
@@ -132,8 +137,7 @@ class SeriesPainting extends Component {
           Click in the image to see more details.
         </Typography>}
         <div className={classes.cards}>
-          {series.images_details.map((image, i) => (
-            image.isTopTen &&
+          {topTenSeries.map((image, i) => (
             <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i}/>
           ))}
 
