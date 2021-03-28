@@ -29,8 +29,12 @@ const styles = (theme) => ({
   cards: {
     display: "flex",
     flexFlow: "row wrap",
+    marginRight: "20px",
     [theme.breakpoints.up("sm")]: {
       padding: theme.sectionPadding.padding,
+    },
+    [theme.breakpoints.between("xs","sm")]: {
+          marginRight: "0px",
     },
   },
   masthead: {
