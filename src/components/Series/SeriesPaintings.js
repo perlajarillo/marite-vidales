@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Slide from "@material-ui/core/Slide";
@@ -10,38 +7,14 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import CardMedia from "@material-ui/core/CardMedia";
 import Paper from "@material-ui/core/Paper";
+import PaintingCard from "./PaintingCard";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const styles = (theme) => ({
-  card: {
-    margin: "10px",
-    width: "21.2rem",
-    height: "25rem",
-    wrap: "wrapper",
-    [theme.breakpoints.down("sm")]: {
-      width: "auto",
-    },
-    [theme.breakpoints.between("sm", "md")]: {
-      width: "95%",
-    },
-  },
-
-  cardContent: {
-    width: "21.2rem",
-    height: "25rem",
-    [theme.breakpoints.down("sm")]: {
-      width: "auto",
-    },
-    [theme.breakpoints.between("sm", "md")]: {
-      width: "95%",
-    },
-  },
-
   image: {
     width: "auto",
     height: "auto",
@@ -53,18 +26,15 @@ const styles = (theme) => ({
     },
     padding: "10px",
   },
-  regularImage: {
-    width: "auto",
-    height: "auto",
-    maxHeight: "285px",
-    maxWidth: "300px",
-    padding: "10px",
-  },
   cards: {
     display: "flex",
     flexFlow: "row wrap",
+    marginRight: "20px",
     [theme.breakpoints.up("sm")]: {
       padding: theme.sectionPadding.padding,
+    },
+    [theme.breakpoints.between("xs","sm")]: {
+          marginRight: "0px",
     },
   },
   masthead: {
@@ -85,10 +55,6 @@ const styles = (theme) => ({
     fontSize: "1.05rem",
     padding: "10px 20px",
   },
-  picture: {
-    textAlign: "center",
-    display: "inline-block",
-  },
   root: {
     padding: theme.spacing(3, 2),
     textAlign: "justify",
@@ -105,6 +71,8 @@ class SeriesPainting extends Component {
     this.state = {
       open: false,
       selectedImage: "",
+      viewMore: false,
+      moreButtonText:"View More"
     };
   }
   handleClickOpen = (url) => {
@@ -114,6 +82,10 @@ class SeriesPainting extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleMorePaintings = () => {
+    this.setState({moreButtonText: this.state.viewMore?"View More": "View Less", viewMore: !this.state.viewMore})
+  }
 
   /**
    * componentDidMount – sets in the data series to edit
@@ -136,7 +108,9 @@ class SeriesPainting extends Component {
 
   render() {
     const { classes } = this.props;
-    const { open, series, selectedImage } = this.state;
+    const { open, series, selectedImage, viewMore, moreButtonText } = this.state;
+    const topTenSeries = series ? series.images_details.filter(image => image.isTopTen) : [];
+    topTenSeries.sort((a, b) => a.order - b.order);
     return series ? (
       <div className={classes.masthead}>
         <Paper className={classes.root}>
@@ -159,36 +133,17 @@ class SeriesPainting extends Component {
           ></div>
           <Typography color="secondary">{series.description}</Typography>
         </Paper>
-        <Typography variant="caption" color="secondary">
+        {topTenSeries.length>0 && <Typography variant="caption" color="secondary" noWrap>
           Click in the image to see more details.
-        </Typography>
+        </Typography>}
         <div className={classes.cards}>
-          {series.images_details.map((image, i) => (
-            <Card
-              className={classes.card}
-              onClick={() => this.handleClickOpen(image)}
-              key={i}
-              name={image.url}
-            >
-              <CardActionArea className={classes.cardContent}>
-                <div className={classes.picture}>
-                  <CardMedia
-                    component="img"
-                    image={image.url}
-                    title={image.title}
-                    className={classes.regularImage}
-                  />
-                </div>
-                <CardContent>
-                  <Typography variant="body2" color="textSecondary" noWrap>
-                    {image.title && '"' + image.title + '"'} {image.year}{" "}
-                    {image.technique && image.measures && "("}
-                    {image.technique} {image.measures}{" "}
-                    {image.technique && image.measures && ")"}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+          {topTenSeries.map((image, i) => (
+            <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i}/>
+          ))}
+
+          {viewMore && series.images_details.map((image, i) => (
+            !image.isTopTen &&
+              <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i+topTenSeries.length} />
           ))}
 
           <Dialog
@@ -224,6 +179,14 @@ class SeriesPainting extends Component {
             </DialogContent>
           </Dialog>
         </div>
+        {topTenSeries.length>0 && (topTenSeries.length !== series.images_details.length)&&<Button
+          size="small"
+          variant="outlined"
+          onClick={this.handleMorePaintings}
+          color="secondary"
+                >
+                  {moreButtonText}
+          </Button>}
       </div>
     ) : (
       <div className={classes.progressDiv}>

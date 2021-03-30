@@ -15,32 +15,36 @@ import { db } from "../../firebase";
 
 const styles = theme => ({
   card: {
-    width: 450,
-    margin: theme.spacing(1),
-    [theme.breakpoints.between("sm", "md")]: {
-      width: 900
+    width: "calc(50% - 50px)",
+    marginRight: "50px",
+    marginBottom: "50px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      marginLeft: "30px",
+      marginRight: "30px",
+    marginBottom: "30px",
     }
   },
   media: {
-    height: 190
+    height: "350px",
+    [theme.breakpoints.down("xs")]: {
+      height: "250px"
+    },
   },
   content: {
-    height: 220,
-    paddingBottom: 10,
+    height: "130px",
+    paddingBottom: 30,
     textAlign: "justify",
     [theme.breakpoints.down("xs")]: {
-      height: 320
+      height: 200
     },
-    [theme.breakpoints.between("sm", "md")]: {
-      height: 300
-    }
   },
   cards: {
     display: "flex",
     flexFlow: "row wrap",
     padding: "3rem 0",
     [theme.breakpoints.up("sm")]: {
-      padding: theme.sectionPadding.padding
+      padding: theme.sectionPadding.padding,
     }
   },
   masthead: {
@@ -49,7 +53,6 @@ const styles = theme => ({
     paddingTop: "50px",
     paddingBottom: "30px",
     paddingLeft: "50px",
-    paddingRight: "50px",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "10px",
       paddingRight: "10px"
@@ -59,6 +62,13 @@ const styles = theme => ({
     textAlign: "center",
     paddingTop: "150px",
     paddingBottom: "400px"
+  },
+
+  description: {
+    display: "-webkit-box",
+    WebkitLineClamp: "3",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
   }
 });
 
@@ -84,9 +94,7 @@ class Series extends Component {
             name: snapshot.val()[serie].name,
             description: snapshot.val()[serie].description,
             shortDescription:
-              snapshot.val()[serie].description.length > 325
-                ? snapshot.val()[serie].description.slice(0, 325) + "..."
-                : snapshot.val()[serie].description,
+              snapshot.val()[serie].description,
             images_details:
               snapshot.val()[serie].images_details.length > 0 &&
               snapshot.val()[serie].images_details,
@@ -123,6 +131,7 @@ class Series extends Component {
               >
                 <CardMedia
                   className={classes.media}
+                  component="img"
                   image={
                     serie.images_details.length > 0
                       ? serie.images_details[serie.cover].url
@@ -138,6 +147,7 @@ class Series extends Component {
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    className={classes.description}
                   >
                     {serie.shortDescription}
                   </Typography>
