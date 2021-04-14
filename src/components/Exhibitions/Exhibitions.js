@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import exhibitions from "./data";
@@ -14,25 +14,35 @@ import picture8 from "../../images/eight.jpg";
 import picture9 from "../../images/nine.jpg";
 import picture10 from "../../images/ten.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Carousel from 'react-material-ui-carousel'
+
 
 const solo = exhibitions.solo;
 const selected = exhibitions.selected;
 const galleries = exhibitions.galleries;
 const juried = exhibitions.juried;
 
-const styles = (theme) => ({
-  image: {
-    width: "650px",
-
-    [theme.breakpoints.down("sm")]: {
-      width: "auto",
-    },
+const styles = makeStyles((theme) => ({
+    root: {
+    maxWidth: "100%",
   },
+    media: {
+      height: 0,
+      paddingTop: '70%',
+  },
+
   carouselContainer: {
     textAlign: "center",
-    width: "50%",
+    width: "45%",
     margin: "auto",
+    paddingBottom:"2em",
+[theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
+
   },
   masthead: {
     textAlign: "center",
@@ -62,12 +72,84 @@ const styles = (theme) => ({
       paddingRight: theme.spacing(1),
     },
   },
-});
+  legend: {
+    fontSize: "0.85rem",
+        color:"#fff",
 
-class Exhibitions extends Component {
-  render() {
-    const { classes } = this.props;
+  },
+  cardContent: {
+    backgroundColor: "black",
+    opacity:.4,
+    '&:hover': {
+      opacity:.6
+    }
 
+  }
+
+}));
+
+function Item(props) {
+   const classes = styles();
+  return (
+    <Card className={classes.root}>
+      <CardMedia
+        className={classes.media}
+        image={props.image}
+      />
+      <CardContent className={classes.cardContent}>
+
+        <Typography variant="caption" color="secondary"  className={classes.legend}>
+          {props.legend}
+      </Typography>
+
+      </CardContent>
+
+
+    </Card>)
+};
+
+
+const Exhibitions =() =>{
+  const classes = styles();
+  const carouselItems = [
+    {
+      image: picture1,
+      legend: "Fondo de Cultura Economica FCE, Lima, Peru"
+    },
+    {
+      image: picture2,
+      legend: "Galeria de Arte Ryoichi Jinnai, Centro Cultural Peruano Japones, Lima Peru"
+    },
+    {
+      image: picture3,
+      legend: "Fruits of Nature. Universidad Femenina del Sagrado Corazón (UNIFE), Lima, Peru."
+    },
+    {
+      image: picture4,
+      legend: "Montpelier Arts Center, Laurel, Montpelier Juried Art Exhibit"
+    },
+    {
+      image: picture5,
+      legend: ""
+    },
+    {
+      image: picture7,
+      legend: "Timeless Huacas"
+    },
+    {
+      image: picture8,
+      legend: "Torpedo Factory Art Center"
+    },
+    {
+      image: picture9,
+      legend: "Hill Center"
+    },
+    {
+      image: picture10,
+      legend: "In the studio"
+    }
+
+  ];
     return (
       <div className={classes.masthead}>
         <Typography variant="h4" color="secondary" gutterBottom>
@@ -75,65 +157,14 @@ class Exhibitions extends Component {
         </Typography>
         <br></br>
         <Paper className={classes.paper}>
-          <div className={classes.carouselContainer}>
             <Carousel
-              showArrows={true}
               autoPlay={true}
-              className={classes.image}
+            className={classes.carouselContainer}
+            fullHeightHover={false}
             >
-              <div>
-                <img src={picture6} alt="Exhibitions" />
-                <p className="legend">Peru</p>
-              </div>
-              <div>
-                <img src={picture1} alt="Exhibitions" />
-                <p className="legend">
-                  Fondo de Cultura Economica FCE, Lima, Peru
-                </p>
-              </div>
-              <div>
-                <img src={picture2} alt="Exhibitions" />
-                <p className="legend">
-                  Galeria de Arte Ryoichi Jinnai, Centro Cultural Peruano
-                  Japones, Lima Peru
-                </p>
-              </div>
-              <div>
-                <img src={picture3} alt="Exhibitions" />
-                <p className="legend">
-                  Fruits of Nature. Universidad Femenina del Sagrado Corazón
-                  (UNIFE), Lima, Peru.
-                </p>
-              </div>
-              <div>
-                <img src={picture4} alt="Exhibitions" />
-                <p className="legend">
-                  Montpelier Arts Center, Laurel, Montpelier Juried Art Exhibit
-                </p>
-              </div>
-              <div>
-                <img src={picture5} alt="Exhibitions" />
-                <p className="legend"></p>
-              </div>
+              {carouselItems.map(i=> <Item image={i.image} legend={i.legend}/>)}
 
-              <div>
-                <img src={picture7} alt="Exhibitions" />
-                <p className="legend">Timeless Huacas</p>
-              </div>
-              <div>
-                <img src={picture8} alt="Exhibitions" />
-                <p className="legend">Torpedo Factory Art Center </p>
-              </div>
-              <div>
-                <img src={picture9} alt="Exhibitions" />
-                <p className="legend">Hill Center</p>
-              </div>
-              <div>
-                <img src={picture10} alt="Exhibitions" />
-                <p className="legend">In the studio</p>
-              </div>
             </Carousel>
-          </div>
           <Typography variant="h6">Galleries </Typography>
           {galleries
             ? Object.keys(galleries).map((i) => (
@@ -198,6 +229,5 @@ class Exhibitions extends Component {
       </div>
     );
   }
-}
 
-export default withStyles(styles)(Exhibitions);
+export default Exhibitions;
