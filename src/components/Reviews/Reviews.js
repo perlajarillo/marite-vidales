@@ -10,7 +10,7 @@ const styles = theme => ({
     textAlign: "center",
     color: "white",
     paddingTop: "50px",
-    paddingBottom: "30px",
+    paddingBottom: "110px",
     paddingLeft: "50px",
     paddingRight: "50px",
     [theme.breakpoints.down("sm")]: {
