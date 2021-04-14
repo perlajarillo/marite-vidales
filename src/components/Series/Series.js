@@ -114,7 +114,7 @@ class Series extends Component {
     const { allSeries } = this.state;
     return allSeries && allSeries.length> 0 ? (
       <div className={classes.masthead}>
-        <Typography gutterBottom variant="h5" component="h2" color="secondary">
+        <Typography gutterBottom variant="h4" component="h2" color="secondary">
           Art work series
         </Typography>
         <div className={classes.cards}>
