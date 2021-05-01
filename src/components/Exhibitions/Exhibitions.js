@@ -17,7 +17,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import Carousel from 'react-material-ui-carousel'
+import Carousel from 'react-material-ui-carousel';
+import Grid from '@material-ui/core/Grid';
 
 
 const solo = exhibitions.solo;
@@ -25,21 +26,37 @@ const selected = exhibitions.selected;
 const galleries = exhibitions.galleries;
 const juried = exhibitions.juried;
 
+const groupByYear = (objectOfExhibits) =>
+  [...Object.values(objectOfExhibits)].reduce((acc, value) => {
+    // Group initialization
+    if (!acc[value.year]) {
+      acc[value.year] = [];
+    }
+    // Grouping
+    acc[value.year].push(value);
+
+    return acc;
+  }, {});
+
+const selectedByYear = groupByYear(selected);
+const soloByYear = groupByYear(solo);
+const juriedByYear = groupByYear(juried);
+
 const styles = makeStyles((theme) => ({
-    root: {
+  root: {
     maxWidth: "100%",
   },
-    media: {
-      height: 0,
-      paddingTop: '70%',
+  media: {
+    height: 0,
+    paddingTop: '70%',
   },
 
   carouselContainer: {
     textAlign: "center",
     width: "45%",
     margin: "auto",
-    paddingBottom:"2em",
-[theme.breakpoints.down("md")]: {
+    paddingBottom: "2em",
+    [theme.breakpoints.down("md")]: {
       width: "100%",
     },
 
@@ -74,14 +91,14 @@ const styles = makeStyles((theme) => ({
   },
   legend: {
     fontSize: "0.85rem",
-        color:"#fff",
+    color: "#fff",
 
   },
   cardContent: {
     backgroundColor: "black",
-    opacity:.4,
+    opacity: .4,
     '&:hover': {
-      opacity:.6
+      opacity: .6
     }
 
   }
@@ -89,7 +106,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 function Item(props) {
-   const classes = styles();
+  const classes = styles();
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -97,19 +114,39 @@ function Item(props) {
         image={props.image}
       />
       <CardContent className={classes.cardContent}>
-
-        <Typography variant="caption" color="secondary"  className={classes.legend}>
+        <Typography variant="caption" color="secondary" className={classes.legend}>
           {props.legend}
-      </Typography>
-
+        </Typography>
       </CardContent>
-
-
     </Card>)
 };
 
+function Exhibits(props) {
+  const exhibitsObject = props.exhibitsObject;
+  const classes = styles();
+  return (Object.entries(exhibitsObject).sort((a, b) => b[0] - a[0]).map(entry => {
+    const year = entry[0];
+    const exhibits = entry[1];
+    return (
+      <Grid container wrap="nowrap" spacing={7} key={year}>
+        <Grid item xs={1}>
+          <Typography className={classes.text}>{year}</Typography>
+        </Grid>
+        <Grid item xs={11}>
+          {exhibits.map((exhibit, idx) =>
+            <Typography className={classes.text} key={idx} gutterBottom>
+              <i>{exhibit.name + '. '}</i>
+              {exhibit.place + ". "}
+              {exhibit.dates + ". "}
+            </Typography>
+          )}
+        </Grid>
+      </Grid>
+    )
+  }))
+};
 
-const Exhibitions =() =>{
+const Exhibitions = () => {
   const classes = styles();
   const carouselItems = [
     {
@@ -150,84 +187,52 @@ const Exhibitions =() =>{
     }
 
   ];
-    return (
-      <div className={classes.masthead}>
-        <Typography variant="h4" color="secondary" gutterBottom>
-          Exhibits
+  return (
+    <div className={classes.masthead}>
+      <Typography variant="h4" color="secondary" gutterBottom>
+        Exhibits
         </Typography>
+      <br></br>
+      <Paper className={classes.paper}>
+        <Carousel
+          autoPlay={true}
+          className={classes.carouselContainer}
+          fullHeightHover={false}
+        >
+          {carouselItems.map((i, idx) => <Item image={i.image} legend={i.legend} key={idx} />)}
+
+        </Carousel>
+        <Typography variant="h6">Galleries </Typography>
+        {galleries
+          ? Object.keys(galleries).map((i) => (
+            <div className={classes.contentBlock} key={i}>
+              <Typography className={classes.text}>
+                {galleries[i].gallery + ". "}
+                {galleries[i].address + ". "}
+              </Typography>
+
+            </div>
+          ))
+          : "No galleries have been added yet!"}
         <br></br>
-        <Paper className={classes.paper}>
-            <Carousel
-              autoPlay={true}
-            className={classes.carouselContainer}
-            fullHeightHover={false}
-            >
-              {carouselItems.map(i=> <Item image={i.image} legend={i.legend}/>)}
-
-            </Carousel>
-          <Typography variant="h6">Galleries </Typography>
-          {galleries
-            ? Object.keys(galleries).map((i) => (
-                <div className={classes.contentBlock} key={i}>
-                  <Typography className={classes.text}>
-                    {galleries[i].gallery + ". "}
-                    {galleries[i].address + ". "}
-                  </Typography>
-
-                  <br></br>
-                  <br></br>
-                </div>
-              ))
-            : "No galleries have been added yet!"}
-          <Typography variant="h6">Solo Exhibits </Typography>
-          {solo
-            ? Object.keys(solo).map((i) => (
-                <div className={classes.contentBlock} key={i}>
-                  <Typography className={classes.text}>
-                    {'"' + solo[i].name + '". '}
-                    {solo[i].place + ". "}
-                    {solo[i].dates + ". "}
-                  </Typography>
-
-                  <br></br>
-                </div>
-              ))
-            : "No solo exhibitions have been added yet!"}
-        </Paper>
-        <Paper className={classes.paper}>
-          <Typography variant="h6">Juried exhibits</Typography>
-          {juried
-            ? Object.keys(juried).map((x) => (
-                <div className={classes.contentBlock} key={x}>
-                  <Typography className={classes.text}>
-                    {'"' + juried[x].name + '". '}
-                    {juried[x].place + ". "}
-                    {juried[x].dates + ". "}
-                  </Typography>
-
-                  <br></br>
-                </div>
-              ))
-            : "No juried exhibitions been added yet!"}
-        </Paper>
-        <Paper className={classes.paper}>
-          <Typography variant="h6">Selected exhibits</Typography>
-          {selected
-            ? Object.keys(selected).map((x) => (
-                <div className={classes.contentBlock} key={x}>
-                  <Typography className={classes.text}>
-                    {'"' + selected[x].name + '". '}
-                    {selected[x].place + ". "}
-                    {selected[x].dates + ". "}
-                  </Typography>
-
-                  <br></br>
-                </div>
-              ))
-            : "No selected exhibitions been added yet!"}
-        </Paper>
-      </div>
-    );
-  }
+        <Typography variant="h6" gutterBottom>Selected Solo Exhibitions </Typography>
+        {soloByYear
+          ? <Exhibits exhibitsObject={soloByYear} />
+          : "No solo exhibitions have been added yet!"}
+      </Paper>
+      <Paper className={classes.paper}>
+        <Typography variant="h6" gutterBottom>Selected Juried Exhibitions</Typography>
+        {juriedByYear
+          ? <Exhibits exhibitsObject={juriedByYear} />
+          : "No juried exhibitions been added yet!"}
+      </Paper>
+      <Paper className={classes.paper}>
+        <Typography variant="h6" gutterBottom>Selected Group Exhibitions</Typography>
+        {selectedByYear ? <Exhibits exhibitsObject={selectedByYear} />
+          : "No selected exhibitions been added yet!"}
+      </Paper>
+    </div >
+  );
+}
 
 export default Exhibitions;
