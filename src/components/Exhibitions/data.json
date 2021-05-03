@@ -9,9 +9,9 @@
       "address": "San Pedro de Montes de Oca, San Jose, Costa Rica"
     }
   },
-  "grants-awards":{
+  "grantsAndAwards": {
     "0": "CAH Cares: Emergency Relief Grant, 2020. DC Commission on the Arts and Humanities",
-    "1":"Arts and Humanities Fellowship, Visual Arts 2019. DC Commission on the Arts and Humanities.",
+    "1": "Arts and Humanities Fellowship, Visual Arts 2019. DC Commission on the Arts and Humanities.",
     "2": "Honorable Mention, 5th Annual Fausto Pacheco Contest, San José, Costa Rica, 1985."
   },
   "solo": {
@@ -257,31 +257,31 @@
       "name": "Selected Paintings by Emily Conover, Tinam Valk, and Marité Vidales",
       "place": "The Learning Center Gallery, Landover, Maryland",
       "dates": "July 8 - August 30",
-       "year": "2005"
+      "year": "2005"
     },
     "24": {
       "name": "Landscapes of Costa Rica: The Visions of Rojas-Alfaro, Vidales and Villalobos",
       "place": "World Bank, Washington, DC",
       "dates": "July - October",
-       "year": "2004"
+      "year": "2004"
     },
     "25": {
       "name": "Lush Scenes from Costa Rica",
       "place": "Target Gallery, Torpedo Factory Art Center, Alexandria, Virginia",
       "dates": "July 5-August 12",
-       "year": "2001"
+      "year": "2001"
     },
     "26": {
       "name": "Women of the World: A Global Collection of Art",
       "place": "White Columns Gallery, New York City",
       "dates": "June 9-July 15",
-       "year": "2000"
+      "year": "2000"
     },
     "27": {
       "name": "IMF Art Exhibition, International Monetary Fund",
       "place": "Washington, DC",
       "dates": "June",
-       "year": "1998"
+      "year": "1998"
     },
     "28": {
       "name": "Encuentros: A Multimedia Exhibition of Latin American and Caribbean Art",

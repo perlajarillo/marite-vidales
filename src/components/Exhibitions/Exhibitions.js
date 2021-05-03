@@ -25,6 +25,7 @@ const solo = exhibitions.solo;
 const selected = exhibitions.selected;
 const galleries = exhibitions.galleries;
 const juried = exhibitions.juried;
+const grantsAndAwards = exhibitions.grantsAndAwards;
 
 const groupByYear = (objectOfExhibits) =>
   [...Object.values(objectOfExhibits)].reduce((acc, value) => {
@@ -214,6 +215,18 @@ const Exhibitions = () => {
             </div>
           ))
           : "No galleries have been added yet!"}
+        <br></br>
+        <Typography variant="h6">Grands and Awards </Typography>
+        {grantsAndAwards
+          ? Object.keys(grantsAndAwards).map((i) => (
+            <div className={classes.contentBlock} key={i}>
+              <Typography className={classes.text}>
+                {grantsAndAwards[i]}
+              </Typography>
+            </div>
+          ))
+          : "No grants and awards have been added yet!"}
+        <br></br>
         <br></br>
         <Typography variant="h6" gutterBottom>Selected Solo Exhibitions </Typography>
         {soloByYear
