@@ -22,7 +22,7 @@ const styles = theme => ({
       width: "100%",
       marginLeft: "30px",
       marginRight: "30px",
-    marginBottom: "30px",
+      marginBottom: "30px",
     }
   },
   media: {
@@ -88,9 +88,8 @@ class Series extends Component {
     db.getAllSeries().then(snapshot => {
       let series = [];
       Object.keys(snapshot.val()).forEach(serie => {
-        if (snapshot.val()[serie].isInTopSeries)
-        {
-            let serieData = {
+        if (snapshot.val()[serie].isInTopSeries) {
+          let serieData = {
             name: snapshot.val()[serie].name,
             description: snapshot.val()[serie].description,
             shortDescription:
@@ -98,8 +97,8 @@ class Series extends Component {
             images_details:
               snapshot.val()[serie].images_details.length > 0 &&
               snapshot.val()[serie].images_details,
-              cover: snapshot.val()[serie].cover,
-              order: snapshot.val()[serie].order
+            cover: snapshot.val()[serie].cover,
+            order: snapshot.val()[serie].order
           };
           series.push(serieData);
         }
@@ -112,10 +111,10 @@ class Series extends Component {
   render() {
     const { classes } = this.props;
     const { allSeries } = this.state;
-    return allSeries && allSeries.length> 0 ? (
+    return allSeries && allSeries.length > 0 ? (
       <div className={classes.masthead}>
         <Typography gutterBottom variant="h4" component="h2" color="secondary">
-          Art work series
+          Artwork series
         </Typography>
         <div className={classes.cards}>
           {allSeries.map((serie, i) => (
