@@ -189,6 +189,7 @@ export default function SetSeries(props) {
     let key = "";
     let isInTopSeries = false;
     let order = 1;
+    let collectionType = "";
     if (p.location.state) {
       if (p.location.state.series) {
         let series = p.location.state.series;
@@ -199,6 +200,7 @@ export default function SetSeries(props) {
         key = series.key;
         isInTopSeries = series.isInTopSeries;
         order = series.order;
+        collectionType = series.collectionType;
       }
     }
 
@@ -260,6 +262,7 @@ export default function SetSeries(props) {
           year: "",
           technique: "",
           measures: "",
+          collectionType: "",
           file: file.name,
           checked: true,
           isTopTen: false
@@ -318,7 +321,7 @@ export default function SetSeries(props) {
     setSeries({ ...series, cover: i });
   };
 
-    const handleMarkAsTopSeries = name => event => {
+  const handleMarkAsTopSeries = name => event => {
     setSeries({ ...series, [name]: event.target.checked });
   };
 
@@ -523,14 +526,14 @@ export default function SetSeries(props) {
         </FormControl>
         <FormControlLabel
           className={classes.formControl}
-            control={
-                <GreenCheckbox
-                  checked={series.isInTopSeries}
-                  onChange={handleMarkAsTopSeries('isInTopSeries')}
-                  value="isInTopSeries"
-                />
-            }
-            label="Mark as top series"
+          control={
+            <GreenCheckbox
+              checked={series.isInTopSeries}
+              onChange={handleMarkAsTopSeries('isInTopSeries')}
+              value="isInTopSeries"
+            />
+          }
+          label="Mark as top series"
         />
         <FormControl className={classes.formControl}>
           <Button
@@ -671,6 +674,15 @@ export default function SetSeries(props) {
                   onChange={handleChangeDetails(series.i + n)}
                 />
                 <TextField
+                  name="collectionType"
+                  placeholder="Collection Type: e.g. Private Collection"
+                  margin="normal"
+                  label="Collection Type: "
+                  className={classes.textField}
+                  value={series.images_details[series.i + n].collectionType}
+                  onChange={handleChangeDetails(series.i + n)}
+                />
+                <TextField
                   name="order"
                   placeholder="Display as: 1, 2, 3... in the list"
                   margin="normal"
@@ -775,7 +787,16 @@ export default function SetSeries(props) {
                   className={classes.textField}
                   value={series.images_details[series.j].measures}
                   onChange={handleChangeDetails(series.j)}
-                />{" "}
+                />
+                <TextField
+                  name="collectionType"
+                  placeholder="Collection Type: e.g. Private Collection"
+                  margin="normal"
+                  label="Collection Type: "
+                  className={classes.textField}
+                  value={series.images_details[series.j].collectionType}
+                  onChange={handleChangeDetails(series.j)}
+                />
                 <TextField
                   name="order"
                   placeholder="Display as: 1, 2, 3... in the list"
