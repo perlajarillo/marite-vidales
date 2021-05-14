@@ -9,6 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import PaintingCard from "./PaintingCard";
+import PaintingsCarousel from "./PaintingsCarousel";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -33,8 +34,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up("sm")]: {
       padding: theme.sectionPadding.padding,
     },
-    [theme.breakpoints.between("xs","sm")]: {
-          marginRight: "0px",
+    [theme.breakpoints.between("xs", "sm")]: {
+      marginRight: "0px",
     },
   },
   masthead: {
@@ -72,7 +73,7 @@ class SeriesPainting extends Component {
       open: false,
       selectedImage: "",
       viewMore: false,
-      moreButtonText:"View More"
+      moreButtonText: "View More",
     };
   }
   handleClickOpen = (url) => {
@@ -84,7 +85,7 @@ class SeriesPainting extends Component {
   };
 
   handleMorePaintings = () => {
-    this.setState({moreButtonText: this.state.viewMore?"View More": "View Less", viewMore: !this.state.viewMore})
+    this.setState({ moreButtonText: this.state.viewMore ? "View More" : "View Less", viewMore: !this.state.viewMore })
   }
 
   /**
@@ -108,9 +109,12 @@ class SeriesPainting extends Component {
 
   render() {
     const { classes } = this.props;
-    const { open, series, selectedImage, viewMore, moreButtonText } = this.state;
+    const { open, series, selectedImage, viewMore, moreButtonText, index } = this.state;
     const topTenSeries = series ? series.images_details.filter(image => image.isTopTen) : [];
     topTenSeries.sort((a, b) => a.order - b.order);
+    const noTopTenSeries = series ? series.images_details.filter((image, i) =>
+      !image.isTopTen) : [];
+    const paintings = viewMore ? [...topTenSeries, ...noTopTenSeries] : topTenSeries;
     return series ? (
       <div className={classes.masthead}>
         <Paper className={classes.root}>
@@ -133,17 +137,12 @@ class SeriesPainting extends Component {
           ></div>
           <Typography color="secondary">{series.description}</Typography>
         </Paper>
-        {topTenSeries.length>0 && <Typography variant="caption" color="secondary" noWrap>
+        {paintings.length > 0 && <Typography variant="caption" color="secondary" noWrap>
           Click in the image to see more details.
         </Typography>}
         <div className={classes.cards}>
-          {topTenSeries.map((image, i) => (
-            <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i}/>
-          ))}
-
-          {viewMore && series.images_details.map((image, i) => (
-            !image.isTopTen &&
-              <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i+topTenSeries.length} />
+          {paintings.map((image, i) => (
+            <PaintingCard image={image} handleClickOpen={this.handleClickOpen} key={i} />
           ))}
 
           <Dialog
@@ -164,29 +163,19 @@ class SeriesPainting extends Component {
               </Button>
             </DialogActions>
             <DialogContent>
-              <div className={classes.container}>
-                <img
-                  src={selectedImage.url}
-                  alt={selectedImage.title}
-                  className={classes.image}
-                />
-                <Typography variant="body2" color="textSecondary">
-                  {" "}
-                  "{selectedImage.title}" {selectedImage.year} {"("}
-                  {selectedImage.technique} {selectedImage.measures} {")"}
-                </Typography>
-              </div>
+              <PaintingsCarousel carouselPaintings={paintings} selectedImage={selectedImage}
+              />
             </DialogContent>
           </Dialog>
         </div>
-        {topTenSeries.length>0 && (topTenSeries.length !== series.images_details.length)&&<Button
+        {topTenSeries.length > 0 && (topTenSeries.length !== series.images_details.length) && <Button
           size="small"
           variant="outlined"
           onClick={this.handleMorePaintings}
           color="secondary"
-                >
-                  {moreButtonText}
-          </Button>}
+        >
+          {moreButtonText}
+        </Button>}
       </div>
     ) : (
       <div className={classes.progressDiv}>
