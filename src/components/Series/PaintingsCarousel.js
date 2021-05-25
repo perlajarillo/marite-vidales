@@ -15,65 +15,30 @@ const styles = makeStyles((theme) => ({
   },
   carouselContainer: {
     textAlign: "center",
-    width: "60%",
+    width: "100%",
     margin: "auto",
-    paddingBottom: "2em",
-    [theme.breakpoints.down("md")]: {
-      width: "100%",
-    },
+    paddingBottom: "0.2em",
 
   },
-  masthead: {
-    textAlign: "center",
-    color: "white",
-    paddingTop: "50px",
-    paddingBottom: "110px",
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "10px",
-      paddingRight: "10px",
-    },
-  },
+
   paper: {
-    padding: theme.spacing(1),
-    margin: "auto",
-  },
-
-  contentBlock: { paddingTop: theme.spacing(2) },
-  text: {
-    textAlign: "justify",
-    fontSize: "0.95rem",
-    paddingLeft: theme.spacing(30),
-    paddingRight: theme.spacing(30),
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
+    margin: "0px",
   },
   legend: {
     fontSize: "0.85rem",
-    color: "#fff",
-
   },
   cardContent: {
-    backgroundColor: "black",
-    opacity: .4,
-    '&:hover': {
-      opacity: .6
-    }
-
+    paddingBottom: "2px !important"
   },
   image: {
     width: "auto",
     height: "auto",
-    maxHeight: theme.spacing(95),
-    maxWidth: theme.spacing(150),
+    maxHeight: theme.spacing(78),
     [theme.breakpoints.down("sm")]: {
-      maxWidth: theme.spacing(35),
+      maxWidth: "90%",
       padding: 0,
     },
-    padding: "10px",
+    padding: "0px",
   },
 
 }));
@@ -94,7 +59,7 @@ function Painting(props) {
   const yearString = `, ${year}. `;
   const workDetails = `${technique}, ${measuresIn}. (${measuresCm}). ${collectionTypeString}`;
   return (
-    <Card className={classes.root}>
+    <div className={classes.root}>
       <img
         src={url}
         alt={title}
@@ -108,7 +73,7 @@ function Painting(props) {
           {workDetails}
         </Typography>
       </CardContent>
-    </Card>)
+    </div>)
 };
 
 export default function PaintingsCarousel(props) {
@@ -117,7 +82,7 @@ export default function PaintingsCarousel(props) {
   const index = carouselPaintings.findIndex(i => i.url === selectedImage.url);
   return <Paper className={classes.paper}>
     <Carousel
-      autoPlay={true}
+      autoPlay={false}
       className={classes.carouselContainer}
       fullHeightHover={false}
       index={index >= 0 ? index : 0}

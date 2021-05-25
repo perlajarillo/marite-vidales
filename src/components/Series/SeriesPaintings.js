@@ -52,9 +52,8 @@ const styles = (theme) => ({
     textAlign: "center",
   },
   button: {
-    color: theme.palette.secondary.contrastText,
-    fontSize: "1.05rem",
-    padding: "10px 20px",
+    fontSize: ".85rem",
+    padding: "0px 30px",
   },
   root: {
     padding: theme.spacing(3, 2),
@@ -152,11 +151,10 @@ class SeriesPainting extends Component {
             fullScreen
           >
             <DialogActions>
-              <Typography variant="caption"> Click Close to return.</Typography>
               <Button
                 onClick={this.handleClose}
                 color="secondary"
-                variant="contained"
+
                 className={classes.button}
               >
                 Close
