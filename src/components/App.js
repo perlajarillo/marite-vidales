@@ -16,6 +16,7 @@ import SetBiography from "./SetBiography";
 import MySeries from "./MySeries";
 import Login from "./Login/Login";
 import { withAuthentication } from "./Session";
+import Contact from "./Contact/Contact";
 
 const App = () => (
   <div className="App">
@@ -33,6 +34,7 @@ const App = () => (
         <Route path="/setseries" component={SetSeries} />
         <Route path="/setbiography" component={SetBiography} />
         <Route path="/login" component={Login} />
+        <Route path="/contact" component={Contact} />
       </Switch>
       <Footer />
     </MuiThemeProvider>
