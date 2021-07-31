@@ -22,13 +22,13 @@ const styles = theme => ({
     letterSpacing: "1px",
     color: theme.palette.primary.contrastText,
     marginLeft: 50,
-     [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "0.9rem",
       marginLeft: 5
     }
   },
   brand: {
-    paddingTop:"1rem",
+    paddingTop: "1rem",
     flex: 1,
     [theme.breakpoints.down("xs")]: {
       fontSize: "1.1rem"
@@ -45,11 +45,11 @@ const NavNoAuth = props => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-      <Typography variant="h5" className={classes.brand} align="center">
-            <a href="/" className={classes.links}>
-              Marite Vidales
-            </a>
-          </Typography>
+        <Typography variant="h5" className={classes.brand} align="center">
+          <a href="/" className={classes.links}>
+            Marite Vidales
+          </a>
+        </Typography>
         <Toolbar>
           <div className={classes.linkContainer}>
             <Button
@@ -84,14 +84,14 @@ const NavNoAuth = props => {
             >
               Reviews
             </Button>
-            {/*             <Button
+            <Button
               color="inherit"
               className={classes.items}
               component={Link}
-              to="/"
+              to="/contact"
             >
-              Contact{" "}
-            </Button> */}
+              Contact
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
