@@ -192,7 +192,7 @@ const Exhibitions = () => {
     <div className={classes.masthead}>
       <Typography variant="h4" color="secondary" gutterBottom>
         Exhibits
-        </Typography>
+      </Typography>
       <br></br>
       <Paper className={classes.paper}>
         <Carousel
@@ -216,7 +216,7 @@ const Exhibitions = () => {
           ))
           : "No galleries have been added yet!"}
         <br></br>
-        <Typography variant="h6">Grands and Awards </Typography>
+        <Typography variant="h6">Grants and Awards </Typography>
         {grantsAndAwards
           ? Object.keys(grantsAndAwards).map((i) => (
             <div className={classes.contentBlock} key={i}>
