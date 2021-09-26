@@ -41,6 +41,7 @@ const styles = theme => ({
 class Footer extends Component {
   render() {
     const { classes } = this.props;
+    const year = new Date().getFullYear();
     return (
       <footer className={classes.root}>
         <Paper className={classes.paper} elevation={0}>
@@ -48,7 +49,7 @@ class Footer extends Component {
             <Grid item xs={12} sm={6} md={6} lg={6}>
               <div className={classes.artistContainer}>
                 <Typography variant="caption" className={classes.copyright}>
-                  Copyright &copy; 2019 Paintings of Marité Vidales, {"  "}
+                  Copyright &copy; {year} Paintings of Marité Vidales, {"  "}
                 </Typography>
                 <Typography variant="caption" className={classes.copyright}>
                   Washington, D.C.
