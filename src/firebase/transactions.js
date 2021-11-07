@@ -57,7 +57,7 @@ export function deleteEducation(key, index) {
     })
     .catch(
       () =>
-        function(error) {
+        function (error) {
           console.log(error);
         }
     );
@@ -108,7 +108,7 @@ export function deleteExperience(key, index) {
     })
     .catch(
       () =>
-        function(error) {
+        function (error) {
           console.log(error);
         }
     );
@@ -165,7 +165,7 @@ export function putProfileImage(file) {
       .child("biography/" + file.name)
       .put(file)
       .then(snapshot => {
-        snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        snapshot.ref.getDownloadURL().then(function (downloadURL) {
           setProfileImageURL(downloadURL);
         });
       })
@@ -207,7 +207,7 @@ export function deleteImages(seriesKey, toDelete) {
   if (toDelete && seriesKey) {
     toDelete.map(image => {
       let imageRef = storage.ref().child(seriesKey + "/" + image);
-      imageRef.delete().catch(function(error) {
+      imageRef.delete().catch(function (error) {
         console.log(error);
       });
     });
@@ -217,7 +217,7 @@ export function deleteImages(seriesKey, toDelete) {
 export function deleteAllImages(series) {
   series.images_details.map(i => {
     let imageRef = storage.ref().child(series.key + "/" + i.file);
-    imageRef.delete().catch(function(error) {
+    imageRef.delete().catch(function (error) {
       console.log(error);
     });
   });
@@ -230,7 +230,7 @@ export function deleteSeries(series) {
     .child(series.key)
     .remove()
     .then(deleteAllImages(series))
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -249,7 +249,7 @@ export function putPaintings(paintings, seriesKey, n) {
         .child(seriesKey + "/" + painting.name)
         .put(painting)
         .then(snapshot => {
-          snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          snapshot.ref.getDownloadURL().then(function (downloadURL) {
             setImageURL(seriesKey, i + n, downloadURL);
           });
         })
@@ -268,4 +268,10 @@ export function setImageURL(seriesKey, i, url) {
     .child(i)
     .child("url")
     .set(url);
+}
+
+export function getExhibitions() {
+  const ref = db.ref().child("exhibits");
+  const exhibitions = ref.once("value");
+  return exhibitions;
 }

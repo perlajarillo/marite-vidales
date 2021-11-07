@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import exhibitions from "./data";
 import picture1 from "../../images/one.jpg";
 import picture2 from "../../images/two.jpg";
 import picture3 from "../../images/three.jpg";
@@ -19,13 +18,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Carousel from 'react-material-ui-carousel';
 import Grid from '@material-ui/core/Grid';
+import { getExhibitions } from "../../firebase/transactions";
 
-
-const solo = exhibitions.solo;
-const selected = exhibitions.selected;
-const galleries = exhibitions.galleries;
-const juried = exhibitions.juried;
-const grantsAndAwards = exhibitions.grantsAndAwards;
 
 const groupByYear = (objectOfExhibits) =>
   [...Object.values(objectOfExhibits)].reduce((acc, value) => {
@@ -38,10 +32,6 @@ const groupByYear = (objectOfExhibits) =>
 
     return acc;
   }, {});
-
-const selectedByYear = groupByYear(selected);
-const soloByYear = groupByYear(solo);
-const juriedByYear = groupByYear(juried);
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -148,6 +138,12 @@ function Exhibits(props) {
 };
 
 const Exhibitions = () => {
+  const [grantsAndAwards, setGrantsAndAwards] = useState({});
+  const [selectedByYear, setSelectedByYear] = useState({});
+  const [soloByYear, setSoloByYear] = useState({});
+  const [juriedByYear, setJuriedByYear] = useState({});
+  const [galleries, setGalleries] = useState({});
+
   const classes = styles();
   const carouselItems = [
     {
@@ -188,6 +184,26 @@ const Exhibitions = () => {
     }
 
   ];
+
+  const getExhibitsData = () => {
+    getExhibitions().then(snapshot => {
+      const solo = snapshot.val().solo;
+      const selected = snapshot.val().selected;
+      const juried = snapshot.val().juried;
+      setGalleries(snapshot.val().galleries);
+      setGrantsAndAwards(snapshot.val().grantsAndAwards);
+      setSelectedByYear(selected && groupByYear(selected));
+      setSoloByYear(solo && groupByYear(solo));
+      setJuriedByYear(juried && groupByYear(juried));
+
+    });
+
+  }
+
+  useEffect(() => {
+    getExhibitsData()
+  }, []);
+
   return (
     <div className={classes.masthead}>
       <Typography variant="h4" color="secondary" gutterBottom>
