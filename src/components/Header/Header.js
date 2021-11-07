@@ -131,7 +131,7 @@ const NavAuth = props => {
               color="inherit"
               className={classes.items}
               component={Link}
-              to="/"
+              to="/setexhibitions"
             >
               Exhibits
             </Button>
