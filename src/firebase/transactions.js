@@ -275,3 +275,104 @@ export function getExhibitions() {
   const exhibitions = ref.once("value");
   return exhibitions;
 }
+
+
+export function setGallery(key, data) {
+  let galleryKey = key;
+  if (galleryKey === "") {
+    galleryKey = db
+      .ref()
+      .child("exhibits")
+      .child("galleries")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/exhibits/galleries/" + galleryKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function setGrantsAndAwards(key, data) {
+  let grantAwardKey = key;
+  if (grantAwardKey === "") {
+    grantAwardKey = db
+      .ref()
+      .child("exhibits")
+      .child("grantsAndAwards")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/exhibits/grantsAndAwards/" + grantAwardKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function setJuriedExhibition(key, data) {
+  let juriedKey = key;
+  if (juriedKey === "") {
+    juriedKey = db
+      .ref()
+      .child("exhibits")
+      .child("juried")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/exhibits/juried/" + juriedKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function setGroupExhibition(key, data) {
+  let groupKey = key;
+  if (groupKey === "") {
+    groupKey = db
+      .ref()
+      .child("exhibits")
+      .child("selected")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/exhibits/selected/" + groupKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+export function setSoloExhibition(key, data) {
+  let soloKey = key;
+  if (soloKey === "") {
+    soloKey = db
+      .ref()
+      .child("exhibits")
+      .child("solo")
+      .push().key;
+  }
+
+  const updates = {};
+  updates["/exhibits/solo/" + soloKey] = data;
+  return db
+    .ref()
+    .update(updates)
+    .catch(error => {
+      console.log(error);
+    });
+}
