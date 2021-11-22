@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { ActionIcons } from "../SetExhibitions/ActionIcons";
 
 const styles = makeStyles((theme) => ({
 
@@ -14,7 +15,6 @@ const styles = makeStyles((theme) => ({
       paddingRight: theme.spacing(1),
     },
   },
-
 }));
 
 
@@ -29,7 +29,7 @@ export function Exhibits(props) {
         <Grid item xs={1}>
           <Typography className={classes.text}>{year}</Typography>
         </Grid>
-        <Grid item xs={11}>
+        <Grid item xs={8}>
           {exhibits.map((exhibit, idx) =>
             <Typography className={classes.text} key={idx} gutterBottom>
               <i>{exhibit.name + '. '}</i>
@@ -38,6 +38,10 @@ export function Exhibits(props) {
             </Typography>
           )}
         </Grid>
+        {props.isAuth &&
+          <Grid item xs={4}>
+            <ActionIcons />
+          </Grid>}
       </Grid>
     )
   }))

@@ -13,9 +13,6 @@ import picture8 from "../../images/eight.jpg";
 import picture9 from "../../images/nine.jpg";
 import picture10 from "../../images/ten.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import Carousel from 'react-material-ui-carousel';
 import Grid from '@material-ui/core/Grid';
 import { getExhibitions } from "../../firebase/transactions";
@@ -23,12 +20,6 @@ import { groupByYear } from "../Exhibitions/utilities";
 import { Exhibits } from "../Exhibitions/Exhibits";
 import { Item } from "../Exhibitions/Item";
 import Button from "@material-ui/core/Button";
-import EditIcon from "@material-ui/icons/Edit";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContentWrapper from "../SnackbarContentComponent/SnackbarContentComponent";
 import TextField from "@material-ui/core/TextField";
@@ -36,6 +27,11 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import NoAuthenticated from "../NoAuthenticated/NoAuthenticated";
 import { db } from "../../firebase";
+import BookIcon from "@material-ui/icons/Book";
+import { ActionIcons } from "./ActionIcons";
+import GalleryDialog from "./galleryDialog";
+import GrantAwardDialog from "./grantAwardDialog";
+import ExhibitionDialog from "./exhibitionDialog";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -96,17 +92,42 @@ const styles = makeStyles((theme) => ({
       opacity: .6
     }
 
-  }
+  },
+  btn: {
+    marginLeft: 10,
+    marginRight: 0,
+    [theme.breakpoints.down("sm")]: {
+      marginTop: theme.spacing(1)
+    }
+  },
+  actions: {
+    display: "flex",
+  },
+
+  actionDelete: {
+    margin: theme.spacing(1),
+    backgroundColor: "#c62828",
+    color: theme.palette.secondary.contrastText
+  },
+  fab: {
+    margin: theme.spacing(1),
+    paddingTop: 0,
+  },
 
 }));
 
-
-const SetExhibitions = () => {
+const SetExhibitions = (props) => {
   const [grantsAndAwards, setGrantsAndAwards] = useState({});
   const [selectedByYear, setSelectedByYear] = useState({});
   const [soloByYear, setSoloByYear] = useState({});
   const [juriedByYear, setJuriedByYear] = useState({});
   const [galleries, setGalleries] = useState({});
+  const [openGalleries, setOpenGalleries] = useState(false);
+  const [openGrantsAndAwards, setOpenGrantsAndAwards] = useState(false);
+  const [openExhibitions, setOpenExhibitions] = useState(false);
+  const [addingSolo, setAddingSolo] = useState(true);
+  const [addingJuried, setAddingJuried] = useState(true);
+  const [addingGroup, setAddingGroup] = useState(true);
 
   const classes = styles();
   const carouselItems = [
@@ -165,8 +186,48 @@ const SetExhibitions = () => {
   }
 
   useEffect(() => {
-    getExhibitsData()
-  }, []);
+    if (props.authUser) {
+      getExhibitsData()
+    }
+  }, [props]);
+
+  const toggleOpenGalleries = () => {
+    setOpenGalleries(!openGalleries)
+  };
+
+  const toggleOpenGrantsAndAwards = () => {
+    setOpenGrantsAndAwards(!openGrantsAndAwards)
+  };
+
+  const onGrantsAwardsUpdate = (newGrantAward) => {
+    if (newGrantAward) {
+      setGrantsAndAwards({ ...newGrantAward, ...grantsAndAwards });
+    }
+  }
+
+  const toggleOpenExhibitions = () => {
+    setOpenExhibitions(!openExhibitions)
+    setAddingSolo(false);
+    setAddingJuried(false);
+    setAddingGroup(false);
+  };
+
+  const handleOpenSolo = () => {
+    setOpenExhibitions(true);
+    setAddingSolo(true);
+  };
+
+  const handleOpenJuried = () => {
+    setOpenExhibitions(true);
+    setAddingJuried(true);
+  };
+
+  const handleOpenGroup = () => {
+    setOpenExhibitions(true);
+    setAddingGroup(true);
+  };
+
+  const exhibitionType = addingSolo ? "Selected Solo" : addingJuried ? "Selected Juried" : "Selected Group";
 
   return (
     <div className={classes.masthead}>
@@ -183,47 +244,113 @@ const SetExhibitions = () => {
           {carouselItems.map((i, idx) => <Item image={i.image} legend={i.legend} key={idx} />)}
 
         </Carousel>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={toggleOpenGalleries}
+          className={classes.btn}
+        >
+          Add gallery <BookIcon className={classes.icon} />
+        </Button>
         <Typography variant="h6">Galleries </Typography>
         {galleries
           ? Object.keys(galleries).map((i) => (
-            <div className={classes.contentBlock} key={i}>
-              <Typography className={classes.text}>
-                {galleries[i].gallery + ". "}
-                {galleries[i].address + ". "}
-              </Typography>
-
-            </div>
+            <Grid container wrap="nowrap" spacing={7} key={i}>
+              <Grid item xs={9}>
+                <div className={classes.contentBlock} key={i}>
+                  <Typography className={classes.text}>
+                    {galleries[i].gallery + ". "}
+                    {galleries[i].address + ". "}
+                  </Typography>
+                </div></Grid>
+              <Grid item xs={4}>
+                <ActionIcons />
+              </Grid>
+            </Grid>
           ))
           : "No galleries have been added yet!"}
         <br></br>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={toggleOpenGrantsAndAwards}
+          className={classes.btn}
+        >
+          Add grant/award <BookIcon className={classes.icon} />
+        </Button>
         <Typography variant="h6">Grants and Awards </Typography>
         {grantsAndAwards
           ? Object.keys(grantsAndAwards).map((i) => (
-            <div className={classes.contentBlock} key={i}>
-              <Typography className={classes.text}>
-                {grantsAndAwards[i]}
-              </Typography>
-            </div>
+            <Grid container wrap="nowrap" spacing={7} key={i}>
+              <Grid item xs={9}>
+                <div className={classes.contentBlock} key={i}>
+                  <Typography className={classes.text}>
+                    {grantsAndAwards[i]}
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <ActionIcons />
+              </Grid>
+            </Grid>
           ))
           : "No grants and awards have been added yet!"}
         <br></br>
         <br></br>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpenSolo}
+          className={classes.btn}
+        >
+          Add solo exhibition <BookIcon className={classes.icon} />
+        </Button>
         <Typography variant="h6" gutterBottom>Selected Solo Exhibitions </Typography>
         {soloByYear
-          ? <Exhibits exhibitsObject={soloByYear} />
+          ? <Exhibits exhibitsObject={soloByYear} isAuth={props.authUser} />
           : "No solo exhibitions have been added yet!"}
       </Paper>
       <Paper className={classes.paper}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpenJuried}
+          className={classes.btn}
+        >
+          Add selected juried exhibition <BookIcon className={classes.icon} />
+        </Button>
         <Typography variant="h6" gutterBottom>Selected Juried Exhibitions</Typography>
         {juriedByYear
-          ? <Exhibits exhibitsObject={juriedByYear} />
+          ? <Exhibits exhibitsObject={juriedByYear} isAuth={props.authUser} />
           : "No juried exhibitions been added yet!"}
       </Paper>
       <Paper className={classes.paper}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpenGroup}
+          className={classes.btn}
+        >
+          Add selected group exhibition <BookIcon className={classes.icon} />
+        </Button>
         <Typography variant="h6" gutterBottom>Selected Group Exhibitions</Typography>
-        {selectedByYear ? <Exhibits exhibitsObject={selectedByYear} />
+        {selectedByYear ? <Exhibits exhibitsObject={selectedByYear} isAuth={props.authUser} />
           : "No selected exhibitions been added yet!"}
       </Paper>
+      <GalleryDialog
+        openGalleries={openGalleries}
+        toggleOpenGalleries={toggleOpenGalleries}
+      />
+      <GrantAwardDialog
+        openGrantsAndAwards={openGrantsAndAwards}
+        toggleOpenGrantsAndAwards={toggleOpenGrantsAndAwards}
+        onGrantsAwardsUpdate={onGrantsAwardsUpdate}
+      />
+      <ExhibitionDialog
+        openExhibitions={openExhibitions}
+        toggleOpenExhibitions={toggleOpenExhibitions}
+        exhibitionType={exhibitionType}
+      />
     </div >
   );
 }
