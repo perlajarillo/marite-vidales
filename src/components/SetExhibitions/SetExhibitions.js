@@ -125,9 +125,9 @@ const SetExhibitions = (props) => {
   const [openGalleries, setOpenGalleries] = useState(false);
   const [openGrantsAndAwards, setOpenGrantsAndAwards] = useState(false);
   const [openExhibitions, setOpenExhibitions] = useState(false);
-  const [addingSolo, setAddingSolo] = useState(true);
-  const [addingJuried, setAddingJuried] = useState(true);
-  const [addingGroup, setAddingGroup] = useState(true);
+  const [addingSolo, setAddingSolo] = useState(false);
+  const [addingJuried, setAddingJuried] = useState(false);
+  const [addingGroup, setAddingGroup] = useState(false);
   const [selectedItem, setSelectedItem] = useState(undefined);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(undefined);
@@ -244,7 +244,13 @@ const SetExhibitions = (props) => {
     setOpenSnackbar(false);
   };
 
-  const exhibitionType = addingSolo ? "Selected Solo" : addingJuried ? "Selected Juried" : "Selected Group";
+  const exhibitionType = addingSolo
+    ? "Selected Solo"
+    : addingJuried
+      ? "Selected Juried"
+      : addingGroup
+        ? "Selected Group"
+        : undefined;
 
   return (
     <div className={classes.masthead}>
