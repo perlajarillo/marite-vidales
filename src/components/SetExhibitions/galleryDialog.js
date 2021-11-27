@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -11,10 +11,24 @@ import { Typography } from "@material-ui/core";
 
 
 const GalleryDialog = (props) => {
-  const { openGalleries, toggleOpenGalleries } = props;
+  const {
+    openGalleries,
+    toggleOpenGalleries,
+    getExhibitsData,
+    selectedItem,
+    setSnackbarMessage
+  } = props;
   const [address, setAddress] = useState(undefined);
   const [gallery, setGallery] = useState(undefined);
   const [message, setMessage] = useState(undefined);
+  const [key, setKey] = useState("");
+  const addEditText = selectedItem ? "Edit" : "Add";
+
+  useEffect(() => {
+    setAddress(selectedItem?.address);
+    setGallery(selectedItem?.gallery);
+    setKey(selectedItem?.key || "");
+  }, [selectedItem]);
 
   const onSaveGallery = (e) => {
     e.preventDefault();
@@ -23,8 +37,11 @@ const GalleryDialog = (props) => {
         address,
         gallery
       };
-      db.setGallery("", data).then(() => {
-        onClose()
+      db.setGallery(key, data).then(() => {
+        getExhibitsData();
+        onClose();
+        const addedOrEdited = addEditText === "Add" ? "added" : "edited";
+        setSnackbarMessage(`Galery has been ${addedOrEdited}`);
       });
     } else {
       setMessage("Fields with * are required");
@@ -33,8 +50,10 @@ const GalleryDialog = (props) => {
 
   const onClose = e => {
     e?.preventDefault();
-    setAddress(undefined);
-    setGallery(undefined);
+    if (!selectedItem) {
+      setAddress(undefined);
+      setGallery(undefined);
+    }
     setMessage(undefined);
     toggleOpenGalleries()
   }
@@ -45,7 +64,7 @@ const GalleryDialog = (props) => {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Add Gallery</DialogTitle>
+      <DialogTitle id="form-dialog-title">{addEditText} Gallery</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Fill the next fields to add a gallery. All fields are required.

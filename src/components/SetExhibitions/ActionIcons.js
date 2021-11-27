@@ -22,17 +22,20 @@ const styles = makeStyles((theme) => ({
 
 }));
 
-export function ActionIcons() {
+export function ActionIcons(props) {
   const classes = styles();
+  const { selectedItem, openEditDialog } = props;
+  const handleOpenEditDialog = () => {
+    openEditDialog(selectedItem);
+  };
+
   return (<div className={classes.actions} >
     <Fab
       color="secondary"
       aria-label="edit"
       className={classes?.fab}
       sx={{ mr: 1 }}
-    /*  onClick={() =>
-       this.handleEditEducation(education[e.key], e.key)
-     } */
+      onClick={handleOpenEditDialog}
     >
       <EditIcon />
     </Fab>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -21,8 +21,24 @@ const ExhibitionDialog = (props) => {
   const [place, setPlace] = useState(undefined);
   const [year, setYear] = useState(undefined);
   const [message, setMessage] = useState(undefined)
-  const { openExhibitions, toggleOpenExhibitions, exhibitionType } = props;
-
+  const [key, setKey] = useState("");
+  const {
+    openExhibitions,
+    toggleOpenExhibitions,
+    exhibitionType,
+    getExhibitsData,
+    selectedItem,
+    setSnackbarMessage
+  } = props;
+  const addEditText = selectedItem ? "Edit" : "Add";
+  useEffect(() => {
+    setDates(selectedItem?.dates);
+    setName(selectedItem?.name);
+    setPlace(selectedItem?.place);
+    setYear(selectedItem?.year);
+    setKey(selectedItem?.key || "");
+  }, [props, selectedItem]);
+  const addedOrEdited = addEditText === "Add" ? "added" : "edited";
   const onSaveExhibition = (e) => {
     e.preventDefault();
     if (dates && name && place && year) {
@@ -34,18 +50,24 @@ const ExhibitionDialog = (props) => {
       };
       switch (exhibitionType) {
         case (ExhibitionType.Group):
-          db.setGroupExhibition("", data).then(() => {
-            onClose()
+          db.setGroupExhibition(key, data).then(() => {
+            getExhibitsData();
+            setSnackbarMessage(`Group exhibition has been ${addedOrEdited}`);
+            onClose();
           });
           break;
         case (ExhibitionType.Juried):
-          db.setJuriedExhibition("", data).then(() => {
-            onClose()
+          db.setJuriedExhibition(key, data).then(() => {
+            getExhibitsData();
+            setSnackbarMessage(`Juried exhibition has been ${addedOrEdited}`);
+            onClose();
           });
           break;
         case (ExhibitionType.Solo):
-          db.setSoloExhibition("", data).then(() => {
-            onClose()
+          db.setSoloExhibition(key, data).then(() => {
+            getExhibitsData();
+            setSnackbarMessage(`Solo exhibition has been ${addedOrEdited}`);
+            onClose();
           });
           break;
         default:
@@ -58,11 +80,13 @@ const ExhibitionDialog = (props) => {
 
   const onClose = e => {
     e?.preventDefault();
-    setDates(undefined);
-    setName(undefined);
+    if (!selectedItem) {
+      setDates(undefined);
+      setName(undefined);
+      setPlace(undefined);
+      setYear(undefined);
+    }
     setMessage(undefined);
-    setPlace(undefined);
-    setYear(undefined);
     toggleOpenExhibitions();
   }
   return (
@@ -71,7 +95,7 @@ const ExhibitionDialog = (props) => {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Add {exhibitionType} Exhibition</DialogTitle>
+      <DialogTitle id="form-dialog-title">{addEditText} {exhibitionType} Exhibition</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Fill the next fields to add a exhibition. All fields are required.

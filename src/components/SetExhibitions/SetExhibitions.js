@@ -128,6 +128,10 @@ const SetExhibitions = (props) => {
   const [addingSolo, setAddingSolo] = useState(true);
   const [addingJuried, setAddingJuried] = useState(true);
   const [addingGroup, setAddingGroup] = useState(true);
+  const [selectedItem, setSelectedItem] = useState(undefined);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(undefined);
+  const [typeOfMessage, setTypeOfMessage] = useState("success");
 
   const classes = styles();
   const carouselItems = [
@@ -180,7 +184,7 @@ const SetExhibitions = (props) => {
       setSelectedByYear(selected && groupByYear(selected));
       setSoloByYear(solo && groupByYear(solo));
       setJuriedByYear(juried && groupByYear(juried));
-
+      setSelectedItem(undefined);
     });
 
   }
@@ -191,19 +195,21 @@ const SetExhibitions = (props) => {
     }
   }, [props]);
 
-  const toggleOpenGalleries = () => {
-    setOpenGalleries(!openGalleries)
+  useEffect(() => {
+    if (snackbarMessage) {
+      setOpenSnackbar(true);
+    }
+  }, [snackbarMessage]);
+
+  const toggleOpenGalleries = (item) => {
+    setSelectedItem(item);
+    setOpenGalleries(!openGalleries);
   };
 
-  const toggleOpenGrantsAndAwards = () => {
+  const toggleOpenGrantsAndAwards = (item) => {
+    setSelectedItem(item);
     setOpenGrantsAndAwards(!openGrantsAndAwards)
   };
-
-  const onGrantsAwardsUpdate = (newGrantAward) => {
-    if (newGrantAward) {
-      setGrantsAndAwards({ ...newGrantAward, ...grantsAndAwards });
-    }
-  }
 
   const toggleOpenExhibitions = () => {
     setOpenExhibitions(!openExhibitions)
@@ -212,19 +218,30 @@ const SetExhibitions = (props) => {
     setAddingGroup(false);
   };
 
-  const handleOpenSolo = () => {
+  const handleOpenSolo = (item) => {
+    setSelectedItem(item);
     setOpenExhibitions(true);
     setAddingSolo(true);
   };
 
-  const handleOpenJuried = () => {
+  const handleOpenJuried = (item) => {
+    setSelectedItem(item);
     setOpenExhibitions(true);
     setAddingJuried(true);
   };
 
-  const handleOpenGroup = () => {
+  const handleOpenGroup = (item) => {
+    setSelectedItem(item);
     setOpenExhibitions(true);
     setAddingGroup(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarMessage(undefined);
+    setOpenSnackbar(false);
   };
 
   const exhibitionType = addingSolo ? "Selected Solo" : addingJuried ? "Selected Juried" : "Selected Group";
@@ -247,7 +264,7 @@ const SetExhibitions = (props) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={toggleOpenGalleries}
+          onClick={() => toggleOpenGalleries(undefined)}
           className={classes.btn}
         >
           Add gallery <BookIcon className={classes.icon} />
@@ -264,7 +281,10 @@ const SetExhibitions = (props) => {
                   </Typography>
                 </div></Grid>
               <Grid item xs={4}>
-                <ActionIcons />
+                <ActionIcons
+                  openEditDialog={toggleOpenGalleries}
+                  selectedItem={{ key: i, ...galleries[i] }}
+                />
               </Grid>
             </Grid>
           ))
@@ -273,7 +293,7 @@ const SetExhibitions = (props) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={toggleOpenGrantsAndAwards}
+          onClick={() => toggleOpenGrantsAndAwards(undefined)}
           className={classes.btn}
         >
           Add grant/award <BookIcon className={classes.icon} />
@@ -290,7 +310,10 @@ const SetExhibitions = (props) => {
                 </div>
               </Grid>
               <Grid item xs={4}>
-                <ActionIcons />
+                <ActionIcons
+                  openEditDialog={toggleOpenGrantsAndAwards}
+                  selectedItem={{ key: i, grantAward: grantsAndAwards[i] }}
+                />
               </Grid>
             </Grid>
           ))
@@ -300,57 +323,94 @@ const SetExhibitions = (props) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleOpenSolo}
+          onClick={() => handleOpenSolo(undefined)}
           className={classes.btn}
         >
           Add solo exhibition <BookIcon className={classes.icon} />
         </Button>
         <Typography variant="h6" gutterBottom>Selected Solo Exhibitions </Typography>
         {soloByYear
-          ? <Exhibits exhibitsObject={soloByYear} isAuth={props.authUser} />
+          ? <Exhibits
+            exhibitsObject={soloByYear}
+            isAuth={props.authUser}
+            openEditDialog={handleOpenSolo}
+          />
           : "No solo exhibitions have been added yet!"}
       </Paper>
       <Paper className={classes.paper}>
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleOpenJuried}
+          onClick={() => handleOpenJuried(undefined)}
           className={classes.btn}
         >
           Add selected juried exhibition <BookIcon className={classes.icon} />
         </Button>
         <Typography variant="h6" gutterBottom>Selected Juried Exhibitions</Typography>
         {juriedByYear
-          ? <Exhibits exhibitsObject={juriedByYear} isAuth={props.authUser} />
+          ? <Exhibits
+            exhibitsObject={juriedByYear}
+            isAuth={props.authUser}
+            openEditDialog={handleOpenJuried}
+          />
           : "No juried exhibitions been added yet!"}
       </Paper>
       <Paper className={classes.paper}>
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleOpenGroup}
+          onClick={() => handleOpenGroup(undefined)}
           className={classes.btn}
         >
           Add selected group exhibition <BookIcon className={classes.icon} />
         </Button>
         <Typography variant="h6" gutterBottom>Selected Group Exhibitions</Typography>
-        {selectedByYear ? <Exhibits exhibitsObject={selectedByYear} isAuth={props.authUser} />
+        {selectedByYear ? <Exhibits
+          exhibitsObject={selectedByYear}
+          isAuth={props.authUser}
+          openEditDialog={handleOpenGroup}
+        />
           : "No selected exhibitions been added yet!"}
       </Paper>
       <GalleryDialog
         openGalleries={openGalleries}
         toggleOpenGalleries={toggleOpenGalleries}
+        getExhibitsData={getExhibitsData}
+        selectedItem={selectedItem}
+        setSnackbarMessage={setSnackbarMessage}
       />
       <GrantAwardDialog
         openGrantsAndAwards={openGrantsAndAwards}
         toggleOpenGrantsAndAwards={toggleOpenGrantsAndAwards}
-        onGrantsAwardsUpdate={onGrantsAwardsUpdate}
+        getExhibitsData={getExhibitsData}
+        selectedItem={selectedItem}
+        setSnackbarMessage={setSnackbarMessage}
       />
       <ExhibitionDialog
         openExhibitions={openExhibitions}
         toggleOpenExhibitions={toggleOpenExhibitions}
         exhibitionType={exhibitionType}
+        getExhibitsData={getExhibitsData}
+        selectedItem={selectedItem}
+        setSnackbarMessage={setSnackbarMessage}
       />
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        id="openSnackbarError"
+        name="openSnackbarError"
+      >
+        <SnackbarContentWrapper
+          onClose={handleSnackbarClose}
+          variant={typeOfMessage}
+          message={snackbarMessage}
+        />
+      </Snackbar>
     </div >
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -13,18 +13,29 @@ import { v4 as uuidv4 } from 'uuid';
 
 const GrantAwardDialog = (props) => {
   const [grantAward, setGrantAward] = useState(undefined);
-  const [message, setMessage] = useState(undefined)
-  const { openGrantsAndAwards, toggleOpenGrantsAndAwards, onGrantsAwardsUpdate } = props;
+  const [message, setMessage] = useState(undefined);
+  const [key, setKey] = useState("");
+  const {
+    openGrantsAndAwards,
+    toggleOpenGrantsAndAwards,
+    getExhibitsData,
+    selectedItem,
+    setSnackbarMessage
+  } = props;
+  const addEditText = selectedItem ? "Edit" : "Add";
+  const addedOrEdited = addEditText === "Add" ? "added" : "edited";
+
+  useEffect(() => {
+    setGrantAward(selectedItem?.grantAward);
+    setKey(selectedItem?.key || "");
+  }, [selectedItem]);
 
   const onSaveGrantAward = (e) => {
     e.preventDefault();
     if (grantAward) {
-      db.setGrantsAndAwards("", grantAward).then(() => {
-        const key = uuidv4();
-        const newEntry = {
-          [key]: grantAward
-        }
-        onGrantsAwardsUpdate(newEntry);
+      db.setGrantsAndAwards(key, grantAward).then(() => {
+        getExhibitsData();
+        setSnackbarMessage(`Solo exhibition has been ${addedOrEdited}`);
         onClose();
       });
     } else {
@@ -34,7 +45,9 @@ const GrantAwardDialog = (props) => {
 
   const onClose = e => {
     e?.preventDefault();
-    setGrantAward(undefined);
+    if (!selectedItem) {
+      setGrantAward(undefined);
+    }
     setMessage(undefined);
     toggleOpenGrantsAndAwards();
   }
@@ -45,7 +58,7 @@ const GrantAwardDialog = (props) => {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Add Grant/Award</DialogTitle>
+      <DialogTitle id="form-dialog-title">{addEditText} Grant/Award</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Fill the next fields to add a gallery. All fields are required.

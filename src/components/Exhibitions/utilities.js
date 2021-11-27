@@ -1,11 +1,12 @@
 export const groupByYear = (objectOfExhibits) =>
-  [...Object.values(objectOfExhibits)].reduce((acc, value) => {
+  [...Object.entries(objectOfExhibits)].reduce((acc, [key, value]) => {
     // Group initialization
     if (!acc[value.year]) {
       acc[value.year] = [];
     }
     // Grouping
-    acc[value.year].push(value);
+    const objectWithKey = { key, ...value };
+    acc[value.year].push(objectWithKey);
 
     return acc;
   }, {});

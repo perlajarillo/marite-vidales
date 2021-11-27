@@ -19,7 +19,7 @@ const styles = makeStyles((theme) => ({
 
 
 export function Exhibits(props) {
-  const exhibitsObject = props.exhibitsObject;
+  const { exhibitsObject, openEditDialog } = props;
   const classes = styles();
   return (Object.entries(exhibitsObject).sort((a, b) => b[0] - a[0]).map(entry => {
     const year = entry[0];
@@ -29,19 +29,27 @@ export function Exhibits(props) {
         <Grid item xs={1}>
           <Typography className={classes.text}>{year}</Typography>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={11}>
           {exhibits.map((exhibit, idx) =>
-            <Typography className={classes.text} key={idx} gutterBottom>
-              <i>{exhibit.name + '. '}</i>
-              {exhibit.place + ". "}
-              {exhibit.dates + ". "}
-            </Typography>
+            <Grid container wrap="nowrap" spacing={7} key={idx}>
+              <Grid item xs={8}>
+                <Typography className={classes.text} gutterBottom>
+                  <i>{exhibit.name + '. '}</i>
+                  {exhibit.place + ". "}
+                  {exhibit.dates + ". "}
+                </Typography>
+              </Grid>
+              {
+                props.isAuth &&
+                <Grid item xs={4}>
+                  <ActionIcons
+                    openEditDialog={openEditDialog}
+                    selectedItem={{ key: entry.key, ...exhibit }}
+                  />
+                </Grid>
+              }</Grid>
           )}
         </Grid>
-        {props.isAuth &&
-          <Grid item xs={4}>
-            <ActionIcons />
-          </Grid>}
       </Grid>
     )
   }))
