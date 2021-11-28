@@ -376,3 +376,78 @@ export function setSoloExhibition(key, data) {
       console.log(error);
     });
 }
+
+export function deleteGrantAward(key) {
+  return db
+    .ref()
+    .child("exhibits")
+    .child("grantsAndAwards")
+    .child(key)
+    .remove()
+    .catch(
+      () =>
+        function (error) {
+          console.log(error);
+        }
+    );
+}
+
+export function deleteGallery(key) {
+  return db
+    .ref()
+    .child("exhibits")
+    .child("galleries")
+    .child(key)
+    .remove()
+    .catch(
+      () =>
+        function (error) {
+          console.log(error);
+        }
+    );
+}
+
+export function deleteJuriedExhibit(key) {
+  return db
+    .ref()
+    .child("exhibits")
+    .child("juried")
+    .child(key)
+    .remove()
+    .catch(
+      () =>
+        function (error) {
+          console.log(error);
+        }
+    );
+}
+
+export function deleteGroupExhibit(key) {
+  return db
+    .ref()
+    .child("exhibits")
+    .child("selected")
+    .child(key)
+    .remove()
+    .catch(
+      () =>
+        function (error) {
+          console.log(error);
+        }
+    );
+}
+
+export function deleteSoloExhibit(key) {
+  return db
+    .ref()
+    .child("exhibits")
+    .child("solo")
+    .child(key)
+    .remove()
+    .catch(
+      () =>
+        function (error) {
+          console.log(error);
+        }
+    );
+}

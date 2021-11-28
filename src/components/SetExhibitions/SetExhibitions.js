@@ -32,6 +32,7 @@ import { ActionIcons } from "./ActionIcons";
 import GalleryDialog from "./galleryDialog";
 import GrantAwardDialog from "./grantAwardDialog";
 import ExhibitionDialog from "./exhibitionDialog";
+import { DeleteDialog, EntryType } from "./deleteDialog";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -132,6 +133,8 @@ const SetExhibitions = (props) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(undefined);
   const [typeOfMessage, setTypeOfMessage] = useState("success");
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [entryType, setEntryType] = useState(undefined);
 
   const classes = styles();
   const carouselItems = [
@@ -236,6 +239,12 @@ const SetExhibitions = (props) => {
     setAddingGroup(true);
   };
 
+  const handleOpenDeleteDialog = (item, entryType) => {
+    setOpenDeleteDialog(true);
+    setEntryType(entryType);
+    setSelectedItem(item);
+  }
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -244,6 +253,19 @@ const SetExhibitions = (props) => {
     setOpenSnackbar(false);
   };
 
+  const handleCloseDeleteDialog = (entryWasRemoved, isError) => {
+    setOpenDeleteDialog(false);
+    setEntryType(undefined);
+    entryWasRemoved && !isError && getExhibitsData();
+    if (entryWasRemoved || isError) {
+      setTypeOfMessage("error");
+      setSnackbarMessage(isError
+        ? "Something went wrong, entry has NOT been removed"
+        : "Entry has been removed");
+    }
+    setSelectedItem(undefined);
+  }
+
   const exhibitionType = addingSolo
     ? "Selected Solo"
     : addingJuried
@@ -251,6 +273,8 @@ const SetExhibitions = (props) => {
       : addingGroup
         ? "Selected Group"
         : undefined;
+  const grantsAndAwardsArray = Object.keys(grantsAndAwards).slice(0).reverse();
+  const galleriesArray = Object.keys(galleries).slice(0).reverse();
 
   return (
     <div className={classes.masthead}>
@@ -277,7 +301,7 @@ const SetExhibitions = (props) => {
         </Button>
         <Typography variant="h6">Galleries </Typography>
         {galleries
-          ? Object.keys(galleries).map((i) => (
+          ? galleriesArray.map((i) => (
             <Grid container wrap="nowrap" spacing={7} key={i}>
               <Grid item xs={9}>
                 <div className={classes.contentBlock} key={i}>
@@ -290,6 +314,8 @@ const SetExhibitions = (props) => {
                 <ActionIcons
                   openEditDialog={toggleOpenGalleries}
                   selectedItem={{ key: i, ...galleries[i] }}
+                  handleOpenDeleteDialog={handleOpenDeleteDialog}
+                  entryType={EntryType.Gallery}
                 />
               </Grid>
             </Grid>
@@ -306,7 +332,7 @@ const SetExhibitions = (props) => {
         </Button>
         <Typography variant="h6">Grants and Awards </Typography>
         {grantsAndAwards
-          ? Object.keys(grantsAndAwards).map((i) => (
+          ? grantsAndAwardsArray.map((i) => (
             <Grid container wrap="nowrap" spacing={7} key={i}>
               <Grid item xs={9}>
                 <div className={classes.contentBlock} key={i}>
@@ -319,6 +345,8 @@ const SetExhibitions = (props) => {
                 <ActionIcons
                   openEditDialog={toggleOpenGrantsAndAwards}
                   selectedItem={{ key: i, grantAward: grantsAndAwards[i] }}
+                  handleOpenDeleteDialog={handleOpenDeleteDialog}
+                  entryType={EntryType.GrantAward}
                 />
               </Grid>
             </Grid>
@@ -340,6 +368,8 @@ const SetExhibitions = (props) => {
             exhibitsObject={soloByYear}
             isAuth={props.authUser}
             openEditDialog={handleOpenSolo}
+            entryType={EntryType.Solo}
+            handleOpenDeleteDialog={handleOpenDeleteDialog}
           />
           : "No solo exhibitions have been added yet!"}
       </Paper>
@@ -358,6 +388,8 @@ const SetExhibitions = (props) => {
             exhibitsObject={juriedByYear}
             isAuth={props.authUser}
             openEditDialog={handleOpenJuried}
+            entryType={EntryType.Juried}
+            handleOpenDeleteDialog={handleOpenDeleteDialog}
           />
           : "No juried exhibitions been added yet!"}
       </Paper>
@@ -371,11 +403,14 @@ const SetExhibitions = (props) => {
           Add selected group exhibition <BookIcon className={classes.icon} />
         </Button>
         <Typography variant="h6" gutterBottom>Selected Group Exhibitions</Typography>
-        {selectedByYear ? <Exhibits
-          exhibitsObject={selectedByYear}
-          isAuth={props.authUser}
-          openEditDialog={handleOpenGroup}
-        />
+        {selectedByYear
+          ? <Exhibits
+            exhibitsObject={selectedByYear}
+            isAuth={props.authUser}
+            openEditDialog={handleOpenGroup}
+            entryType={EntryType.Group}
+            handleOpenDeleteDialog={handleOpenDeleteDialog}
+          />
           : "No selected exhibitions been added yet!"}
       </Paper>
       <GalleryDialog
@@ -417,6 +452,12 @@ const SetExhibitions = (props) => {
           message={snackbarMessage}
         />
       </Snackbar>
+      <DeleteDialog
+        openDeleteDialog={openDeleteDialog}
+        handleCloseDeleteDialog={handleCloseDeleteDialog}
+        entryType={entryType}
+        selectedItem={selectedItem}
+      />
     </div >
   );
 }

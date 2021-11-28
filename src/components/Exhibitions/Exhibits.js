@@ -19,7 +19,12 @@ const styles = makeStyles((theme) => ({
 
 
 export function Exhibits(props) {
-  const { exhibitsObject, openEditDialog } = props;
+  const {
+    exhibitsObject,
+    openEditDialog,
+    entryType,
+    handleOpenDeleteDialog
+  } = props;
   const classes = styles();
   return (Object.entries(exhibitsObject).sort((a, b) => b[0] - a[0]).map(entry => {
     const year = entry[0];
@@ -32,7 +37,7 @@ export function Exhibits(props) {
         <Grid item xs={11}>
           {exhibits.map((exhibit, idx) =>
             <Grid container wrap="nowrap" spacing={7} key={idx}>
-              <Grid item xs={8}>
+              <Grid item xs={props.isAuth ? 8 : 12}>
                 <Typography className={classes.text} gutterBottom>
                   <i>{exhibit.name + '. '}</i>
                   {exhibit.place + ". "}
@@ -45,6 +50,8 @@ export function Exhibits(props) {
                   <ActionIcons
                     openEditDialog={openEditDialog}
                     selectedItem={{ key: entry.key, ...exhibit }}
+                    entryType={entryType}
+                    handleOpenDeleteDialog={handleOpenDeleteDialog}
                   />
                 </Grid>
               }</Grid>

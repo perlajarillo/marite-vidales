@@ -24,10 +24,20 @@ const styles = makeStyles((theme) => ({
 
 export function ActionIcons(props) {
   const classes = styles();
-  const { selectedItem, openEditDialog } = props;
+  const {
+    selectedItem,
+    openEditDialog,
+    handleOpenDeleteDialog,
+    entryType
+  } = props;
+
   const handleOpenEditDialog = () => {
     openEditDialog(selectedItem);
   };
+
+  const onHandleOpenDeleteDialog = () => {
+    handleOpenDeleteDialog(selectedItem, entryType);
+  }
 
   return (<div className={classes.actions} >
     <Fab
@@ -42,9 +52,7 @@ export function ActionIcons(props) {
     <Fab
       aria-label="delete"
       className={classes?.actionDelete}
-    /*  onClick={() =>
-       this.handleOpenDeleteEducation(education[e.key], e.key)
-     } */
+      onClick={onHandleOpenDeleteDialog}
     >
       <DeleteIcon />
     </Fab>
