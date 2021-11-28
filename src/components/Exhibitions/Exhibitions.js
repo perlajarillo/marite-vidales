@@ -149,6 +149,9 @@ const Exhibitions = () => {
     getExhibitsData()
   }, []);
 
+  const grantsAndAwardsArray = Object.keys(grantsAndAwards).slice(0).reverse();
+  const galleriesArray = Object.keys(galleries).slice(0).reverse();
+
   return (
     <div className={classes.masthead}>
       <Typography variant="h4" color="secondary" gutterBottom>
@@ -166,7 +169,7 @@ const Exhibitions = () => {
         </Carousel>
         <Typography variant="h6">Galleries </Typography>
         {galleries
-          ? Object.keys(galleries).map((i) => (
+          ? galleriesArray.map((i) => (
             <div className={classes.contentBlock} key={i}>
               <Typography className={classes.text}>
                 {galleries[i].gallery + ". "}
@@ -179,7 +182,7 @@ const Exhibitions = () => {
         <br></br>
         <Typography variant="h6">Grants and Awards </Typography>
         {grantsAndAwards
-          ? Object.keys(grantsAndAwards).map((i) => (
+          ? grantsAndAwardsArray.map((i) => (
             <div className={classes.contentBlock} key={i}>
               <Typography className={classes.text}>
                 {grantsAndAwards[i]}
