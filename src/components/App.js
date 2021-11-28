@@ -13,6 +13,7 @@ import Series from "./Series/Series";
 import SeriesPaintings from "./Series/SeriesPaintings";
 import SetSeries from "./SetSeries";
 import SetBiography from "./SetBiography";
+import SetExhibitions from "./SetExhibitions";
 import MySeries from "./MySeries";
 import Login from "./Login/Login";
 import { withAuthentication } from "./Session";
@@ -33,6 +34,7 @@ const App = () => (
         <Route path="/myseries" component={MySeries} />
         <Route path="/setseries" component={SetSeries} />
         <Route path="/setbiography" component={SetBiography} />
+        <Route path="/setexhibitions" component={SetExhibitions} />
         <Route path="/login" component={Login} />
         <Route path="/contact" component={Contact} />
       </Switch>

@@ -13,25 +13,11 @@ import picture8 from "../../images/eight.jpg";
 import picture9 from "../../images/nine.jpg";
 import picture10 from "../../images/ten.jpg";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import Carousel from 'react-material-ui-carousel';
-import Grid from '@material-ui/core/Grid';
 import { getExhibitions } from "../../firebase/transactions";
-
-
-const groupByYear = (objectOfExhibits) =>
-  [...Object.values(objectOfExhibits)].reduce((acc, value) => {
-    // Group initialization
-    if (!acc[value.year]) {
-      acc[value.year] = [];
-    }
-    // Grouping
-    acc[value.year].push(value);
-
-    return acc;
-  }, {});
+import { groupByYear } from "./utilities";
+import { Exhibits } from "./Exhibits";
+import { Item } from "./Item";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -95,47 +81,6 @@ const styles = makeStyles((theme) => ({
   }
 
 }));
-
-function Item(props) {
-  const classes = styles();
-  return (
-    <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={props.image}
-      />
-      <CardContent className={classes.cardContent}>
-        <Typography variant="caption" color="secondary" className={classes.legend}>
-          {props.legend}
-        </Typography>
-      </CardContent>
-    </Card>)
-};
-
-function Exhibits(props) {
-  const exhibitsObject = props.exhibitsObject;
-  const classes = styles();
-  return (Object.entries(exhibitsObject).sort((a, b) => b[0] - a[0]).map(entry => {
-    const year = entry[0];
-    const exhibits = entry[1];
-    return (
-      <Grid container wrap="nowrap" spacing={7} key={year}>
-        <Grid item xs={1}>
-          <Typography className={classes.text}>{year}</Typography>
-        </Grid>
-        <Grid item xs={11}>
-          {exhibits.map((exhibit, idx) =>
-            <Typography className={classes.text} key={idx} gutterBottom>
-              <i>{exhibit.name + '. '}</i>
-              {exhibit.place + ". "}
-              {exhibit.dates + ". "}
-            </Typography>
-          )}
-        </Grid>
-      </Grid>
-    )
-  }))
-};
 
 const Exhibitions = () => {
   const [grantsAndAwards, setGrantsAndAwards] = useState({});
