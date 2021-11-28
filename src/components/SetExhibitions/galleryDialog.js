@@ -78,6 +78,7 @@ const GalleryDialog = (props) => {
             fullWidth
             value={address}
             required
+            multiline
             onChange={e => setAddress(e.target.value)}
           />
           <TextField
@@ -88,6 +89,7 @@ const GalleryDialog = (props) => {
             fullWidth
             value={gallery}
             required
+            multiline
             onChange={e => setGallery(e.target.value)}
           />
         </div>
