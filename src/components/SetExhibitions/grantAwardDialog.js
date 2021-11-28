@@ -72,6 +72,7 @@ const GrantAwardDialog = (props) => {
             fullWidth
             value={grantAward}
             required
+            multiline
             onChange={e => setGrantAward(e.target.value)}
           />
         </div>

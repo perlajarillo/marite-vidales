@@ -119,6 +119,7 @@ const ExhibitionDialog = (props) => {
             fullWidth
             value={name}
             required
+            multiline
             onChange={e => setName(e.target.value)}
           />
           <TextField
@@ -129,6 +130,7 @@ const ExhibitionDialog = (props) => {
             fullWidth
             value={place}
             required
+            multiline
             onChange={e => setPlace(e.target.value)}
           />
           <TextField
