@@ -189,7 +189,6 @@ export default function SetSeries(props) {
     let key = "";
     let isInTopSeries = false;
     let order = 1;
-    let collectionType = "";
     if (p.location.state) {
       if (p.location.state.series) {
         let series = p.location.state.series;
@@ -200,7 +199,6 @@ export default function SetSeries(props) {
         key = series.key;
         isInTopSeries = series.isInTopSeries;
         order = series.order;
-        collectionType = series.collectionType;
       }
     }
 

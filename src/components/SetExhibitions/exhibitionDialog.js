@@ -79,7 +79,7 @@ const ExhibitionDialog = (props) => {
   }
 
   const onClose = e => {
-    e?.preventDefault();
+    e && e.preventDefault();
     if (!selectedItem) {
       setDates(undefined);
       setName(undefined);

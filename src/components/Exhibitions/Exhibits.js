@@ -1,3 +1,4 @@
+import React from "react";
 import { Typography } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,7 +19,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 
-export function Exhibits(props) {
+export const Exhibits = (props) => {
   const {
     exhibitsObject,
     openEditDialog,

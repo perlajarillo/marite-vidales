@@ -1,3 +1,4 @@
+import React from "react";
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -29,7 +30,7 @@ const styles = makeStyles((theme) => ({
 
 }));
 
-export function Item(props) {
+export const Item = (props) => {
   const classes = styles();
   return (
     <Card className={classes.root}>

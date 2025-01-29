@@ -108,7 +108,7 @@ class SeriesPainting extends Component {
 
   render() {
     const { classes } = this.props;
-    const { open, series, selectedImage, viewMore, moreButtonText, index } = this.state;
+    const { open, series, selectedImage, viewMore, moreButtonText } = this.state;
     const topTenSeries = series ? series.images_details.filter(image => image.isTopTen) : [];
     topTenSeries.sort((a, b) => a.order - b.order);
     const noTopTenSeries = series ? series.images_details.filter((image, i) =>

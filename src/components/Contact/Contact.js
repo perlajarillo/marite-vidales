@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContentWrapper from "../SnackbarContentComponent/SnackbarContentComponent";
 import { Typography } from "@material-ui/core";
-import { firebase } from "../../firebase";
 import { REACT_FUNCTION_URL } from "../../functions_env";
 
 const styles = makeStyles((theme) => ({

@@ -49,7 +49,7 @@ const GalleryDialog = (props) => {
   }
 
   const onClose = e => {
-    e?.preventDefault();
+    e && e.preventDefault();
     if (!selectedItem) {
       setAddress(undefined);
       setGallery(undefined);

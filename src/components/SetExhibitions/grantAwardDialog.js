@@ -8,7 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../../firebase";
 import { Typography } from "@material-ui/core";
-import { v4 as uuidv4 } from 'uuid';
 
 
 const GrantAwardDialog = (props) => {
@@ -44,7 +43,7 @@ const GrantAwardDialog = (props) => {
   }
 
   const onClose = e => {
-    e?.preventDefault();
+    e && e.preventDefault();
     if (!selectedItem) {
       setGrantAward(undefined);
     }

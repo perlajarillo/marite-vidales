@@ -7,7 +7,6 @@ import picture2 from "../../images/two.jpg";
 import picture3 from "../../images/three.jpg";
 import picture4 from "../../images/four.jpg";
 import picture5 from "../../images/five.JPG";
-import picture6 from "../../images/six.JPG";
 import picture7 from "../../images/seven.JPG";
 import picture8 from "../../images/eight.jpg";
 import picture9 from "../../images/nine.jpg";
