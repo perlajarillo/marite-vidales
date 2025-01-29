@@ -18,12 +18,12 @@
     "react-material-ui-carousel": "^2.2.1",
     "react-responsive-carousel": "^3.1.50",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^3.0.1",
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
