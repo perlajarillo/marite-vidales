@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@mui/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
@@ -21,7 +21,7 @@ import Contact from "./Contact/Contact";
 
 const App = () => (
   <div className="App">
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
       <Switch>
@@ -39,7 +39,7 @@ const App = () => (
         <Route path="/contact" component={Contact} />
       </Switch>
       <Footer />
-    </MuiThemeProvider>
+    </ThemeProvider>
   </div>
 );
 

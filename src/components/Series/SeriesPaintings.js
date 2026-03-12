@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
-import Slide from "@material-ui/core/Slide";
-import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
+import Dialog from "@mui/material/Dialog";
+import Typography from "@mui/material/Typography";
+import { withStyles } from "@mui/styles";
+import Slide from "@mui/material/Slide";
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
 import PaintingCard from "./PaintingCard";
 import PaintingsCarousel from "./PaintingsCarousel";
 

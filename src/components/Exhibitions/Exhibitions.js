@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { makeStyles } from '@mui/styles';
+import { Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import picture1 from "../../images/one.jpg";
 import picture2 from "../../images/two.jpg";
 import picture3 from "../../images/three.jpg";

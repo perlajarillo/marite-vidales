@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Paper, Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@mui/styles";
+import { Paper, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import mail from "../../images/icon_mail.svg";
 import facebook from "../../images/icon_facebook.svg";
 import instagram from "../../images/icon_instagram.svg";

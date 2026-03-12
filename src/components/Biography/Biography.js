@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@mui/styles";
 import marite from "../../images/Mariteweb.jpg";
 import { db } from "../../firebase";
-import { Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 const styles = theme => ({
   image: {

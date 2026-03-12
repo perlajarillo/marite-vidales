@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import Axios from 'axios'
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
 import SnackbarContentWrapper from "../SnackbarContentComponent/SnackbarContentComponent";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { REACT_FUNCTION_URL } from "../../functions_env";
 
 const styles = makeStyles((theme) => ({

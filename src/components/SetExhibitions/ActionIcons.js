@@ -1,8 +1,8 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Fab from "@material-ui/core/Fab";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import { makeStyles } from '@mui/styles';
+import Fab from "@mui/material/Fab";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 
 const styles = makeStyles((theme) => ({

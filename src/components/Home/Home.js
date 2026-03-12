@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@mui/styles";
 import painting from "../../images/HomePage-Image-Transparent4.jpg";
 
 const styles = theme => ({

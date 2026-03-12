@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@mui/styles";
+import { Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import reviewsData from "./data";
 import reviewsImage from "../../images/reviews-image.jpg";
 

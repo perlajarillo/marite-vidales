@@ -1,11 +1,11 @@
 
 
 import React from "react";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 import Carousel from 'react-material-ui-carousel';
-import CardContent from '@material-ui/core/CardContent';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from "@material-ui/core";
+import CardContent from '@mui/material/CardContent';
+import { makeStyles } from '@mui/styles';
+import { Typography } from "@mui/material";
 import { Author } from "../../constants";
 
 const styles = makeStyles((theme) => ({

@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import { makeStyles } from '@mui/styles';
 import { ActionIcons } from "../SetExhibitions/ActionIcons";
 
 const styles = makeStyles((theme) => ({
