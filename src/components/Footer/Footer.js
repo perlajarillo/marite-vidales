@@ -1,107 +1,105 @@
-import React, { Component } from "react";
-import { withStyles } from "@mui/styles";
+import React from "react";
+import { styled } from "@mui/material/styles";
 import { Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import mail from "../../images/icon_mail.svg";
 import facebook from "../../images/icon_facebook.svg";
 import instagram from "../../images/icon_instagram.svg";
 
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(2, 1),
-    position: "fixed",
-    width: "100%",
-    bottom: 0,
-    backgroundColor: "#fafafa",
-    boxShadow:
-      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
-  },
-  copyright: {
-    color: theme.palette.primary.contrastText
-  },
-  paper: {
-    backgroundColor: "transparent",
-    textAlign: "center",
-    borderRadius: 0
-  },
-  artistContainer: {
-    marginLeft: theme.spacing(6),
-    textAlign: "Left"
-  },
-  iconsContainer: {
-    marginRight: theme.spacing(6),
-    textAlign: "right"
-  },
-  icons: {
-    marginRight: theme.spacing(5),
-    width: "1.5em"
-  }
+
+const StyledTypography = styled(Typography) ({
+  variant: "caption",
+  fontSize: "0.85rem",
+  color: "#424242"
 });
 
-class Footer extends Component {
-  render() {
-    const { classes } = this.props;
-    const year = new Date().getFullYear();
-    return (
-      <footer className={classes.root}>
-        <Paper className={classes.paper} elevation={0}>
+const StyledFooter = styled("footer") ({
+  position: "fixed",
+  width: "100%",
+  bottom: 0,
+  backgroundColor: "#fafafa",
+  boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+});
+
+const StyledPaper = styled(Paper) (({ theme }) => ({
+  padding: theme.spacing(2, 1),
+  backgroundColor: "transparent",
+  textAlign: "center",
+  borderRadius: 0
+}));
+
+const StyledArtistContainer = styled("div")(({ theme }) => ({
+    marginLeft: theme.spacing(6),
+    marginTop: theme.spacing(1),
+    textAlign: "Left"
+}));
+
+const StyledIconsContainer = styled("div")(({ theme }) => ({
+  marginRight: theme.spacing(6),
+  textAlign: "right"
+}));
+
+const StyledIcons = styled("img")(({ theme }) => ({
+  marginRight: theme.spacing(5),
+  width: "1.5em"
+}));
+
+
+const Footer = () => {
+  const year = new Date().getFullYear();
+  return (
+    <StyledFooter>
+        <StyledPaper>
           <Grid container>
             <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={classes.artistContainer}>
-                <Typography variant="caption" className={classes.copyright}>
+              <StyledArtistContainer>
+                <StyledTypography>
                   Copyright &copy; {year} Paintings of Marité Vidales, {"  "}
-                </Typography>
-                <Typography variant="caption" className={classes.copyright}>
                   Washington, D.C.
-                </Typography>
-              </div>
+                </StyledTypography>
+              </StyledArtistContainer>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={classes.iconsContainer}>
+              <StyledIconsContainer>
                 <a
-                  className={classes.links}
                   href={"mailto:paulzye@aol.com"}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {" "}
-                  <img
-                    src={mail}
-                    alt="send me an email"
-                    className={classes.icons}
-                  />
+                  <StyledIcons src={mail}
+                    alt="send me an email">
+                  </StyledIcons>
                 </a>
                 <a
-                  className={classes.links}
                   href="https://www.facebook.com/marite.vidales"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img
+                  <StyledIcons
                     src={facebook}
                     alt="visit my facebook page"
-                    className={classes.icons}
                   />
                 </a>
                 <a
-                  className={classes.links}
                   href="https://www.instagram.com/vidalesmarite/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img
+                  <StyledIcons
                     src={instagram}
                     alt="follow me in instagram"
-                    className={classes.icons}
                   />
+                  
                 </a>
-              </div>
+              </StyledIconsContainer>
             </Grid>
           </Grid>
-        </Paper>
-      </footer>
+        </StyledPaper>
+      </StyledFooter>
     );
   }
-}
 
-export default withStyles(styles)(Footer);
+
+export default Footer;

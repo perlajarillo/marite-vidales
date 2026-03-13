@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@mui/styles";
+import React, { useContext } from "react";
+import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,165 +7,117 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import AuthUserContext from "../Session/context";
 import { auth } from "../../firebase";
+import { Author } from "../../constants";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    display: "flex"
-  },
-
-  links: {
-    textDecoration: "none",
-    color: "#424242"
-  },
-  items: {
-    letterSpacing: "1px",
-    color: theme.palette.primary.contrastText,
-    marginLeft: 50,
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "0.9rem",
-      marginLeft: 5
-    }
-  },
-  brand: {
-    paddingTop: "1rem",
-    flex: 1,
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "1.1rem"
-    }
-  },
-  linkContainer: {
-    width: "100%",
-    textAlign: "center"
-  }
+const Root = styled("div")({
+  flexGrow: 1,
+  display: "flex",
+  color: "#424242",
+  backgroundColor: "#fafafa",
 });
 
-const NavNoAuth = props => {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Typography variant="h5" className={classes.brand} align="center">
-          <a href="/" className={classes.links}>
-            Marite Vidales
-          </a>
-        </Typography>
-        <Toolbar>
-          <div className={classes.linkContainer}>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/series"
-            >
-              Artwork
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/exhibitions"
-            >
-              Exhibits
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/biography"
-            >
-              Biography
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/reviews"
-            >
-              Reviews
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/contact"
-            >
-              Contact
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: "#424242",
+  fontSize: "1.7rem",
+});
+
+const StyledLinkAuth = styled(Link)({
+  textDecoration: "none",
+  color: "#fafafa",
+  fontSize: "1.7rem",
+});
+
+const BrandTypography = styled(Typography)(({ theme }) => ({
+  paddingTop: "1rem",
+  flex: 1,
+  [theme.breakpoints.down("xs")]: {
+    fontSize: "1.1rem",
+  },
+}));
+
+const NavButton = styled(Button)(({ theme }) => ({
+  letterSpacing: "1px",
+  fontWeight: "500",
+  fontSize: "1rem",
+  marginLeft: 50,
+  [theme.breakpoints.down("xs")]: {
+    marginLeft: 5,
+  },
+}));
+
+const LinkContainer = styled("div")({
+  width: "100%",
+  textAlign: "center",
+});
+
+const NavNoAuth = () => (
+  <Root>
+    <AppBar position="static" color="transparent">
+      <BrandTypography variant="h5" align="center">
+        <StyledLink to="/">{Author}</StyledLink>
+      </BrandTypography>
+      <Toolbar>
+        <LinkContainer>
+          <NavButton color="inherit" component={Link} to="/series">
+            Artwork
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/exhibitions">
+            Exhibits
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/biography">
+            Biography
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/reviews">
+            Reviews
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/contact">
+            Contact
+          </NavButton>
+        </LinkContainer>
+      </Toolbar>
+    </AppBar>
+  </Root>
+);
+
+const NavAuth = () => (
+  <Root>
+    <AppBar position="static">
+      <Toolbar>
+        <BrandTypography variant="h5">
+          <StyledLinkAuth to="/" >
+            {Author}
+          </StyledLinkAuth>
+        </BrandTypography>
+        <div>
+          <NavButton color="inherit" component={Link} to="/myseries">
+            My Series
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/setbiography">
+            Biography
+          </NavButton>
+          <NavButton color="inherit" component={Link} to="/setexhibitions">
+            Exhibits
+          </NavButton>
+
+          <NavButton
+            color="inherit"
+            component={Link}
+            onClick={auth.onLogOut}
+            to="/"
+          >
+            Log out
+          </NavButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+  </Root>
+);
+
+const Header = () => {
+  const authUser = useContext(AuthUserContext);
+
+  return authUser ? <NavAuth /> : <NavNoAuth />;
 };
 
-const NavAuth = props => {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h5" className={classes.brand}>
-            <a href="/" className={classes.links}>
-              Marite Vidales
-            </a>
-          </Typography>
-          <div>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/myseries"
-            >
-              My Series
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/setbiography"
-            >
-              Biography
-            </Button>
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              to="/setexhibitions"
-            >
-              Exhibits
-            </Button>
-
-            <Button
-              color="inherit"
-              className={classes.items}
-              component={Link}
-              onClick={auth.onLogOut}
-              to="/"
-            >
-              Log out
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
-class Header extends Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <AuthUserContext.Consumer>
-        {authUser =>
-          authUser ? (
-            <NavAuth classes={classes} />
-          ) : (
-            <NavNoAuth classes={classes} />
-          )
-        }
-      </AuthUserContext.Consumer>
-    );
-  }
-}
-
-export default withStyles(styles)(Header);
+export default Header;
