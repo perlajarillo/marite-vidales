@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { withStyles } from "@mui/styles";
+import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -10,11 +9,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import noPicture from "../../images/noPicture.png";
+import { styled } from "@mui/material/styles";
 
 import { db } from "../../firebase";
 
-const styles = theme => ({
-  card: {
+
+const StyledCard = styled(Card)(({ theme }) => 
+  ({
     width: "calc(50% - 50px)",
     marginRight: "50px",
     marginBottom: "50px",
@@ -23,68 +24,70 @@ const styles = theme => ({
       marginLeft: "30px",
       marginRight: "30px",
       marginBottom: "30px",
-    }
-  },
-  media: {
+    }})
+  );
+
+  const StyledCardMedia = styled(CardMedia) (({ theme }) => ({
     height: "350px",
     [theme.breakpoints.down("xs")]: {
       height: "250px"
     },
-  },
-  content: {
+  })
+);
+
+const StyledCardContent = styled(CardContent) (({ theme }) => ({
     height: "130px",
     paddingBottom: 30,
     textAlign: "justify",
     [theme.breakpoints.down("xs")]: {
       height: 200
-    },
-  },
-  cards: {
-    display: "flex",
-    flexFlow: "row wrap",
-    padding: "3rem 0",
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.sectionPadding.padding,
     }
-  },
-  masthead: {
-    textAlign: "center",
-    color: "white",
-    paddingTop: "50px",
-    paddingBottom: "30px",
-    paddingLeft: "50px",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "10px",
-      paddingRight: "10px"
-    }
-  },
-  progressDiv: {
-    textAlign: "center",
-    paddingTop: "150px",
-    paddingBottom: "400px"
-  },
+})  
+);
 
-  description: {
-    display: "-webkit-box",
-    WebkitLineClamp: "3",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
+const StyledCards=styled("div")(({ theme }) => ({
+  display: "flex",
+  flexFlow: "row wrap", 
+  padding: "3rem 0",
+  [theme.breakpoints.up("sm")]: {
+    padding: theme?.sectionPadding?.padding,
   }
-});
+}));
 
-class Series extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      allSeries: []
-    };
-  }
+const StyledMasthead = styled("div")(({ theme }) => ({
+  textAlign: "center",
+  paddingTop: "50px",
+  paddingBottom: "30px",
+  paddingLeft: "50px",
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: "10px",
+    paddingRight: "10px"
+  },
+}));
 
-  componentDidMount() {
-    this.observer = this.getSeries();
-  }
+const StyledProgressDiv = styled("div")(({ theme }) => ({
+  textAlign: "center",
+  paddingTop: "150px",
+  paddingBottom: "400px"
+}));
 
-  getSeries = () => {
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  WebkitLineClamp: "3",
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  color: theme.palette.text.secondary,
+}) 
+);
+
+function Series() {
+  const [allSeries, setAllSeries] = useState([]);
+
+  useEffect(() => {
+    getSeries();
+  }, []);
+
+  const getSeries = () => {
     db.getAllSeries().then(snapshot => {
       let series = [];
       Object.keys(snapshot.val()).forEach(serie => {
@@ -104,22 +107,49 @@ class Series extends Component {
         }
       });
       series.sort((a, b) => a.order - b.order);
-      this.setState({ allSeries: series });
+      setAllSeries(series);
     });
   };
 
-  render() {
-    const { classes } = this.props;
-    const { allSeries } = this.state;
-    return allSeries && allSeries.length > 0 ? (
-      <div className={classes.masthead}>
-        <Typography gutterBottom variant="h4" component="h2" color="secondary">
-          Artwork series
-        </Typography>
-        <div className={classes.cards}>
-          {allSeries.map((serie, i) => (
-            <Card className={classes.card} key={i}>
-              <CardActionArea
+  return allSeries && allSeries.length > 0 ? (
+    <StyledMasthead>
+      <Typography gutterBottom variant="h4" component="h2" color="secondary">
+        Artwork series
+      </Typography>
+      <StyledCards>
+        {allSeries.map((serie, i) => (
+          <StyledCard key={i}>
+            <CardActionArea
+              component={Link}
+              to={{
+                pathname: "/seriespaintings",
+                state: {
+                  serie: serie
+                }
+              }}
+            >
+              <StyledCardMedia
+                component="img"
+                image={
+                  serie.images_details.length > 0
+                    ? serie.images_details[serie.cover].url
+                    : noPicture
+                }
+                title={serie.name}
+              />
+              <StyledCardContent >
+                <Typography gutterBottom variant="h5" component="h2">
+                  {serie.name}
+                </Typography>
+                <StyledTypography variant="body2" component="p" color="textSecondary">
+                  {serie.shortDescription}
+                </StyledTypography>
+              </StyledCardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button
+                size="small"
+                color="secondary"
                 component={Link}
                 to={{
                   pathname: "/seriespaintings",
@@ -128,55 +158,18 @@ class Series extends Component {
                   }
                 }}
               >
-                <CardMedia
-                  className={classes.media}
-                  component="img"
-                  image={
-                    serie.images_details.length > 0
-                      ? serie.images_details[serie.cover].url
-                      : noPicture
-                  }
-                  title={serie.name}
-                />
-                <CardContent className={classes.content}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {serie.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    className={classes.description}
-                  >
-                    {serie.shortDescription}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button
-                  size="small"
-                  color="secondary"
-                  component={Link}
-                  to={{
-                    pathname: "/seriespaintings",
-                    state: {
-                      serie: serie
-                    }
-                  }}
-                >
-                  View series
-                </Button>
-              </CardActions>
-            </Card>
-          ))}
-        </div>
-      </div>
-    ) : (
-      <div className={classes.progressDiv}>
-        <CircularProgress color="secondary" />
-      </div>
-    );
-  }
+                View series
+              </Button>
+            </CardActions>
+          </StyledCard>
+        ))}
+      </StyledCards>
+    </StyledMasthead>
+  ) : (
+    <StyledProgressDiv>
+      <CircularProgress color="secondary" />
+    </StyledProgressDiv>
+  );
 }
 
-export default withStyles(styles)(Series);
+export default Series;
